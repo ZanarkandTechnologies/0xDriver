@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: building
+- state: done
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: docs/prd.md, docs/specs/directory-structure-plan.md
@@ -98,42 +98,58 @@ ADE compares it to fixture future labels, and artifacts are written under
 
 ## Acceptance Criteria
 
-- [ ] `driverx inspect-scene --config configs/mock.yaml` writes a camera/trajectory artifact.
-- [ ] `driverx run-scene --config configs/mock.yaml` writes intent, trajectory, metric, latency, and overlay artifacts.
-- [ ] `driverx evaluate --run-dir <dir>` prints or writes ADE metrics.
-- [ ] `driverx package-submission --run-dir <dir>` creates a dry-run JSON/protobuf-compatible package artifact.
-- [ ] Tests cover schema validation, trajectory shape, smoothing, ADE, and mock pipeline execution.
-- [ ] Docs explain that real Waymo data is optional and configurable.
-- [ ] QA report maps evidence to PRD user stories.
+- [x] `driverx inspect-scene --config configs/mock.yaml` writes a camera/trajectory artifact.
+- [x] `driverx run-scene --config configs/mock.yaml` writes intent, trajectory, metric, latency, and overlay artifacts.
+- [x] `driverx evaluate --run-dir <dir>` prints or writes ADE metrics.
+- [x] `driverx package-submission --run-dir <dir>` creates a dry-run JSON/protobuf-compatible package artifact.
+- [x] Tests cover schema validation, trajectory shape, smoothing, ADE, and mock pipeline execution.
+- [x] Docs explain that real Waymo data is optional and configurable.
+- [x] QA report maps evidence to PRD user stories.
 
 ## Evidence Checklist
 
-- [ ] Test run output.
-- [ ] Inspect-scene artifact.
-- [ ] Run-scene artifact directory.
-- [ ] Metrics and latency report.
-- [ ] Submission dry-run package.
-- [ ] Review result.
-- [ ] QA report.
+- [x] Test run output.
+- [x] Inspect-scene artifact.
+- [x] Run-scene artifact directory.
+- [x] Metrics and latency report.
+- [x] Submission dry-run package.
+- [x] Review result.
+- [x] QA report.
 
 ## Build Notes
 
-Implementation begins after this ticket is created.
+Implemented in modular commits:
+
+- `5f98c57 feat(core): add driverx package skeleton`
+- `8603fab feat(pipeline): add fixture autonomy loop`
+- `079d427 test(pipeline): add mock verification gate`
+- `e71bb28 feat(pipeline): add fixture batch runner`
+- `53ccd19 docs(modules): document runtime ownership`
+- `4a2cf1d feat(cli): add stable run output overrides`
+- `9293fc9 fix(pipeline): strengthen evidence artifacts`
 
 ## QA Reconciliation
 
-- US-001: NOT RUN
-- US-002: NOT RUN
-- US-003: NOT RUN
-- US-004: NOT RUN
+- US-001: PASS
+- US-002: PASS
+- US-003: PASS
+- US-004: PASS for v1 dry-run package scope
 
 ## Artifact Links
 
-- Pending.
+- QA report: `qa/reports/TASK-001-final-qa.md`
+- Inspect artifact: `artifacts/runs/final-qa-inspect/scene_inspection.svg`
+- Prediction artifact: `artifacts/runs/final-qa-scene/scene_prediction.svg`
+- Intent: `artifacts/runs/final-qa-scene/intent.json`
+- Raw candidates: `artifacts/runs/final-qa-scene/raw_candidates.json`
+- Smoothed candidates: `artifacts/runs/final-qa-scene/smoothed_candidates.json`
+- Metrics: `artifacts/runs/final-qa-scene/metrics.json`
+- Timings: `artifacts/runs/final-qa-scene/timings.json`
+- Batch summary: `artifacts/runs/final-qa-batch/batch_summary.json`
 
 ## User Evidence
 
-- Hero screenshot: pending.
-- Supporting evidence: pending.
-- QA report: pending.
-- Final verdict: pending.
+- Hero screenshot: `artifacts/runs/final-qa-scene/scene_prediction.svg`
+- Supporting evidence: `artifacts/runs/final-qa-inspect/scene_inspection.svg`
+- QA report: `qa/reports/TASK-001-final-qa.md`
+- Final verdict: PASS for fixture-backed v1.
