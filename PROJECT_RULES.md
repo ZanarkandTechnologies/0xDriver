@@ -105,6 +105,9 @@ PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml
 # Run the fixture pipeline
 PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml
 
+# Run the tiny fixture validation batch
+PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml
+
 # Run tests
 PYTHONPATH=src python3 -m unittest discover -s tests
 

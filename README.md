@@ -81,6 +81,9 @@ PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml
 # Run the full mock pipeline
 PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml
 
+# Run a tiny fixture validation batch
+PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml
+
 # Evaluate an existing run directory
 PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/<run-id>
 

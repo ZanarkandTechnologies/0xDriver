@@ -19,6 +19,8 @@ def rank_candidates(
         cost = candidate.score
         cost += obstacle_cost(candidate, objects)
         cost += smoothness_cost(candidate) * 0.15
+        speed_multiplier = float(candidate.metadata.get("speed_multiplier", 1.0))
+        cost += abs(1.0 - speed_multiplier) * 0.4
         if "fallback" in candidate.source:
             cost += 0.35
         ranked.append(

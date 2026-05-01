@@ -37,6 +37,15 @@ def _command_run_scene(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_run_batch(args: argparse.Namespace) -> int:
+    from driverx.pipeline.batch_run import run_batch
+
+    config = load_config(args.config)
+    result = run_batch(config, fixture_names=args.fixtures)
+    print(json.dumps(result, indent=2))
+    return 0
+
+
 def _command_evaluate(args: argparse.Namespace) -> int:
     from driverx.evaluation.reports import evaluate_run_dir
 
@@ -79,6 +88,19 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_config_arg(run_parser)
     run_parser.set_defaults(func=_command_run_scene)
+
+    batch_parser = subparsers.add_parser(
+        "run-batch",
+        help="Run a tiny validation batch over one or more fixture scenes.",
+    )
+    _add_config_arg(batch_parser)
+    batch_parser.add_argument(
+        "--fixtures",
+        nargs="+",
+        default=["construction_merge", "straight_clear"],
+        help="Fixture names to run.",
+    )
+    batch_parser.set_defaults(func=_command_run_batch)
 
     evaluate_parser = subparsers.add_parser(
         "evaluate",
