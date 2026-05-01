@@ -7,33 +7,38 @@
 ## Commands Run
 
 ```bash
-PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml --run-id final-qa-inspect
-PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml --run-id final-qa-scene
-PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/final-qa-scene
-PYTHONPATH=src python3 -m driverx package-submission --run-dir artifacts/runs/final-qa-scene
-PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml --run-id final-qa-batch
+PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml --run-id final-qa2-inspect
+PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml --run-id final-qa2-scene
+PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/final-qa2-scene
+PYTHONPATH=src python3 -m driverx package-submission --run-dir artifacts/runs/final-qa2-scene
+PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml --run-id final-qa2-batch
+PYTHONPATH=src python3 -m driverx run-scene --config configs/invalid_reasoner.yaml --run-id final-qa2-invalid
 bash scripts/pre_push_check.sh
 ```
 
 ## Evidence Artifacts
 
-- Inspect scene: `artifacts/runs/final-qa-inspect/scene_inspection.svg`
-- Predicted scene: `artifacts/runs/final-qa-scene/scene_prediction.svg`
-- Intent: `artifacts/runs/final-qa-scene/intent.json`
-- Raw candidates: `artifacts/runs/final-qa-scene/raw_candidates.json`
-- Smoothed candidates: `artifacts/runs/final-qa-scene/smoothed_candidates.json`
-- Selected trajectory: `artifacts/runs/final-qa-scene/selected_trajectory.json`
-- Metrics: `artifacts/runs/final-qa-scene/metrics.json`
-- Timings: `artifacts/runs/final-qa-scene/timings.json`
-- Submission dry-run: `artifacts/runs/final-qa-scene/submission_dry_run.json`
-- Batch summary: `artifacts/runs/final-qa-batch/batch_summary.json`
+- Inspect scene: `artifacts/runs/final-qa2-inspect/scene_inspection.svg`
+- Predicted scene: `artifacts/runs/final-qa2-scene/scene_prediction.svg`
+- Intent: `artifacts/runs/final-qa2-scene/intent.json`
+- Raw candidates: `artifacts/runs/final-qa2-scene/raw_candidates.json`
+- Smoothed candidates: `artifacts/runs/final-qa2-scene/smoothed_candidates.json`
+- Selected trajectory: `artifacts/runs/final-qa2-scene/selected_trajectory.json`
+- Metrics: `artifacts/runs/final-qa2-scene/metrics.json`
+- Timings: `artifacts/runs/final-qa2-scene/timings.json`
+- Submission dry-run JSON: `artifacts/runs/final-qa2-scene/submission_dry_run.json`
+- Submission protobuf shard: `artifacts/runs/final-qa2-scene/submission_shard_00000.pb`
+- Submission protobuf schema: `artifacts/runs/final-qa2-scene/submission_schema.proto`
+- Batch summary: `artifacts/runs/final-qa2-batch/batch_summary.json`
+- Invalid reasoner fallback: `artifacts/runs/final-qa2-invalid/reasoner_error.json`
 
 ## Results
 
 - Single-scene ADE: `0.779339`
 - Batch scenes: `2`
 - Batch mean ADE: `0.472727`
-- Tests: `14` unittest cases passed
+- Invalid reasoner fallback ADE: `4.837193` (intentional failure case)
+- Tests: `16` unittest cases passed
 - Local gate: `bash scripts/pre_push_check.sh` passed
 
 ## User Story Reconciliation
@@ -54,6 +59,8 @@ Status: PASS.
 
 - Mock reasoner emits validated structured JSON fields.
 - Invalid hazard and lateral-bias schema cases fail closed in tests.
+- Invalid runtime reasoner output records `reasoner_error.json` and falls back
+  to a safe-stop intent.
 - Raw intent is saved to `intent.json`.
 
 ### US-003: Generate And Smooth Trajectory Candidates
@@ -67,18 +74,23 @@ Status: PASS.
 
 ### US-004: Evaluate And Package Submission Artifacts
 
-Status: PASS for dry-run package scope.
+Status: PASS for v1 package scope.
 
 - ADE is computed for the single-scene run and two-scene batch.
-- Dry-run Waymo-style submission JSON is created.
+- Dry-run Waymo-style submission JSON, a binary protobuf shard, and the local
+  dry-run protobuf schema are created.
 - Timings separate load, reason, generate, smooth, rank, evaluate, render, and
   package stages.
-- Failure-case analysis is not yet a narrative notebook; it remains a follow-up
-  once real Waymo scenes are available.
+- Failure case: `configs/invalid_reasoner.yaml` simulates malformed model
+  output. The pipeline records the validation error and falls back to a safe
+  stop trajectory. This deliberately produces worse ADE (`4.837193`) than the
+  nominal planner, which is expected because the behavior prioritizes safety
+  over matching the fixture future trajectory.
 
 ## Residual Risks
 
 - Real Waymo TFRecord parsing is still intentionally unimplemented.
-- Dry-run submission is JSON, not official protobuf serialization.
+- The protobuf shard uses a local dry-run schema, not the official Waymo
+  challenge protobuf schema.
 - Mock VLA intent is deterministic and does not prove real model quality.
 - No cloud GPU backend exists yet.

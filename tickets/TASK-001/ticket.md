@@ -133,23 +133,26 @@ Implemented in modular commits:
 - US-001: PASS
 - US-002: PASS
 - US-003: PASS
-- US-004: PASS for v1 dry-run package scope
+- US-004: PASS for v1 package scope
 
 ## Artifact Links
 
 - QA report: `qa/reports/TASK-001-final-qa.md`
-- Inspect artifact: `artifacts/runs/final-qa-inspect/scene_inspection.svg`
-- Prediction artifact: `artifacts/runs/final-qa-scene/scene_prediction.svg`
-- Intent: `artifacts/runs/final-qa-scene/intent.json`
-- Raw candidates: `artifacts/runs/final-qa-scene/raw_candidates.json`
-- Smoothed candidates: `artifacts/runs/final-qa-scene/smoothed_candidates.json`
-- Metrics: `artifacts/runs/final-qa-scene/metrics.json`
-- Timings: `artifacts/runs/final-qa-scene/timings.json`
-- Batch summary: `artifacts/runs/final-qa-batch/batch_summary.json`
+- Review result: `docs/reviews/TASK-001-implementation-review.md`
+- Inspect artifact: `artifacts/runs/final-qa2-inspect/scene_inspection.svg`
+- Prediction artifact: `artifacts/runs/final-qa2-scene/scene_prediction.svg`
+- Intent: `artifacts/runs/final-qa2-scene/intent.json`
+- Raw candidates: `artifacts/runs/final-qa2-scene/raw_candidates.json`
+- Smoothed candidates: `artifacts/runs/final-qa2-scene/smoothed_candidates.json`
+- Metrics: `artifacts/runs/final-qa2-scene/metrics.json`
+- Timings: `artifacts/runs/final-qa2-scene/timings.json`
+- Submission protobuf shard: `artifacts/runs/final-qa2-scene/submission_shard_00000.pb`
+- Invalid reasoner fallback: `artifacts/runs/final-qa2-invalid/reasoner_error.json`
+- Batch summary: `artifacts/runs/final-qa2-batch/batch_summary.json`
 
 ## User Evidence
 
-- Hero screenshot: `artifacts/runs/final-qa-scene/scene_prediction.svg`
-- Supporting evidence: `artifacts/runs/final-qa-inspect/scene_inspection.svg`
+- Hero screenshot: `artifacts/runs/final-qa2-scene/scene_prediction.svg`
+- Supporting evidence: `artifacts/runs/final-qa2-inspect/scene_inspection.svg`
 - QA report: `qa/reports/TASK-001-final-qa.md`
 - Final verdict: PASS for fixture-backed v1.

@@ -56,6 +56,19 @@ def _metadata_payload(config: DriverConfig) -> dict[str, Any]:
     }
 
 
+def _fallback_intent(frame: FrameBundle, error: Exception) -> dict[str, Any]:
+    return {
+        "scene_type": "reasoner_validation_fallback",
+        "hazards": [str(item) for item in frame.metadata.get("hazards", [])],
+        "ego_intent": "fallback to safe stop after invalid reasoner output",
+        "target_behavior": "stop",
+        "speed_profile": "brake",
+        "lateral_bias": "center",
+        "uncertainty": 1.0,
+        "validation_error": str(error),
+    }
+
+
 def inspect_scene(config: DriverConfig) -> SceneRunResult:
     timer = StageTimer()
     artifacts: list[ArtifactRef] = []
@@ -92,7 +105,18 @@ def run_scene(config: DriverConfig) -> SceneRunResult:
 
     with timer.track("reason"):
         reasoner = build_reasoner(config.reasoner)
-        intent = reasoner.infer_intent(frame)
+        try:
+            intent = reasoner.infer_intent(frame)
+        except ValueError as exc:
+            error_payload = {
+                "error_type": exc.__class__.__name__,
+                "message": str(exc),
+                "fallback": "safe_stop",
+            }
+            artifacts.append(write_json_artifact(run_dir, "reasoner_error", error_payload))
+            from driverx.reasoning.schema import intent_from_mapping
+
+            intent = intent_from_mapping(_fallback_intent(frame, exc))
     artifacts.append(write_json_artifact(run_dir, "intent", intent.__dict__))
 
     with timer.track("generate_candidates"):

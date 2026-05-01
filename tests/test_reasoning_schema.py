@@ -1,5 +1,7 @@
 import unittest
 
+from driverx.datasets.fixtures import load_fixture_frame
+from driverx.reasoning.mock import InvalidMockReasoner
 from driverx.reasoning.schema import intent_from_mapping
 
 
@@ -46,6 +48,10 @@ class ReasoningSchemaTest(unittest.TestCase):
                     "uncertainty": 0.4,
                 }
             )
+
+    def test_invalid_mock_reasoner_simulates_bad_model_output(self) -> None:
+        with self.assertRaises(ValueError):
+            InvalidMockReasoner().infer_intent(load_fixture_frame("construction_merge"))
 
 
 if __name__ == "__main__":

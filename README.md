@@ -90,6 +90,9 @@ PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/demo
 # Create a dry-run submission package
 PYTHONPATH=src python3 -m driverx package-submission --run-dir artifacts/runs/<run-id>
 
+# Exercise fail-closed behavior for malformed reasoner output
+PYTHONPATH=src python3 -m driverx run-scene --config configs/invalid_reasoner.yaml --run-id invalid-demo
+
 # Run local checks
 bash scripts/pre_push_check.sh
 ```

@@ -49,6 +49,9 @@ class PipelineMockTest(unittest.TestCase):
             submission = json.loads((run_dir / "submission_dry_run.json").read_text())
             self.assertEqual(submission["authors"], ["0xDriver"])
             self.assertEqual(submission["unique_method_name"], "fixture_vla_intent_planner")
+            self.assertTrue((run_dir / "submission_shard_00000.pb").exists())
+            self.assertGreater((run_dir / "submission_shard_00000.pb").stat().st_size, 0)
+            self.assertTrue((run_dir / "submission_schema.proto").exists())
 
     def test_run_scene_does_not_clobber_existing_run_id(self) -> None:
         with TemporaryDirectory() as tmp:
@@ -58,6 +61,18 @@ class PipelineMockTest(unittest.TestCase):
             self.assertNotEqual(first.run_dir, second.run_dir)
             self.assertTrue(first.run_dir.exists())
             self.assertTrue(second.run_dir.exists())
+
+    def test_invalid_reasoner_records_error_and_falls_back(self) -> None:
+        with TemporaryDirectory() as tmp:
+            config = DriverConfig(
+                dataset=DatasetConfig(kind="fixture", name="construction_merge"),
+                reasoner=ReasonerConfig(backend="invalid_mock", uncertainty=1.0),
+                output=OutputConfig(root=Path(tmp), run_id="invalid"),
+            )
+            result = run_scene(config)
+            self.assertIsNotNone(result.intent)
+            self.assertEqual(result.intent.target_behavior, "stop")
+            self.assertTrue((Path(tmp) / "invalid" / "reasoner_error.json").exists())
 
 
 if __name__ == "__main__":

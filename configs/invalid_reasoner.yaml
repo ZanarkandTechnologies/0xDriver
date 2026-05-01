@@ -1,0 +1,14 @@
+dataset:
+  kind: fixture
+  name: construction_merge
+
+reasoner:
+  backend: invalid_mock
+  uncertainty: 1.0
+
+output:
+  root: artifacts/runs
+  run_id:
+
+author: 0xDriver
+method_name: invalid_reasoner_fallback_check

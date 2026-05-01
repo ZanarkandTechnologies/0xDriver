@@ -44,3 +44,20 @@ class MockReasoner:
                 "uncertainty": 0.9,
             }
         return intent_from_mapping(payload)
+
+
+class InvalidMockReasoner:
+    """Test backend that simulates malformed model output."""
+
+    def infer_intent(self, frame: FrameBundle) -> DrivingIntent:
+        return intent_from_mapping(
+            {
+                "scene_type": "malformed model output",
+                "hazards": "this should have been a list",
+                "ego_intent": "",
+                "target_behavior": "",
+                "speed_profile": "",
+                "lateral_bias": "diagonal",
+                "uncertainty": 1.2,
+            }
+        )

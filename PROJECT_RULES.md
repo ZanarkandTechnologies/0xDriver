@@ -111,6 +111,9 @@ PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml
 # Run tests
 PYTHONPATH=src python3 -m unittest discover -s tests
 
+# Exercise reasoner validation fallback
+PYTHONPATH=src python3 -m driverx run-scene --config configs/invalid_reasoner.yaml --run-id invalid-smoke
+
 # Run the local pre-push gate
 bash scripts/pre_push_check.sh
 ```
