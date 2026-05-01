@@ -7,9 +7,9 @@ WARN_THRESHOLD="${PRE_PUSH_WARN_LINES:-500}"
 BLOCK_THRESHOLD="${PRE_PUSH_BLOCK_LINES:-1000}"
 
 # Fill these in for the project during bootstrap follow-through.
-LINT_CMD="${PRE_PUSH_LINT_CMD:-}"
+LINT_CMD="${PRE_PUSH_LINT_CMD:-python3 -m compileall -q src tests}"
 TYPECHECK_CMD="${PRE_PUSH_TYPECHECK_CMD:-}"
-TEST_CMD="${PRE_PUSH_TEST_CMD:-}"
+TEST_CMD="${PRE_PUSH_TEST_CMD:-PYTHONPATH=src python3 -m unittest discover -s tests}"
 BUILD_CMD="${PRE_PUSH_BUILD_CMD:-}"
 DESLOPPIFY_CMD="${PRE_PUSH_DESLOPPIFY_CMD:-}"
 

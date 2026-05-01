@@ -5,18 +5,17 @@ stack-specific details and commands in `PROJECT_RULES.md`.
 
 ## Build & Run
 
-- Current phase: docs-first bootstrap and PRD.
-- Install: not configured yet.
-- Dev: not configured yet.
-- QA path: not configured yet.
-- Before adding runtime commands, update `PROJECT_RULES.md` and `qa/`.
+- Current phase: first fixture-backed implementation.
+- Install: optional `python3 -m pip install -e .`; local commands use `PYTHONPATH=src`.
+- Dev: `PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml`
+- QA path: `bash scripts/pre_push_check.sh`
 
 ## Validation
 
-- Bootstrap gate: `bash scripts/pre_push_check.sh`
-- Tests: not configured until code scaffolding lands.
-- Typecheck: not configured until code scaffolding lands.
-- Lint: not configured until code scaffolding lands.
+- Bootstrap/full local gate: `bash scripts/pre_push_check.sh`
+- Tests: `PYTHONPATH=src python3 -m unittest discover -s tests`
+- Typecheck: not configured yet.
+- Lint/syntax: `python3 -m compileall -q src tests`
 - Build: not applicable yet.
 
 ## Docs State

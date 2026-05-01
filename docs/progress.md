@@ -28,7 +28,7 @@ Implement the first fixture-backed offline Waymo E2E-style pipeline:
 - [x] Add candidate planning, smoothing, ranking, and fallback.
 - [x] Add ADE, latency, and evidence reports.
 - [x] Add submission dry-run packager.
-- [ ] Add tests and local validation commands.
+- [x] Add tests and local validation commands.
 - [ ] Run code review.
 - [ ] Run final QA against PRD user stories.
 - [ ] Update docs and close implementation pass.

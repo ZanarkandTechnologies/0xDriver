@@ -8,9 +8,7 @@ version = "0.1.0"
 description = "Fixture-backed minimal-shot autonomy pipeline inspired by real-time VLA systems."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [
-  "PyYAML>=6.0",
-]
+dependencies = []
 
 [project.optional-dependencies]
 dev = [

@@ -8,7 +8,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import yaml
 
 
 @dataclass(frozen=True)
@@ -71,10 +70,66 @@ def _read_mapping(path: Path) -> dict[str, Any]:
     if path.suffix.lower() == ".json":
         raw = json.loads(text)
     else:
-        raw = yaml.safe_load(text)
+        raw = _parse_simple_yaml(text)
     if not isinstance(raw, dict):
         raise ValueError(f"Config must be a mapping: {path}")
     return raw
+
+
+def _parse_scalar(value: str) -> Any:
+    stripped = value.strip()
+    if stripped in {"", "null", "None", "~"}:
+        return None
+    if stripped in {"true", "false"}:
+        return stripped == "true"
+    try:
+        return int(stripped)
+    except ValueError:
+        pass
+    try:
+        return float(stripped)
+    except ValueError:
+        pass
+    if (stripped.startswith('"') and stripped.endswith('"')) or (
+        stripped.startswith("'") and stripped.endswith("'")
+    ):
+        return stripped[1:-1]
+    return stripped
+
+
+def _parse_simple_yaml(text: str) -> dict[str, Any]:
+    """Parse the small mapping subset used by repo configs.
+
+    This intentionally supports only root mappings and one nested mapping level.
+    It keeps the local fixture path dependency-free while still allowing users to
+    replace these sample configs with JSON for more complex cases.
+    """
+
+    root: dict[str, Any] = {}
+    current_section: str | None = None
+    for raw_line in text.splitlines():
+        line_without_comment = raw_line.split("#", 1)[0].rstrip()
+        if not line_without_comment.strip():
+            continue
+        indent = len(line_without_comment) - len(line_without_comment.lstrip(" "))
+        if ":" not in line_without_comment:
+            raise ValueError(f"Unsupported config line: {raw_line}")
+        key, value = line_without_comment.strip().split(":", 1)
+        if indent == 0:
+            if value.strip() == "":
+                root[key] = {}
+                current_section = key
+            else:
+                root[key] = _parse_scalar(value)
+                current_section = None
+        elif indent == 2 and current_section is not None:
+            section = root.get(current_section)
+            if not isinstance(section, dict):
+                raise ValueError(f"Config section is not a mapping: {current_section}")
+            section[key] = _parse_scalar(value)
+        else:
+            raise ValueError(f"Unsupported config indentation: {raw_line}")
+    return root
 
 
 def load_config(path: Path) -> DriverConfig:

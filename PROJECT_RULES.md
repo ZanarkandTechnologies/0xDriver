@@ -14,7 +14,8 @@ expectations, and runtime assumptions.
 - Notebooks: Jupyter for exploration and final analysis.
 - Visualization: matplotlib/OpenCV for dataset overlays; optional rerun/RRD or
   video export later.
-- Package manager: not chosen yet; prefer `uv` for Python if no blocker appears.
+- Package manager: stdlib-first Python package for v1; use editable install or
+  `PYTHONPATH=src` during local development.
 
 ## Folder Structure
 
@@ -24,9 +25,9 @@ expectations, and runtime assumptions.
 - `qa/`: reusable verification and evidence-capture guidance.
 - `tickets/`: future ticket board and archived work.
 - `scripts/`: repo-local validation helpers.
-- Future `src/`: implementation surface, created only after planning.
-- Future `notebooks/`: analysis notebooks, created when the first notebook ticket lands.
-- Future `data/`: local ignored data mount instructions, not checked-in dataset files.
+- `src/driverx/`: implementation surface.
+- `notebooks/`: analysis notebook placeholders.
+- `data/`: local ignored data mount instructions, not checked-in dataset files.
 
 ## Conventions
 
@@ -54,24 +55,21 @@ expectations, and runtime assumptions.
 
 - Warn on large tracked source files: 500 raw lines.
 - Block on oversized tracked source files: 1000 raw lines.
-- Required local commands for the current docs-only bootstrap:
-  - Lint: not configured yet.
+- Required local commands:
+  - Lint/syntax: `python3 -m compileall -q src tests`
   - Typecheck: not configured yet.
-  - Tests: not configured yet.
-  - Build: not applicable yet.
-- Required commands after Python scaffolding lands:
-  - Lint: `uv run ruff check .` or equivalent.
-  - Typecheck: `uv run pyright` or equivalent.
-  - Tests: `uv run pytest`.
-  - Build: optional unless packaging is added.
+  - Tests: `PYTHONPATH=src python3 -m unittest discover -s tests`
+  - Build: optional unless packaging/distribution is added.
 - Optional heavy checks:
   - Desloppify: manual workflow only for v1.
   - CodeRabbit: manual workflow only for v1.
 
 ## Runtime / QA Commands
 
-- Authoritative app-only run path: not applicable until runtime scaffolding lands.
-- Authoritative QA / evidence run path: not applicable until runtime scaffolding lands.
+- Authoritative app-only run path:
+  `PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml`
+- Authoritative QA / evidence run path:
+  `bash scripts/pre_push_check.sh`
 - Required local services: none for docs; future cloud GPU is optional for VLA
   inference and not required for local dataset parsing.
 - Launch shape: local Python processes and notebooks first; optional remote
@@ -81,8 +79,8 @@ expectations, and runtime assumptions.
   - Future service ports must be configurable.
   - Future dataset paths must be controlled by environment variables or config,
     not hardcoded absolute paths.
-- Source of truth note: update this file when package scripts, notebook launch
-  commands, or server/client commands become real.
+- Source of truth note: CLI commands run through `python3 -m driverx` until an
+  editable install is required.
 
 ## Agent QA / Testability
 
@@ -101,6 +99,15 @@ expectations, and runtime assumptions.
 ## Quick Commands
 
 ```bash
+# Inspect one fixture scene
+PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml
+
+# Run the fixture pipeline
+PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml
+
+# Run tests
+PYTHONPATH=src python3 -m unittest discover -s tests
+
 # Run the local pre-push gate
 bash scripts/pre_push_check.sh
 ```

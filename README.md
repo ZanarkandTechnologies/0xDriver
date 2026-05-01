@@ -68,4 +68,28 @@ planning code should turn that intent into valid trajectories.
 
 ## Current Status
 
-Planning/bootstrap phase. No runtime implementation has been added yet.
+First fixture-backed implementation is underway. The repo can run without Waymo
+data or a VLA model by using a synthetic construction-merge scene and mock
+structured intent.
+
+## Quickstart
+
+```bash
+# Inspect the configured fixture scene and write an SVG artifact
+PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml
+
+# Run the full mock pipeline
+PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml
+
+# Evaluate an existing run directory
+PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/<run-id>
+
+# Create a dry-run submission package
+PYTHONPATH=src python3 -m driverx package-submission --run-dir artifacts/runs/<run-id>
+
+# Run local checks
+bash scripts/pre_push_check.sh
+```
+
+Generated run artifacts are written under `artifacts/runs/` and remain ignored
+by git.
