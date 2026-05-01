@@ -76,5 +76,6 @@ Result: PASS, `16` unittest cases.
 
 - The protobuf shard uses the repo's dry-run schema, not the official Waymo
   challenge protobuf schema.
-- Real Waymo TFRecord loading remains a follow-up.
+- Real Waymo TFRecord loading remains a follow-up; v1 includes a
+  `dataset.kind=waymo` JSON fixture loader for local E2E-shaped frame proof.
 - Real VLA/VLM integration remains a follow-up.

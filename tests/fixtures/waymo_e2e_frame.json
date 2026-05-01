@@ -1,0 +1,33 @@
+{
+  "frame_name": "waymo_json_fixture_001",
+  "front_images": [
+    {"name": "front_left", "width": 96, "height": 54, "tint": [68, 84, 96]},
+    {"name": "front", "width": 96, "height": 54, "tint": [82, 80, 88]},
+    {"name": "front_right", "width": 96, "height": 54, "tint": [90, 78, 76]}
+  ],
+  "ego_history_xy": [[-4.0, 0.0], [-3.0, 0.0], [-2.0, 0.0], [-1.0, 0.0], [0.0, 0.0]],
+  "future_xy": [
+    [0.85, -0.01], [1.65, -0.02], [2.38, -0.04], [3.05, -0.07],
+    [3.67, -0.11], [4.25, -0.17], [4.80, -0.24], [5.34, -0.32],
+    [5.88, -0.40], [6.43, -0.48], [7.00, -0.55], [7.60, -0.61],
+    [8.24, -0.65], [8.92, -0.68], [9.64, -0.70], [10.40, -0.70],
+    [11.20, -0.69], [12.04, -0.67], [12.92, -0.64], [13.84, -0.60]
+  ],
+  "metadata": {
+    "scenario": "construction_merge",
+    "route": "continue_through_work_zone",
+    "objects": [
+      {"kind": "cone", "x": 5.3, "y": 0.65},
+      {"kind": "cone", "x": 7.1, "y": 0.62},
+      {"kind": "stopped_vehicle", "x": 9.0, "y": 0.35},
+      {"kind": "occlusion", "x": 4.6, "y": -1.35}
+    ],
+    "hazards": [
+      "construction cones narrowing the lane",
+      "stopped service vehicle near lane center",
+      "pedestrian occlusion near the right shoulder"
+    ],
+    "expected_behavior": "slow left-biased pass through work zone",
+    "source_format": "waymo_e2e_json_fixture"
+  }
+}

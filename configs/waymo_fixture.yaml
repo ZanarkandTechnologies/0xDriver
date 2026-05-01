@@ -1,0 +1,15 @@
+dataset:
+  kind: waymo
+  name: waymo_json_fixture
+  path: tests/fixtures/waymo_e2e_frame.json
+
+reasoner:
+  backend: mock
+  uncertainty: 0.34
+
+output:
+  root: artifacts/runs
+  run_id:
+
+author: 0xDriver
+method_name: waymo_json_fixture_intent_planner

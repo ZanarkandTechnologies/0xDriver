@@ -78,6 +78,9 @@ structured intent.
 # Inspect the configured fixture scene and write an SVG artifact
 PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml
 
+# Inspect a Waymo E2E-shaped local fixture through the Waymo loader seam
+PYTHONPATH=src python3 -m driverx inspect-scene --config configs/waymo_fixture.yaml
+
 # Run the full mock pipeline
 PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml --run-id demo
 

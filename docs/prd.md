@@ -33,7 +33,8 @@ a new model from scratch.
 
 Build the first complete offline Waymo E2E research loop:
 
-1. Load a small validation subset from Waymo E2E TFRecords.
+1. Load a small validation subset from Waymo E2E TFRecords or a Waymo E2E-shaped
+   local fixture while TFRecord data is unavailable.
 2. Render front-camera panels with ego future trajectory overlays.
 3. Produce structured scene intent using a mockable VLA/VLM reasoner interface.
 4. Generate candidate 20-point trajectories for 5 seconds at 4 Hz.
@@ -77,7 +78,8 @@ shape before model work.
 
 **Acceptance Criteria:**
 
-- [ ] A documented command or notebook cell loads at least one E2E frame.
+- [ ] A documented command or notebook cell loads at least one E2E frame or
+  E2E-shaped fixture frame.
 - [ ] The front-left, front, and front-right camera strip renders successfully.
 - [ ] Ground-truth future ego waypoints are projected or overlaid for inspection.
 - [ ] Missing dataset path errors explain how to configure the local data root.

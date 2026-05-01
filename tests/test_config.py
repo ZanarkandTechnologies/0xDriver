@@ -18,6 +18,11 @@ class ConfigTest(unittest.TestCase):
             with self.assertRaises(FileNotFoundError):
                 load_config(missing)
 
+    def test_load_waymo_fixture_config(self) -> None:
+        config = load_config(Path("configs/waymo_fixture.yaml"))
+        self.assertEqual(config.dataset.kind, "waymo")
+        self.assertEqual(config.dataset.path, Path("tests/fixtures/waymo_e2e_frame.json"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -140,6 +140,7 @@ Implemented in modular commits:
 - QA report: `qa/reports/TASK-001-final-qa.md`
 - Review result: `docs/reviews/TASK-001-implementation-review.md`
 - Inspect artifact: `artifacts/runs/final-qa2-inspect/scene_inspection.svg`
+- Waymo-shaped fixture artifact: `artifacts/runs/final-qa2-waymo-fixture/scene_inspection.svg`
 - Prediction artifact: `artifacts/runs/final-qa2-scene/scene_prediction.svg`
 - Intent: `artifacts/runs/final-qa2-scene/intent.json`
 - Raw candidates: `artifacts/runs/final-qa2-scene/raw_candidates.json`

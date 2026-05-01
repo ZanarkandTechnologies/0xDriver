@@ -8,6 +8,7 @@
 
 ```bash
 PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml --run-id final-qa2-inspect
+PYTHONPATH=src python3 -m driverx inspect-scene --config configs/waymo_fixture.yaml --run-id final-qa2-waymo-fixture
 PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml --run-id final-qa2-scene
 PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/final-qa2-scene
 PYTHONPATH=src python3 -m driverx package-submission --run-dir artifacts/runs/final-qa2-scene
@@ -19,6 +20,7 @@ bash scripts/pre_push_check.sh
 ## Evidence Artifacts
 
 - Inspect scene: `artifacts/runs/final-qa2-inspect/scene_inspection.svg`
+- Waymo-shaped fixture inspect scene: `artifacts/runs/final-qa2-waymo-fixture/scene_inspection.svg`
 - Predicted scene: `artifacts/runs/final-qa2-scene/scene_prediction.svg`
 - Intent: `artifacts/runs/final-qa2-scene/intent.json`
 - Raw candidates: `artifacts/runs/final-qa2-scene/raw_candidates.json`
@@ -38,7 +40,7 @@ bash scripts/pre_push_check.sh
 - Batch scenes: `2`
 - Batch mean ADE: `0.472727`
 - Invalid reasoner fallback ADE: `4.837193` (intentional failure case)
-- Tests: `16` unittest cases passed
+- Tests: `19` unittest cases passed
 - Local gate: `bash scripts/pre_push_check.sh` passed
 
 ## User Story Reconciliation
@@ -48,6 +50,8 @@ bash scripts/pre_push_check.sh
 Status: PASS within fixture-backed v1 scope.
 
 - A documented command loads a configured fixture frame.
+- A documented `dataset.kind=waymo` command loads a Waymo E2E-shaped local
+  fixture frame from `tests/fixtures/waymo_e2e_frame.json`.
 - Front-left, front, and front-right camera panels render in
   `scene_inspection.svg`.
 - Fixture future waypoints are overlaid in the top-down evidence panel.
