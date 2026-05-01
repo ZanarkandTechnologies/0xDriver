@@ -1,0 +1,14 @@
+dataset:
+  kind: fixture
+  name: construction_merge
+
+reasoner:
+  backend: mock
+  uncertainty: 0.34
+
+output:
+  root: artifacts/runs
+  run_id:
+
+author: 0xDriver
+method_name: fixture_vla_intent_planner
