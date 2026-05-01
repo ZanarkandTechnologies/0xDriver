@@ -7,7 +7,7 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
-from driverx.core.artifacts import timestamp_run_id
+from driverx.core.artifacts import prepare_run_dir, write_json_artifact
 from driverx.core.config import DatasetConfig, DriverConfig, OutputConfig
 from driverx.pipeline.scene_run import run_scene
 
@@ -16,9 +16,8 @@ def run_batch(config: DriverConfig, fixture_names: list[str]) -> dict[str, Any]:
     if not fixture_names:
         raise ValueError("At least one fixture is required for run-batch.")
 
-    batch_id = config.output.run_id or timestamp_run_id("batch")
-    batch_dir = config.output.root / batch_id
-    batch_dir.mkdir(parents=True, exist_ok=True)
+    batch_dir = prepare_run_dir(config.output.root, config.output.run_id)
+    batch_id = batch_dir.name
 
     scenes: list[dict[str, Any]] = []
     ade_values: list[float] = []
@@ -52,4 +51,5 @@ def run_batch(config: DriverConfig, fixture_names: list[str]) -> dict[str, Any]:
     summary_path = Path(batch_dir) / "batch_summary.json"
     summary_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
     summary["summary_path"] = str(summary_path)
+    write_json_artifact(batch_dir, "run_metadata", {"author": config.author, "method_name": config.method_name})
     return summary

@@ -40,12 +40,29 @@ def _trajectory_payload(candidate: TrajectoryCandidate) -> dict[str, Any]:
     }
 
 
+def _metadata_payload(config: DriverConfig) -> dict[str, Any]:
+    return {
+        "author": config.author,
+        "method_name": config.method_name,
+        "dataset": {
+            "kind": config.dataset.kind,
+            "name": config.dataset.name,
+            "path": str(config.dataset.path) if config.dataset.path else None,
+        },
+        "reasoner": {
+            "backend": config.reasoner.backend,
+            "uncertainty": config.reasoner.uncertainty,
+        },
+    }
+
+
 def inspect_scene(config: DriverConfig) -> SceneRunResult:
     timer = StageTimer()
     artifacts: list[ArtifactRef] = []
     run_dir = prepare_run_dir(config.output.root, config.output.run_id)
     with timer.track("load_frame"):
         frame = load_frame(config.dataset)
+    artifacts.append(write_json_artifact(run_dir, "run_metadata", _metadata_payload(config)))
     artifacts.append(write_json_artifact(run_dir, "frame", _frame_payload(frame)))
     with timer.track("render_scene"):
         artifacts.append(render_scene_svg(frame, run_dir / "scene_inspection.svg"))
@@ -70,6 +87,7 @@ def run_scene(config: DriverConfig) -> SceneRunResult:
 
     with timer.track("load_frame"):
         frame = load_frame(config.dataset)
+    artifacts.append(write_json_artifact(run_dir, "run_metadata", _metadata_payload(config)))
     artifacts.append(write_json_artifact(run_dir, "frame", _frame_payload(frame)))
 
     with timer.track("reason"):
@@ -77,14 +95,25 @@ def run_scene(config: DriverConfig) -> SceneRunResult:
         intent = reasoner.infer_intent(frame)
     artifacts.append(write_json_artifact(run_dir, "intent", intent.__dict__))
 
-    with timer.track("plan"):
+    with timer.track("generate_candidates"):
         raw_candidates = generate_candidates(frame, intent)
+    artifacts.append(
+        write_json_artifact(
+            run_dir,
+            "raw_candidates",
+            [_trajectory_payload(candidate) for candidate in raw_candidates],
+        )
+    )
+
+    with timer.track("smooth_candidates"):
         candidates = [smooth_candidate(candidate) for candidate in raw_candidates]
+
+    with timer.track("rank_candidates"):
         selected = rank_candidates(frame, candidates)
     artifacts.append(
         write_json_artifact(
             run_dir,
-            "candidates",
+            "smoothed_candidates",
             [_trajectory_payload(candidate) for candidate in candidates],
         )
     )

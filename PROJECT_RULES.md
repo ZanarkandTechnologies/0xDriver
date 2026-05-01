@@ -7,7 +7,7 @@ expectations, and runtime assumptions.
 
 - Language: Python first for data/model/evaluation work; TypeScript only if a
   later web demo is added.
-- Runtime: Python 3.10 or 3.11.
+- Runtime: Python 3.11 or newer.
 - Data: Waymo Open Dataset End-to-End Driving TFRecords and protobufs.
 - ML/VLM integration: provider-neutral adapter layer; first implementation may
   use cloud GPU inference or API-backed VLM calls.

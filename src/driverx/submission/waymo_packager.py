@@ -22,11 +22,19 @@ def package_run_dir(run_dir: Path, output_path: Path | None = None) -> dict[str,
 
     trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
     frame = json.loads(frame_path.read_text(encoding="utf-8"))
+    metadata_path = run_dir / "run_metadata.json"
+    metadata = (
+        json.loads(metadata_path.read_text(encoding="utf-8"))
+        if metadata_path.exists()
+        else {}
+    )
     package = {
         "submission_type": "E2ED_SUBMISSION_DRY_RUN",
-        "authors": ["0xDriver"],
+        "authors": [str(metadata.get("author", "0xDriver"))],
         "affiliation": "Independent",
-        "unique_method_name": "fixture_vla_intent_planner",
+        "unique_method_name": str(
+            metadata.get("method_name", "fixture_vla_intent_planner")
+        ),
         "uses_public_model_pretraining": True,
         "public_model_names": ["mock-vla-intent-reasoner"],
         "num_model_parameters": "0",

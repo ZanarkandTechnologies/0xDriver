@@ -11,12 +11,17 @@ from driverx.core.types import ArtifactRef
 
 
 def timestamp_run_id(prefix: str = "run") -> str:
-    return f"{prefix}-{datetime.now(tz=UTC).strftime('%Y%m%dT%H%M%SZ')}"
+    return f"{prefix}-{datetime.now(tz=UTC).strftime('%Y%m%dT%H%M%S%fZ')}"
 
 
 def prepare_run_dir(root: Path, run_id: str | None = None) -> Path:
-    run_dir = root / (run_id or timestamp_run_id())
-    run_dir.mkdir(parents=True, exist_ok=True)
+    base = root / (run_id or timestamp_run_id())
+    run_dir = base
+    suffix = 1
+    while run_dir.exists():
+        run_dir = root / f"{base.name}-{suffix:03d}"
+        suffix += 1
+    run_dir.mkdir(parents=True, exist_ok=False)
     return run_dir
 
 

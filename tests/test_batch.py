@@ -18,6 +18,8 @@ class BatchTest(unittest.TestCase):
             self.assertEqual(summary["num_scenes"], 2)
             self.assertIsNotNone(summary["mean_ade"])
             self.assertTrue((Path(tmp) / "batch" / "batch_summary.json").exists())
+            clear_svg = Path(tmp) / "batch" / "straight_clear" / "scene_prediction.svg"
+            self.assertNotIn("service vehicle", clear_svg.read_text())
 
 
 if __name__ == "__main__":

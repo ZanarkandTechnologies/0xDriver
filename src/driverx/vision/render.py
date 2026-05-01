@@ -60,15 +60,24 @@ def render_scene_svg(
                 f'<text x="{x + 12}" y="{y + 24}" class="small">{escape(image.name)}</text>',
             ]
         )
-        if idx == 1:
-            parts.extend(
-                [
-                    f'<rect x="{x + 172}" y="{y + 103}" width="54" height="28" fill="#334155" stroke="#e5e7eb"/>',
-                    f'<text x="{x + 170}" y="{y + 148}" class="tiny">service vehicle</text>',
-                    f'<circle cx="{x + 112}" cy="{y + 132}" r="8" fill="#f97316"/>',
-                    f'<circle cx="{x + 142}" cy="{y + 130}" r="8" fill="#f97316"/>',
-                ]
-            )
+        if idx == 1 and frame.metadata.get("objects"):
+            objects = frame.metadata.get("objects", [])
+            has_vehicle = any(obj.get("kind") == "stopped_vehicle" for obj in objects)
+            has_cones = any(obj.get("kind") == "cone" for obj in objects)
+            if has_vehicle:
+                parts.extend(
+                    [
+                        f'<rect x="{x + 172}" y="{y + 103}" width="54" height="28" fill="#334155" stroke="#e5e7eb"/>',
+                        f'<text x="{x + 170}" y="{y + 148}" class="tiny">service vehicle</text>',
+                    ]
+                )
+            if has_cones:
+                parts.extend(
+                    [
+                        f'<circle cx="{x + 112}" cy="{y + 132}" r="8" fill="#f97316"/>',
+                        f'<circle cx="{x + 142}" cy="{y + 130}" r="8" fill="#f97316"/>',
+                    ]
+                )
 
     parts.extend(
         [

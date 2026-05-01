@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -32,7 +33,12 @@ class PipelineMockTest(unittest.TestCase):
             self.assertIn("ade", result.metrics)
             run_dir = Path(tmp) / "run"
             self.assertTrue((run_dir / "scene_prediction.svg").exists())
+            self.assertTrue((run_dir / "raw_candidates.json").exists())
+            self.assertTrue((run_dir / "smoothed_candidates.json").exists())
             self.assertTrue((run_dir / "submission_dry_run.json").exists())
+            self.assertIn("generate_candidates", result.timings_ms)
+            self.assertIn("smooth_candidates", result.timings_ms)
+            self.assertIn("rank_candidates", result.timings_ms)
 
             report = evaluate_run_dir(run_dir)
             self.assertEqual(report["num_points"], 20)
@@ -40,6 +46,18 @@ class PipelineMockTest(unittest.TestCase):
 
             package = package_run_dir(run_dir)
             self.assertEqual(package["predictions"], 1)
+            submission = json.loads((run_dir / "submission_dry_run.json").read_text())
+            self.assertEqual(submission["authors"], ["0xDriver"])
+            self.assertEqual(submission["unique_method_name"], "fixture_vla_intent_planner")
+
+    def test_run_scene_does_not_clobber_existing_run_id(self) -> None:
+        with TemporaryDirectory() as tmp:
+            config = self._config(Path(tmp), "same-id")
+            first = run_scene(config)
+            second = run_scene(config)
+            self.assertNotEqual(first.run_dir, second.run_dir)
+            self.assertTrue(first.run_dir.exists())
+            self.assertTrue(second.run_dir.exists())
 
 
 if __name__ == "__main__":
