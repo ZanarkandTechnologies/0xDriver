@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import replace
 from pathlib import Path
 from typing import Sequence
 
-from driverx.core.config import DriverConfig, load_config
+from driverx.core.config import DriverConfig, OutputConfig, load_config
 
 
 def _add_config_arg(parser: argparse.ArgumentParser) -> None:
@@ -17,12 +18,34 @@ def _add_config_arg(parser: argparse.ArgumentParser) -> None:
         default=Path("configs/mock.yaml"),
         help="Path to a driverx YAML or JSON config.",
     )
+    parser.add_argument(
+        "--output-root",
+        type=Path,
+        help="Override output.root from config.",
+    )
+    parser.add_argument(
+        "--run-id",
+        help="Override output.run_id from config.",
+    )
+
+
+def _load_config_from_args(args: argparse.Namespace) -> DriverConfig:
+    config = load_config(args.config)
+    if args.output_root is None and args.run_id is None:
+        return config
+    return replace(
+        config,
+        output=OutputConfig(
+            root=args.output_root or config.output.root,
+            run_id=args.run_id if args.run_id is not None else config.output.run_id,
+        ),
+    )
 
 
 def _command_inspect_scene(args: argparse.Namespace) -> int:
     from driverx.pipeline.scene_run import inspect_scene
 
-    config = load_config(args.config)
+    config = _load_config_from_args(args)
     result = inspect_scene(config)
     print(json.dumps(result.to_jsonable(), indent=2))
     return 0
@@ -31,7 +54,7 @@ def _command_inspect_scene(args: argparse.Namespace) -> int:
 def _command_run_scene(args: argparse.Namespace) -> int:
     from driverx.pipeline.scene_run import run_scene
 
-    config = load_config(args.config)
+    config = _load_config_from_args(args)
     result = run_scene(config)
     print(json.dumps(result.to_jsonable(), indent=2))
     return 0
@@ -40,7 +63,7 @@ def _command_run_scene(args: argparse.Namespace) -> int:
 def _command_run_batch(args: argparse.Namespace) -> int:
     from driverx.pipeline.batch_run import run_batch
 
-    config = load_config(args.config)
+    config = _load_config_from_args(args)
     result = run_batch(config, fixture_names=args.fixtures)
     print(json.dumps(result, indent=2))
     return 0
@@ -63,7 +86,7 @@ def _command_package_submission(args: argparse.Namespace) -> int:
 
 
 def _command_show_config(args: argparse.Namespace) -> int:
-    config = load_config(args.config)
+    config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
     return 0
 

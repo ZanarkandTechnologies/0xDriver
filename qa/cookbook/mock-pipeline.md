@@ -13,9 +13,9 @@ Proves the first 0xDriver loop without real Waymo data or VLA access.
 ## Commands
 
 ```bash
-PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml
-PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml
-PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml
+PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml --run-id qa-inspect
+PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml --run-id qa-scene
+PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml --run-id qa-batch
 PYTHONPATH=src python3 -m unittest discover -s tests
 ```
 

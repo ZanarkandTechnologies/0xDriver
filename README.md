@@ -79,13 +79,13 @@ structured intent.
 PYTHONPATH=src python3 -m driverx inspect-scene --config configs/mock.yaml
 
 # Run the full mock pipeline
-PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml
+PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml --run-id demo
 
 # Run a tiny fixture validation batch
-PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml
+PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml --run-id demo-batch
 
 # Evaluate an existing run directory
-PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/<run-id>
+PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/demo
 
 # Create a dry-run submission package
 PYTHONPATH=src python3 -m driverx package-submission --run-dir artifacts/runs/<run-id>
