@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Literal, get_args
+from typing import Any, Literal, cast, get_args
 
 from driverx.core.types import DrivingIntent
 
@@ -26,6 +26,6 @@ def intent_from_mapping(payload: dict[str, Any]) -> DrivingIntent:
         ego_intent=str(payload.get("ego_intent", "")),
         target_behavior=str(payload.get("target_behavior", "")),
         speed_profile=str(payload.get("speed_profile", "")),
-        lateral_bias=lateral_bias,  # type: ignore[arg-type]
+        lateral_bias=cast(LateralBias, lateral_bias),
         uncertainty=float(payload.get("uncertainty", 1.0)),
     )
