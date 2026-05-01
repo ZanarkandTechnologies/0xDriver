@@ -22,12 +22,12 @@ Implement the first fixture-backed offline Waymo E2E-style pipeline:
 - [x] Bootstrap docs, PRD, and directory plan exist.
 - [ ] Create parent implementation ticket.
 - [x] Add Python package and CLI skeleton.
-- [ ] Add fixture data path and mock scene loader.
-- [ ] Add visualization artifact generation.
-- [ ] Add structured intent schema and mock reasoner.
-- [ ] Add candidate planning, smoothing, ranking, and fallback.
-- [ ] Add ADE, latency, and evidence reports.
-- [ ] Add submission dry-run packager.
+- [x] Add fixture data path and mock scene loader.
+- [x] Add visualization artifact generation.
+- [x] Add structured intent schema and mock reasoner.
+- [x] Add candidate planning, smoothing, ranking, and fallback.
+- [x] Add ADE, latency, and evidence reports.
+- [x] Add submission dry-run packager.
 - [ ] Add tests and local validation commands.
 - [ ] Run code review.
 - [ ] Run final QA against PRD user stories.
