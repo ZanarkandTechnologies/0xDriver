@@ -67,10 +67,14 @@ Establish the first real-data Waymo batch baseline before adding VLA/GPU serving
 - Linux native dependency guidance now points to `requirements/waymo-linux.txt`;
   `pip install --dry-run -r requirements/waymo-linux.txt` resolves the Waymo
   tree and finds `jaxlib==0.4.13` through the configured JAX wheel index.
-- TASK-004 local proof: `bash scripts/pre_push_check.sh` passes with 31 unittest
+- TASK-004 local proof: `bash scripts/pre_push_check.sh` passes with 34 unittest
   cases after adding Waymo batch aggregation tests.
 - TASK-004 Docker proof: `waymo-batch-10` streamed 10 validation frames, wrote
   `artifacts/runs/waymo-batch-10/batch_summary.json` and
   `artifacts/runs/waymo-batch-10/batch_report.md`, produced mean ADE
   `6.204769`, best ADE `0.517203` at frame index `4`, and worst ADE
   `13.953167` at frame index `6`.
+- TASK-004 review repair: fixture batch defaults moved into `run_batch`, the CLI
+  now passes fixture names through unchanged, tests prove CLI/API fixture-default
+  agreement, and `waymo-batch-default-10` proves real-data default count without
+  passing `--frame-count`.

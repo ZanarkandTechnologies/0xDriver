@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from driverx.core.types import CameraImage, FrameBundle
 from driverx.core.config import DatasetConfig, DriverConfig, OutputConfig, ReasonerConfig
-from driverx.pipeline.batch_run import run_batch
+from driverx.pipeline.batch_run import DEFAULT_WAYMO_BATCH_COUNT, run_batch
 
 
 class BatchTest(unittest.TestCase):
@@ -22,6 +22,20 @@ class BatchTest(unittest.TestCase):
             self.assertTrue((Path(tmp) / "batch" / "batch_summary.json").exists())
             clear_svg = Path(tmp) / "batch" / "straight_clear" / "scene_prediction.svg"
             self.assertNotIn("service vehicle", clear_svg.read_text())
+
+    def test_fixture_config_defaults_to_standard_batch(self) -> None:
+        with TemporaryDirectory() as tmp:
+            config = DriverConfig(
+                dataset=DatasetConfig(kind="fixture", name="construction_merge"),
+                reasoner=ReasonerConfig(backend="mock", uncertainty=0.34),
+                output=OutputConfig(root=Path(tmp), run_id="batch-default"),
+            )
+            summary = run_batch(config)
+        self.assertEqual(summary["num_scenes"], 2)
+        self.assertEqual(
+            [scene["fixture"] for scene in summary["scenes"]],
+            ["construction_merge", "straight_clear"],
+        )
 
     def test_run_batch_over_fake_waymo_frames_writes_report(self) -> None:
         with TemporaryDirectory() as tmp:
@@ -56,6 +70,35 @@ class BatchTest(unittest.TestCase):
             self.assertIn("## ADE Table", report)
             self.assertIn("## Latency Table", report)
             self.assertIn("Worst-scene SVG", report)
+
+    def test_waymo_batch_defaults_to_ten_frames_without_count(self) -> None:
+        with TemporaryDirectory() as tmp:
+            config = DriverConfig(
+                dataset=DatasetConfig(
+                    kind="waymo",
+                    name="fake_waymo",
+                    path=Path("unused.tfrecord"),
+                ),
+                reasoner=ReasonerConfig(backend="mock", uncertainty=0.34),
+                output=OutputConfig(root=Path(tmp), run_id="waymo-default"),
+            )
+            frames = [
+                _fake_frame(f"waymo_{index:03d}", float(index))
+                for index in range(DEFAULT_WAYMO_BATCH_COUNT)
+            ]
+            with patch(
+                "driverx.pipeline.batch_run.iter_waymo_frames",
+                return_value=iter(frames),
+            ) as iterator:
+                summary = run_batch(config)
+
+        self.assertEqual(summary["frame_count"], DEFAULT_WAYMO_BATCH_COUNT)
+        self.assertEqual(summary["num_scenes"], DEFAULT_WAYMO_BATCH_COUNT)
+        iterator.assert_called_once_with(
+            config.dataset,
+            start_index=0,
+            count=DEFAULT_WAYMO_BATCH_COUNT,
+        )
 
 
 def _image() -> CameraImage:

@@ -65,12 +65,9 @@ def _command_run_batch(args: argparse.Namespace) -> int:
     from driverx.pipeline.batch_run import run_batch
 
     config = _load_config_from_args(args)
-    fixture_names = args.fixtures
-    if fixture_names is None and config.dataset.kind == "fixture":
-        fixture_names = ["construction_merge", "straight_clear"]
     result = run_batch(
         config,
-        fixture_names=fixture_names,
+        fixture_names=args.fixtures,
         frame_start=args.frame_start,
         frame_count=args.frame_count,
     )

@@ -81,7 +81,7 @@ honest baseline for local Docker and later cloud GPU experiments.
 - [x] Snapshot: `batch_summary.json`
 - [x] Snapshot: `batch_report.md`
 - [x] Snapshot: worst-scene `scene_prediction.svg` path
-- [ ] QA report linked:
+- [x] QA report linked: `tickets/TASK-004/artifacts/qa/2026-05-02T125206Z/report.md`
 
 ### Build Notes
 
@@ -93,8 +93,15 @@ honest baseline for local Docker and later cloud GPU experiments.
 - Docker proof: `scripts/run_waymo_docker.sh python -m driverx run-batch
   --config configs/waymo_local.sample.yaml --run-id waymo-batch-10
   --frame-count 10` completed successfully.
+- Default-count Docker proof: `scripts/run_waymo_docker.sh python -m driverx
+  run-batch --config configs/waymo_local.sample.yaml --run-id
+  waymo-batch-default-10 --frame-start 0` completed successfully without
+  `--frame-count`.
 - Real batch result: mean ADE `6.204769`; best scene frame index `4` ADE
   `0.517203`; worst scene frame index `6` ADE `13.953167`.
+- Review revision: fixture defaults are now centralized in `run_batch`, the CLI
+  passes through `None`, and tests prove API/CLI agreement plus Waymo default
+  count behavior.
 
 ### QA Reconciliation
 
@@ -103,22 +110,28 @@ honest baseline for local Docker and later cloud GPU experiments.
 - Batch summary/report: PASS
 - Real-data Docker proof: PASS
 - Review: PENDING
+- QA report: PASS
 
 ### Artifact Links
 
 - `artifacts/runs/waymo-batch-10/batch_summary.json`
 - `artifacts/runs/waymo-batch-10/batch_report.md`
 - `artifacts/runs/waymo-batch-10/frame-000006/scene_prediction.svg`
+- `artifacts/runs/waymo-batch-default-10/batch_summary.json`
+- `artifacts/runs/waymo-batch-default-10/batch_report.md`
+- `artifacts/runs/waymo-batch-default-10/frame-000006/scene_prediction.svg`
+- `tickets/TASK-004/artifacts/qa/2026-05-02T125206Z/report.md`
 
 ### User Evidence
 
 - Final verdict:
 - Supporting evidence: `waymo-batch-10` real-data Docker run produced 10
   per-frame run dirs, aggregate ADE/timing tables, and worst-scene SVG.
-- QA report:
+- QA report: `tickets/TASK-004/artifacts/qa/2026-05-02T125206Z/report.md`
 
 ### Required Evidence
 
 - [x] Unit/integration/e2e tests pass as applicable.
 - [x] Docker real-data batch proof captured.
+- [x] QA report attached.
 - [ ] Final review attached.

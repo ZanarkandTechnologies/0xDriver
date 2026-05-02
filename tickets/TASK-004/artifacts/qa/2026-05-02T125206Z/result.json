@@ -1,0 +1,12 @@
+{
+  "ticket_id": "TASK-004",
+  "phase": "qa",
+  "verdict": "pass",
+  "summary": "QA proved fixture compatibility, CLI/API fixture-default agreement, configurable Waymo batch execution, default 10-frame Waymo behavior, aggregate report generation, and real 10-frame Docker evidence.",
+  "artifacts": [
+    "tickets/TASK-004/artifacts/qa/2026-05-02T125206Z/report.md",
+    "artifacts/runs/waymo-batch-default-10/batch_summary.json",
+    "artifacts/runs/waymo-batch-default-10/batch_report.md",
+    "artifacts/runs/waymo-batch-default-10/frame-000006/scene_prediction.svg"
+  ]
+}

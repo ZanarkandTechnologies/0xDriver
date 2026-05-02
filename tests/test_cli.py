@@ -1,4 +1,5 @@
-from contextlib import redirect_stderr
+import json
+from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -7,10 +8,41 @@ from unittest.mock import patch
 
 from driverx.cli import main
 from driverx.core.config import DatasetConfig, DriverConfig, OutputConfig, ReasonerConfig
+from driverx.pipeline.batch_run import run_batch
 from driverx.pipeline.scene_run import run_scene
 
 
 class CliTest(unittest.TestCase):
+    def test_fixture_batch_cli_and_api_defaults_agree(self) -> None:
+        with TemporaryDirectory() as tmp:
+            api_config = DriverConfig(
+                dataset=DatasetConfig(kind="fixture", name="construction_merge"),
+                reasoner=ReasonerConfig(backend="mock", uncertainty=0.34),
+                output=OutputConfig(root=Path(tmp), run_id="api-batch"),
+            )
+            api_summary = run_batch(api_config)
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "run-batch",
+                        "--config",
+                        "configs/mock.yaml",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "cli-batch",
+                    ]
+                )
+            cli_summary = json.loads(stream.getvalue())
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(cli_summary["num_scenes"], api_summary["num_scenes"])
+        self.assertEqual(
+            [scene["fixture"] for scene in cli_summary["scenes"]],
+            [scene["fixture"] for scene in api_summary["scenes"]],
+        )
+
     def test_run_batch_accepts_waymo_frame_range_flags(self) -> None:
         with patch(
             "driverx.pipeline.batch_run.run_batch",

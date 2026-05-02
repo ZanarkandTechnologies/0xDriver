@@ -15,6 +15,7 @@ from driverx.datasets import iter_waymo_frames
 from driverx.pipeline.scene_run import run_loaded_scene, run_scene
 
 DEFAULT_WAYMO_BATCH_COUNT = 10
+DEFAULT_FIXTURE_BATCH_NAMES = ("construction_merge", "straight_clear")
 
 
 def _number(value: Any) -> float | None:
@@ -273,7 +274,7 @@ def run_batch(
         effective_frame_start = None
         effective_frame_count = len(scenes)
     elif config.dataset.kind == "fixture":
-        scenes = _run_fixture_batch(config, batch_dir, [config.dataset.name])
+        scenes = _run_fixture_batch(config, batch_dir, list(DEFAULT_FIXTURE_BATCH_NAMES))
         dataset_kind = "fixture"
         effective_frame_start = None
         effective_frame_count = len(scenes)

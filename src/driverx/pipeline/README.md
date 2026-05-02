@@ -9,15 +9,17 @@ evaluator, renderer, and submission packager.
 
 - `inspect_scene(config)`
 - `run_scene(config)`
-- `run_batch(config, fixture_names)`
+- `run_loaded_scene(config, frame)`
+- `run_batch(config, fixture_names=None, frame_start=None, frame_count=None)`
 
 ## Minimal Example
 
 ```python
 from driverx.core.config import load_config
-from driverx.pipeline.scene_run import run_scene
+from driverx.pipeline import run_batch, run_scene
 
 result = run_scene(load_config("configs/mock.yaml"))
+batch = run_batch(load_config("configs/mock.yaml"))
 ```
 
 ## Test
