@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: building
+- state: done
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-001, docs/prd.md
@@ -126,7 +126,7 @@ and, when requested, uses the official Waymo submission protobuf class.
 - [x] Unit tests for loader and packager optional paths.
 - [x] `bash scripts/pre_push_check.sh` output.
 - [x] Waymo fixture smoke artifact.
-- [ ] Review result linked.
+- [x] Review result linked.
 
 ## Build Notes
 
@@ -146,6 +146,14 @@ Fresh validation:
 - `driverx package-submission --run-dir artifacts/runs/task2-mock-run --official`: expected setup failure, clean `driverx error:` message, exit code `2`.
 - `WAYMO_E2E_TFRECORD=/tmp/driverx_empty_waymo.tfrecord driverx inspect-scene --config configs/waymo_local.sample.yaml`: expected setup failure, clean `driverx error:` message, exit code `2`.
 
+Final review:
+
+- `docs/reviews/TASK-002-implementation-review.md`: PASS, `4.2 / 5.0`.
+
+Final QA:
+
+- `qa/reports/TASK-002-final-qa.md`: PASS.
+
 ## QA Reconciliation
 
 - AC-1: PASS
@@ -156,18 +164,21 @@ Fresh validation:
 ## Artifact Links
 
 - Waymo fixture inspect artifact: `artifacts/runs/task2-waymo-fixture/scene_inspection.svg`
+- Waymo fixture inspect artifact rerun: `artifacts/runs/task2-waymo-fixture-r2/scene_inspection.svg`
 - Mock run prediction artifact: `artifacts/runs/task2-mock-run/scene_prediction.svg`
+- Mock run prediction artifact rerun: `artifacts/runs/task2-mock-run-r2/scene_prediction.svg`
 - Mock run metrics: `artifacts/runs/task2-mock-run/metrics.json`
 - Mock run submission dry-run: `artifacts/runs/task2-mock-run/submission_dry_run.json`
 - Mock run local protobuf shard: `artifacts/runs/task2-mock-run/submission_shard_00000.pb`
-- Review result: pending.
+- Review result: `docs/reviews/TASK-002-implementation-review.md`
+- QA report: `qa/reports/TASK-002-final-qa.md`
 
 ## User Evidence
 
 - Hero artifact: `artifacts/runs/task2-mock-run/scene_prediction.svg`
-- Supporting evidence: `artifacts/runs/task2-waymo-fixture/scene_inspection.svg`
-- QA report: pending final QA lane.
-- Final verdict: implementation checks pass; review/QA pending.
+- Supporting evidence: `artifacts/runs/task2-waymo-fixture-r2/scene_inspection.svg`
+- QA report: `qa/reports/TASK-002-final-qa.md`
+- Final verdict: PASS.
 
 ## Required Evidence
 

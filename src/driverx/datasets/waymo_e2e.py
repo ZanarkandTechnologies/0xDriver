@@ -37,7 +37,7 @@ def load_waymo_frame(config: DatasetConfig) -> FrameBundle:
     if config.path is None:
         raise FileNotFoundError(
             "Waymo dataset path is required for dataset.kind=waymo. "
-            "Set dataset.path in config or use ${WAYMO_E2E_DATASET}."
+            "Set dataset.path in config or use ${WAYMO_E2E_TFRECORD}."
         )
     path_text = str(config.path)
     has_glob = any(char in path_text for char in "*?[]")
