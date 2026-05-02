@@ -9,12 +9,13 @@ from pathlib import Path
 from typing import Any
 
 
-
 @dataclass(frozen=True)
 class DatasetConfig:
     kind: str = "fixture"
     name: str = "construction_merge"
     path: Path | None = None
+    frame_index: int = 0
+    limit: int | None = None
 
 
 @dataclass(frozen=True)
@@ -35,7 +36,11 @@ class DriverConfig:
     reasoner: ReasonerConfig
     output: OutputConfig
     author: str = "0xDriver"
+    affiliation: str = "Independent"
+    account_name: str = ""
     method_name: str = "fixture_vla_intent_planner"
+    method_link: str = ""
+    description: str = ""
 
     def to_jsonable(self) -> dict[str, Any]:
         return {
@@ -43,6 +48,8 @@ class DriverConfig:
                 "kind": self.dataset.kind,
                 "name": self.dataset.name,
                 "path": str(self.dataset.path) if self.dataset.path else None,
+                "frame_index": self.dataset.frame_index,
+                "limit": self.dataset.limit,
             },
             "reasoner": {
                 "backend": self.reasoner.backend,
@@ -53,7 +60,11 @@ class DriverConfig:
                 "run_id": self.output.run_id,
             },
             "author": self.author,
+            "affiliation": self.affiliation,
+            "account_name": self.account_name,
             "method_name": self.method_name,
+            "method_link": self.method_link,
+            "description": self.description,
         }
 
 
@@ -149,6 +160,12 @@ def load_config(path: Path) -> DriverConfig:
         kind=str(dataset_raw.get("kind", "fixture")),
         name=str(dataset_raw.get("name", "construction_merge")),
         path=_expand_path(dataset_raw.get("path")),
+        frame_index=int(dataset_raw.get("frame_index", 0) or 0),
+        limit=(
+            int(dataset_raw["limit"])
+            if dataset_raw.get("limit") not in (None, "")
+            else None
+        ),
     )
     reasoner = ReasonerConfig(
         backend=str(reasoner_raw.get("backend", "mock")),
@@ -167,5 +184,9 @@ def load_config(path: Path) -> DriverConfig:
         reasoner=reasoner,
         output=output,
         author=str(raw.get("author", "0xDriver")),
+        affiliation=str(raw.get("affiliation", "Independent")),
+        account_name=str(raw.get("account_name", "")),
         method_name=str(raw.get("method_name", "fixture_vla_intent_planner")),
+        method_link=str(raw.get("method_link", "")),
+        description=str(raw.get("description", "")),
     )

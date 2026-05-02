@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from dataclasses import replace
 from pathlib import Path
 from typing import Sequence
@@ -80,7 +81,7 @@ def _command_evaluate(args: argparse.Namespace) -> int:
 def _command_package_submission(args: argparse.Namespace) -> int:
     from driverx.submission.waymo_packager import package_run_dir
 
-    package = package_run_dir(args.run_dir, output_path=args.output)
+    package = package_run_dir(args.run_dir, output_path=args.output, official=args.official)
     print(json.dumps(package, indent=2))
     return 0
 
@@ -138,6 +139,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     package_parser.add_argument("--run-dir", type=Path, required=True)
     package_parser.add_argument("--output", type=Path)
+    package_parser.add_argument(
+        "--official",
+        action="store_true",
+        help="Use official Waymo protobuf serialization when optional deps are installed.",
+    )
     package_parser.set_defaults(func=_command_package_submission)
 
     config_parser = subparsers.add_parser(
@@ -153,7 +159,11 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    return int(args.func(args))
+    try:
+        return int(args.func(args))
+    except (FileNotFoundError, ImportError, IndexError, ValueError) as exc:
+        print(f"driverx error: {exc}", file=sys.stderr)
+        return 2
 
 
 __all__ = ["DriverConfig", "build_parser", "main"]

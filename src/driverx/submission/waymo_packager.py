@@ -1,16 +1,25 @@
-"""Dry-run Waymo E2E submission packaging.
+"""Waymo E2E submission packaging.
 
-This writes a JSON artifact with the same essential frame/trajectory structure
-as the official protobuf submission. Real protobuf serialization can be added
-once the Waymo dependency is enabled.
+The default path writes a dependency-free dry-run package. Passing
+``official=True`` uses the official Waymo protobuf module when installed.
 """
 
 from __future__ import annotations
 
+import importlib
 import json
 import struct
 from pathlib import Path
 from typing import Any
+
+WAYMO_SUBMISSION_INSTALL_HINT = (
+    "Install optional Waymo dependencies with "
+    "`python -m pip install waymo-open-dataset-tf-2-12-0==1.6.7`."
+)
+
+
+class WaymoSubmissionDependencyError(ImportError):
+    """Raised when official submission packaging is requested without Waymo deps."""
 
 
 def _varint(value: int) -> bytes:
@@ -79,6 +88,18 @@ def _submission_message(package: dict[str, Any]) -> bytes:
     return bytes(payload)
 
 
+def _load_submission_pb2() -> Any:
+    try:
+        return importlib.import_module(
+            "waymo_open_dataset.protos.end_to_end_driving_submission_pb2"
+        )
+    except (ImportError, ModuleNotFoundError) as exc:
+        raise WaymoSubmissionDependencyError(
+            "Official Waymo submission packaging requires "
+            f"waymo-open-dataset. {WAYMO_SUBMISSION_INSTALL_HINT}"
+        ) from exc
+
+
 def _write_schema(run_dir: Path) -> Path:
     schema_path = run_dir / "submission_schema.proto"
     schema_path.write_text(
@@ -107,7 +128,7 @@ message E2EDChallengeSubmissionDryRun {
     return schema_path
 
 
-def package_run_dir(run_dir: Path, output_path: Path | None = None) -> dict[str, Any]:
+def _build_package(run_dir: Path) -> dict[str, Any]:
     trajectory_path = run_dir / "selected_trajectory.json"
     frame_path = run_dir / "frame.json"
     if not trajectory_path.exists():
@@ -126,10 +147,13 @@ def package_run_dir(run_dir: Path, output_path: Path | None = None) -> dict[str,
     package = {
         "submission_type": "E2ED_SUBMISSION_DRY_RUN",
         "authors": [str(metadata.get("author", "0xDriver"))],
-        "affiliation": "Independent",
+        "affiliation": str(metadata.get("affiliation", "Independent")),
+        "account_name": str(metadata.get("account_name", "")),
         "unique_method_name": str(
             metadata.get("method_name", "fixture_vla_intent_planner")
         ),
+        "method_link": str(metadata.get("method_link", "")),
+        "description": str(metadata.get("description", "")),
         "uses_public_model_pretraining": True,
         "public_model_names": ["mock-vla-intent-reasoner"],
         "num_model_parameters": "0",
@@ -143,6 +167,12 @@ def package_run_dir(run_dir: Path, output_path: Path | None = None) -> dict[str,
             }
         ],
     }
+    return package
+
+
+def _write_dry_run_package(
+    run_dir: Path, package: dict[str, Any], output_path: Path | None
+) -> dict[str, Any]:
     output = output_path or (run_dir / "submission_dry_run.json")
     output.write_text(json.dumps(package, indent=2), encoding="utf-8")
     shard_path = run_dir / "submission_shard_00000.pb"
@@ -152,5 +182,64 @@ def package_run_dir(run_dir: Path, output_path: Path | None = None) -> dict[str,
         "path": str(output),
         "protobuf_shard": str(shard_path),
         "protobuf_schema": str(schema_path),
+        "official": False,
         "predictions": len(package["predictions"]),
+    }
+
+
+def _write_official_package(
+    run_dir: Path, package: dict[str, Any], output_path: Path | None
+) -> dict[str, Any]:
+    submission_pb2 = _load_submission_pb2()
+    predictions = []
+    for prediction in package["predictions"]:
+        trajectory = submission_pb2.TrajectoryPrediction(
+            pos_x=prediction["trajectory"]["pos_x"],
+            pos_y=prediction["trajectory"]["pos_y"],
+        )
+        predictions.append(
+            submission_pb2.FrameTrajectoryPredictions(
+                frame_name=prediction["frame_name"],
+                trajectory=trajectory,
+            )
+        )
+
+    submission = submission_pb2.E2EDChallengeSubmission(predictions=predictions)
+    submission.submission_type = (
+        submission_pb2.E2EDChallengeSubmission.SubmissionType.E2ED_SUBMISSION
+    )
+    submission.authors[:] = package["authors"]
+    submission.affiliation = package["affiliation"]
+    submission.account_name = package["account_name"]
+    submission.unique_method_name = package["unique_method_name"]
+    submission.method_link = package["method_link"]
+    submission.description = package["description"]
+    submission.uses_public_model_pretraining = package["uses_public_model_pretraining"]
+    submission.public_model_names.extend(package["public_model_names"])
+    submission.num_model_parameters = package["num_model_parameters"]
+
+    output = output_path or (run_dir / "submission_official_shard_00000.pb")
+    output.write_bytes(submission.SerializeToString())
+    return {
+        "path": str(output),
+        "protobuf_shard": str(output),
+        "protobuf_schema": "official_waymo_open_dataset",
+        "official": True,
+        "predictions": len(package["predictions"]),
+    }
+
+
+def package_run_dir(
+    run_dir: Path,
+    output_path: Path | None = None,
+    official: bool = False,
+) -> dict[str, Any]:
+    package = _build_package(run_dir)
+    if not official:
+        return _write_dry_run_package(run_dir, package, output_path)
+    dry_run_result = _write_dry_run_package(run_dir, package, None)
+    official_result = _write_official_package(run_dir, package, output_path)
+    return {
+        **official_result,
+        "dry_run_json": dry_run_result["path"],
     }

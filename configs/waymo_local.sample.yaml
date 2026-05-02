@@ -1,0 +1,21 @@
+dataset:
+  kind: waymo
+  name: waymo_validation_sample
+  path: ${WAYMO_E2E_TFRECORD}
+  frame_index: 0
+  limit:
+
+reasoner:
+  backend: mock
+  uncertainty: 0.34
+
+output:
+  root: artifacts/runs
+  run_id:
+
+author: 0xDriver
+affiliation: Independent
+account_name:
+method_name: waymo_e2e_intent_planner
+method_link:
+description: Latency-aware VLA-intent trajectory planner for Waymo E2E scenes.

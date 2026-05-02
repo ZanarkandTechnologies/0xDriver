@@ -6,9 +6,10 @@ reasoning sparingly for long-tail scene understanding, then compile that
 reasoning into fast, constrained trajectory proposals that can be evaluated on
 Waymo Open Dataset End-to-End Driving scenes.
 
-This repo is not starting by training a new model. The first release plans a
-credible offline autonomy pipeline, analysis notebook, and demo package before
-runtime code is written.
+This repo is not starting by training a new model. The current release provides
+a runnable offline autonomy pipeline, dependency-free fixtures, optional Waymo
+E2E ingestion seams, and submission packaging surfaces that can be hardened into
+a challenge submission.
 
 ## Project Goal
 
@@ -56,21 +57,24 @@ planning code should turn that intent into valid trajectories.
   source for E2E driving data loading, visualization, future-trajectory labels,
   submission protobuf generation, and ADE/rater-feedback tutorial patterns.
 
-## Planned Repository Shape
+## Repository Shape
 
 - `docs/prd.md`: product requirements for the first release
 - `docs/bootstrap-brief.md`: bootstrap decisions, quality gates, and local-vs-cloud assumptions
-- `docs/specs/directory-structure-plan.md`: implementation structure plan for the next pass
+- `docs/specs/directory-structure-plan.md`: implementation structure plan
 - `ARCHITECTURE.md`: top-level system map
 - `PROJECT_RULES.md`: stack, commands, quality gates, and conventions
 - `qa/`: evidence and reproducibility cookbook
-- `tickets/`: future ticket planning and implementation surface
+- `tickets/`: ticket planning and implementation surface
+- `src/driverx/`: Python package for loading, reasoning, planning, evaluation,
+  visualization, and packaging
 
 ## Current Status
 
-First fixture-backed implementation is underway. The repo can run without Waymo
-data or a VLA model by using a synthetic construction-merge scene and mock
-structured intent.
+TASK-001 is complete: the repo can run without Waymo data or a VLA model by
+using synthetic scenes and mock structured intent. TASK-002 is adding optional
+real Waymo TFRecord loading and official protobuf packaging while preserving
+that dependency-free path.
 
 ## Quickstart
 
@@ -93,6 +97,9 @@ PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/demo
 # Create a dry-run submission package
 PYTHONPATH=src python3 -m driverx package-submission --run-dir artifacts/runs/<run-id>
 
+# Try official Waymo protobuf serialization when optional deps are installed
+PYTHONPATH=src python3 -m driverx package-submission --run-dir artifacts/runs/<run-id> --official
+
 # Exercise fail-closed behavior for malformed reasoner output
 PYTHONPATH=src python3 -m driverx run-scene --config configs/invalid_reasoner.yaml --run-id invalid-demo
 
@@ -102,3 +109,20 @@ bash scripts/pre_push_check.sh
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored
 by git.
+
+## Optional Real Waymo Data
+
+The fixture path is the default. To validate on real Waymo E2E data, install the
+optional packages and point `configs/waymo_local.sample.yaml` at one downloaded
+TFRecord file, directory, or glob:
+
+```bash
+python -m pip install ".[waymo]"
+export WAYMO_E2E_TFRECORD="/path/to/validation.tfrecord*"
+PYTHONPATH=src python3 -m driverx inspect-scene --config configs/waymo_local.sample.yaml
+PYTHONPATH=src python3 -m driverx run-scene --config configs/waymo_local.sample.yaml --run-id waymo-smoke
+```
+
+If the optional packages are missing, the Waymo loader and `--official`
+submission mode fail with install guidance instead of importing TensorFlow at
+normal startup.

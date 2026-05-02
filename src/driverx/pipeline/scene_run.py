@@ -43,11 +43,17 @@ def _trajectory_payload(candidate: TrajectoryCandidate) -> dict[str, Any]:
 def _metadata_payload(config: DriverConfig) -> dict[str, Any]:
     return {
         "author": config.author,
+        "affiliation": config.affiliation,
+        "account_name": config.account_name,
         "method_name": config.method_name,
+        "method_link": config.method_link,
+        "description": config.description,
         "dataset": {
             "kind": config.dataset.kind,
             "name": config.dataset.name,
             "path": str(config.dataset.path) if config.dataset.path else None,
+            "frame_index": config.dataset.frame_index,
+            "limit": config.dataset.limit,
         },
         "reasoner": {
             "backend": config.reasoner.backend,
