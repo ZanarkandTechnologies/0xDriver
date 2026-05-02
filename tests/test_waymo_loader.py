@@ -41,7 +41,9 @@ class WaymoLoaderTest(unittest.TestCase):
                             path=shard,
                         )
                     )
-        self.assertIn("Install optional Waymo dependencies", str(context.exception))
+        message = str(context.exception)
+        self.assertIn("Linux amd64 Docker runtime", message)
+        self.assertIn("requirements/waymo-linux.txt", message)
 
     def test_tfrecord_glob_reaches_optional_dependency_boundary(self) -> None:
         with TemporaryDirectory() as tmp:

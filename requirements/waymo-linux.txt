@@ -1,0 +1,5 @@
+--find-links https://storage.googleapis.com/jax-releases/jax_releases.html
+# The Waymo 1.6.7 wheel currently declares TensorFlow 2.13 itself. Let this
+# package bring the pinned Waymo stack. The JAX find-links entry is required for
+# jaxlib==0.4.13 on the Linux amd64 Docker runtime.
+waymo-open-dataset-tf-2-12-0==1.6.7

@@ -71,10 +71,11 @@ planning code should turn that intent into valid trajectories.
 
 ## Current Status
 
-TASK-001 is complete: the repo can run without Waymo data or a VLA model by
-using synthetic scenes and mock structured intent. TASK-002 is adding optional
-real Waymo TFRecord loading and official protobuf packaging while preserving
-that dependency-free path.
+TASK-001 and TASK-002 are complete: the repo can run without Waymo data or a VLA
+model, ingest optional real Waymo TFRecords, and package official submission
+protobufs when the Waymo dependencies are available. TASK-003 is establishing a
+repeatable Linux Docker runtime for those official dependencies on Apple
+Silicon.
 
 ## Quickstart
 
@@ -112,15 +113,34 @@ by git.
 
 ## Optional Real Waymo Data
 
-The fixture path is the default. To validate on real Waymo E2E data, install the
-optional packages and point `configs/waymo_local.sample.yaml` at one downloaded
-TFRecord file, directory, or glob:
+The fixture path is the default. The official Waymo package currently resolves
+cleanly in a Linux x86_64 environment, not native macOS ARM. On the MacBook,
+build the Docker compatibility image and mount the repo into it:
 
 ```bash
-python -m pip install ".[waymo]"
-export WAYMO_E2E_TFRECORD="/path/to/validation.tfrecord*"
-PYTHONPATH=src python3 -m driverx inspect-scene --config configs/waymo_local.sample.yaml
-PYTHONPATH=src python3 -m driverx run-scene --config configs/waymo_local.sample.yaml --run-id waymo-smoke
+scripts/build_waymo_docker.sh
+scripts/run_waymo_docker.sh
+```
+
+`scripts/run_waymo_docker.sh` defaults to the downloaded validation shard at
+`data/val_202504211843.tfrecord-00000-of-00093`. To point at another downloaded
+TFRecord file, directory, or glob, set `WAYMO_E2E_TFRECORD` before running the
+script. Host paths under the repo are translated to `/workspace/...` inside the
+container.
+
+```bash
+WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \
+  scripts/run_waymo_docker.sh \
+  python -m driverx run-scene --config configs/waymo_local.sample.yaml --run-id waymo-smoke
+```
+
+On a Linux x86_64 machine, such as a rented GPU server, the same image can be
+built natively. If you do not use Docker there, install the Waymo dependency
+stack with the requirements file so pip uses the required JAX wheel index:
+
+```bash
+python -m pip install -r requirements/waymo-linux.txt
+python -m pip install -e .
 ```
 
 If the optional packages are missing, the Waymo loader and `--official`
@@ -130,3 +150,16 @@ normal startup.
 Before using `--official`, fill the submission metadata in your config:
 `account_name` must be the email registered at `waymo.com/open`, and
 `num_model_parameters` must include a suffix such as `200K`, `7B`, or `0K`.
+
+## Cloud GPU Workflow
+
+Keep the Mac as the planning, fixtures, docs, and deterministic pipeline
+environment. Use a cloud NVIDIA GPU only for the heavy VLM/VLA inference server:
+
+1. Develop and test loaders, planners, packagers, and mock reasoners locally.
+2. Build the same Docker runtime on the GPU host after cloning the repo.
+3. Run a long-lived inference service on the GPU host, not a cold-start
+   serverless function, when testing latency-sensitive VLA behavior.
+4. Send rendered scene panels and metadata to the GPU service, cache structured
+   intent responses, and keep trajectory generation/evaluation reproducible in
+   this repo.

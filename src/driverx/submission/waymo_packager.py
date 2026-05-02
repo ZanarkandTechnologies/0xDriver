@@ -13,10 +13,7 @@ import struct
 from pathlib import Path
 from typing import Any
 
-WAYMO_SUBMISSION_INSTALL_HINT = (
-    "Install optional Waymo dependencies with "
-    "`python -m pip install waymo-open-dataset-tf-2-12-0==1.6.7`."
-)
+from driverx.waymo_runtime import WAYMO_RUNTIME_HINT
 
 
 class WaymoSubmissionDependencyError(ImportError):
@@ -100,7 +97,7 @@ def _load_submission_pb2() -> Any:
     except (ImportError, ModuleNotFoundError) as exc:
         raise WaymoSubmissionDependencyError(
             "Official Waymo submission packaging requires "
-            f"waymo-open-dataset. {WAYMO_SUBMISSION_INSTALL_HINT}"
+            f"waymo-open-dataset. {WAYMO_RUNTIME_HINT}"
         ) from exc
 
 

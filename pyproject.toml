@@ -7,16 +7,12 @@ name = "driverx"
 version = "0.1.0"
 description = "Fixture-backed minimal-shot autonomy pipeline inspired by real-time VLA systems."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = []
 
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
-]
-waymo = [
-  "tensorflow==2.12.*",
-  "waymo-open-dataset-tf-2-12-0==1.6.7",
 ]
 
 [project.scripts]

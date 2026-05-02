@@ -70,9 +70,11 @@ Status: PASS.
 
 Evidence:
 
-- `README.md` documents `python -m pip install ".[waymo]"`,
+- `README.md` documented the then-current optional Waymo setup,
   `WAYMO_E2E_TFRECORD`, `configs/waymo_local.sample.yaml`, and required
-  `--official` metadata fields.
+  `--official` metadata fields. TASK-003 superseded the install command with
+  the Linux amd64 Docker runtime and `requirements/waymo-linux.txt` because the
+  bare optional-extra path did not resolve `jaxlib==0.4.13`.
 
 ## Commands
 

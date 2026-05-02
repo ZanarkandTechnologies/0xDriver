@@ -13,3 +13,5 @@
 2026-05-02 05:23 +0800 | RULE | MEM-0006 | hardware,cloud,latency | Local Mac development is suitable for docs, dataset parsing, notebooks, mock runs, and light experiments; heavy CUDA/Triton VLA inference should remain optional cloud GPU work and must be timed separately from local offline evaluation.
 
 2026-05-02 05:23 +0800 | RULE | MEM-0007 | artifacts,data | Do not commit Waymo dataset shards, generated videos, submission archives, model weights, or credentials unless a later ticket explicitly defines an artifact policy change.
+
+2026-05-02 19:05 +0800 | RULE | MEM-0008 | waymo,runtime,docker | Official Waymo E2E dependencies must be treated as a Linux x86_64 runtime boundary; on Apple Silicon, use the Docker bridge for real TFRecord parsing and keep fixture/mock paths dependency-light.

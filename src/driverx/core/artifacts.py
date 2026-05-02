@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -11,7 +11,7 @@ from driverx.core.types import ArtifactRef
 
 
 def timestamp_run_id(prefix: str = "run") -> str:
-    return f"{prefix}-{datetime.now(tz=UTC).strftime('%Y%m%dT%H%M%S%fZ')}"
+    return f"{prefix}-{datetime.now(tz=timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')}"
 
 
 def prepare_run_dir(root: Path, run_id: str | None = None) -> Path:

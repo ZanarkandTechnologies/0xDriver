@@ -39,8 +39,10 @@
 - Frontend: none for v1; optional local visualizer or deck later.
 - Backend: none for v1; optional inference server adapter later.
 - Database: none.
-- Runtime / package manager: Python 3.11 or newer; prefer stdlib-first local
-  commands unless a Waymo package constraint requires otherwise.
+- Runtime / package manager: Python 3.10 or newer; prefer stdlib-first local
+  commands unless a Waymo package constraint requires otherwise. On Apple
+  Silicon, official Waymo dependencies run through the Linux amd64 Docker
+  runtime.
 - Deployment target: local Mac for planning, data parsing, and notebooks; rented
   NVIDIA GPU for heavy VLA inference if needed.
 

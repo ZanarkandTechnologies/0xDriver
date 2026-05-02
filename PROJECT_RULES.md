@@ -7,7 +7,8 @@ expectations, and runtime assumptions.
 
 - Language: Python first for data/model/evaluation work; TypeScript only if a
   later web demo is added.
-- Runtime: Python 3.11 or newer.
+- Runtime: Python 3.10 or newer. Use the Linux amd64 Docker runtime for
+  official Waymo dependencies on Apple Silicon.
 - Data: Waymo Open Dataset End-to-End Driving TFRecords and protobufs.
 - ML/VLM integration: provider-neutral adapter layer; first implementation may
   use cloud GPU inference or API-backed VLM calls.

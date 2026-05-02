@@ -37,7 +37,10 @@ class SubmissionPackagerTest(unittest.TestCase):
             ):
                 with self.assertRaises(WaymoSubmissionDependencyError) as context:
                     package_run_dir(self._run_dir(tmp), official=True)
-        self.assertIn("Official Waymo submission packaging requires", str(context.exception))
+        message = str(context.exception)
+        self.assertIn("Official Waymo submission packaging requires", message)
+        self.assertIn("Linux amd64 Docker runtime", message)
+        self.assertIn("requirements/waymo-linux.txt", message)
 
     def test_official_package_validates_required_metadata(self) -> None:
         with TemporaryDirectory() as tmp:

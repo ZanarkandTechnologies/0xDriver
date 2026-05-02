@@ -14,12 +14,7 @@ from typing import Any, cast
 
 from driverx.core.config import DatasetConfig
 from driverx.core.types import CameraImage, FrameBundle, RgbColor
-
-WAYMO_INSTALL_HINT = (
-    "Install optional Waymo dependencies with "
-    "`python -m pip install waymo-open-dataset-tf-2-12-0==1.6.7 tensorflow==2.12.*` "
-    "or keep using dataset.kind=fixture / configs/waymo_fixture.yaml."
-)
+from driverx.waymo_runtime import WAYMO_RUNTIME_HINT
 
 FRONT_CAMERA_ORDER = [2, 1, 3]
 FRONT_CAMERA_NAMES = {
@@ -90,7 +85,7 @@ def _load_waymo_dependencies() -> tuple[Any, Any]:
     except (ImportError, ModuleNotFoundError) as exc:
         raise WaymoDependencyError(
             "Real Waymo TFRecord parsing requires TensorFlow and "
-            f"waymo-open-dataset. {WAYMO_INSTALL_HINT}"
+            f"waymo-open-dataset. {WAYMO_RUNTIME_HINT}"
         ) from exc
     return tf, e2e_pb2
 
