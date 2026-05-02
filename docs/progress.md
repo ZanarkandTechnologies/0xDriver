@@ -4,47 +4,40 @@ Live orchestration log for the first 0xDriver implementation pass.
 
 ## Current Goal
 
-Implement the first fixture-backed offline Waymo E2E-style pipeline:
+Implement optional real Waymo E2E integration without breaking the dependency-free
+fixture path:
 
-- package/config skeleton
-- synthetic frame fixtures
-- scene visualization
-- structured mock VLA intent
-- candidate trajectory generation
-- smoothing/ranking/safety checks
-- ADE and latency reports
-- submission dry-run packaging
-- CLI entrypoints
-- tests and final QA evidence
+- real TFRecord loader seam
+- official Waymo dependency detection
+- official submission protobuf packaging path
+- sample local Waymo config
+- fallback tests and docs for missing optional deps
+- preserve mock pipeline gate
 
 ## Checklist
 
-- [x] Bootstrap docs, PRD, and directory plan exist.
-- [x] Create parent implementation ticket.
-- [x] Add Python package and CLI skeleton.
-- [x] Add fixture data path and mock scene loader.
-- [x] Add visualization artifact generation.
-- [x] Add structured intent schema and mock reasoner.
-- [x] Add candidate planning, smoothing, ranking, and fallback.
-- [x] Add ADE, latency, and evidence reports.
-- [x] Add submission dry-run packager.
-- [x] Add tests and local validation commands.
-- [x] Run code review.
-- [x] Run final QA against PRD user stories.
-- [x] Update docs and close implementation pass.
+- [x] TASK-001 fixture-backed loop complete.
+- [x] Create TASK-002 for real Waymo/protobuf optional integration.
+- [ ] Add optional dependency metadata and config fields.
+- [ ] Implement real TFRecord loader path.
+- [ ] Implement official protobuf packaging path.
+- [ ] Add tests for optional-dependency and fixture continuity.
+- [ ] Update README and durable docs.
+- [ ] Run tests, review, and commit.
 
 ## Commit Plan
 
-1. Planning/control baseline.
-2. Package and CLI skeleton.
-3. Fixture pipeline plus artifacts.
-4. Planning/evaluation/submission behavior.
-5. Tests, docs, review, and QA evidence.
+1. Ticket and config/dependency metadata.
+2. Waymo loader implementation.
+3. Official submission packager implementation.
+4. Tests and docs.
+5. Review, QA evidence, and commit.
 
 ## Notes
 
-- Real Waymo TFRecord parsing is optional for v1 and must fail with clear setup
-  guidance when dependencies or data are missing.
-- Mock/fixture runs are the default proof path so the repo works without cloud
-  GPU or Waymo downloads.
-- Cloud VLA backends remain adapter-only until the core offline loop is solid.
+- Real Waymo data is not needed to implement the optional parser, but it is
+  needed to validate against an actual downloaded shard.
+- Mock/fixture runs remain the default proof path so the repo works without
+  cloud GPU, TensorFlow, Waymo downloads, or model credentials.
+- Cloud VLA backends remain out of scope until official data/package surfaces
+  are credible.
