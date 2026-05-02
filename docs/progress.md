@@ -34,7 +34,7 @@ Establish the first real-data Waymo batch baseline before adding VLA/GPU serving
 - [x] Extend `run-batch` with Waymo frame ranges and report aggregation.
 - [x] Add fake-Waymo unit tests for batch aggregation.
 - [x] Run real 10-frame Waymo Docker baseline.
-- [ ] Attach TASK-004 review and QA evidence.
+- [x] Attach TASK-004 review and QA evidence.
 
 ## Commit Plan
 
