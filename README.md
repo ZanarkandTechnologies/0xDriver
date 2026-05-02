@@ -75,7 +75,9 @@ TASK-001 through TASK-004 are complete enough to establish the first measuring
 stick: the repo can run without Waymo data or a VLA model, ingest optional real
 Waymo TFRecords through Docker, package official submission protobufs when the
 Waymo dependencies are available, and stream a small real Waymo validation batch
-into `batch_summary.json` plus `batch_report.md`.
+into `batch_summary.json` plus `batch_report.md`. TASK-005 adds a comparison
+harness so the current intent planner can be measured against deterministic
+rule baselines before any VLA/cloud backend is introduced.
 
 ## Quickstart
 
@@ -91,6 +93,9 @@ PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml --run-id 
 
 # Run a tiny fixture validation batch
 PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml --run-id demo-batch
+
+# Compare deterministic trajectory strategies on one fixture scene
+PYTHONPATH=src python3 -m driverx run-experiment --config configs/mock.yaml --run-id demo-experiment
 
 # Run a Waymo-shaped fixture through the Waymo batch path
 PYTHONPATH=src python3 -m driverx run-batch --config configs/waymo_fixture.yaml --run-id waymo-fixture-batch --frame-count 1
@@ -153,6 +158,23 @@ WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \
 The batch root will include `batch_summary.json` and `batch_report.md`; each
 frame also keeps the normal `scene_prediction.svg`, `metrics.json`, and
 `timings.json` artifacts.
+
+Compare the current intent planner against non-VLA rule baselines on the same
+real slice:
+
+```bash
+WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \
+  scripts/run_waymo_docker.sh \
+  python -m driverx run-experiment \
+    --config configs/waymo_local.sample.yaml \
+    --run-id waymo-experiment-10 \
+    --frame-start 0 \
+    --frame-count 10
+```
+
+The experiment root includes `experiment_summary.json` and
+`experiment_report.md`. `oracle_best_rule` is labeled analysis-only because it
+uses ground-truth ADE to choose among rule baselines.
 
 On a Linux x86_64 machine, such as a rented GPU server, the same image can be
 built natively. If you do not use Docker there, install the Waymo dependency

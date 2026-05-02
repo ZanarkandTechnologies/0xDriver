@@ -3,11 +3,13 @@
 ## Purpose
 
 Turn structured intent into candidate trajectories, smooth them, and rank the
-best prediction.
+best prediction. Also provide simple non-VLA rule baselines for experiment
+comparison.
 
 ## Public API
 
 - `generate_candidates(frame, intent)`
+- `generate_rule_baselines(frame)`
 - `smooth_candidate(candidate)`
 - `rank_candidates(frame, candidates)`
 
@@ -16,6 +18,7 @@ best prediction.
 ```python
 candidates = [smooth_candidate(c) for c in generate_candidates(frame, intent)]
 selected = rank_candidates(frame, candidates)
+rule_baselines = [smooth_candidate(c) for c in generate_rule_baselines(frame)]
 ```
 
 ## Test

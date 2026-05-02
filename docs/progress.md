@@ -4,13 +4,14 @@ Live orchestration log for the first 0xDriver implementation pass.
 
 ## Current Goal
 
-Establish the first real-data Waymo batch baseline before adding VLA/GPU serving:
+Compare the current mock intent planner against deterministic non-VLA baselines
+before adding VLA/GPU serving:
 
-- stream a configurable validation frame range once
-- preserve fixture `run-batch` compatibility
-- write per-frame artifacts under the batch root
-- write `batch_summary.json` and `batch_report.md`
-- identify the best/worst ADE scenes and worst-scene SVG failure case
+- keep the TASK-004 batch evidence intact
+- add simple rule strategies from ego history
+- run all strategies over the same frame slice
+- write `experiment_summary.json` and `experiment_report.md`
+- identify the strongest deployable baseline and the analysis-only oracle bound
 
 ## Checklist
 
@@ -35,13 +36,21 @@ Establish the first real-data Waymo batch baseline before adding VLA/GPU serving
 - [x] Add fake-Waymo unit tests for batch aggregation.
 - [x] Run real 10-frame Waymo Docker baseline.
 - [x] Attach TASK-004 review and QA evidence.
+- [x] Create TASK-005 for batch experiment harness.
+- [x] Add deterministic rule trajectory baselines.
+- [x] Add cross-strategy experiment runner.
+- [x] Add `run-experiment` CLI.
+- [x] Run local experiment tests.
+- [x] Run real 10-frame Waymo Docker experiment.
+- [ ] Attach TASK-005 review and QA evidence.
 
 ## Commit Plan
 
 1. Ticket start.
-2. Streaming batch implementation and unit tests.
-3. Docs and durable baseline rule.
-4. Review, QA evidence, and closeout.
+2. Rule baseline strategies.
+3. Experiment runner and CLI.
+4. Tests and docs.
+5. Review, QA evidence, and closeout.
 
 ## Notes
 
@@ -78,3 +87,8 @@ Establish the first real-data Waymo batch baseline before adding VLA/GPU serving
   now passes fixture names through unchanged, tests prove CLI/API fixture-default
   agreement, and `waymo-batch-default-10` proves real-data default count without
   passing `--frame-count`.
+- TASK-005 Docker proof: `waymo-experiment-10` compared six strategies over the
+  same 10 validation frames. Best deployable strategy was
+  `constant_acceleration` with mean ADE `3.73323`; current `intent_planner`
+  mean ADE was `6.204769`; `oracle_best_rule` was analysis-only with mean ADE
+  `3.732298`.

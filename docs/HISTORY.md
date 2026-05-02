@@ -10,3 +10,5 @@
 2026-05-02 20:42 +0800 | TASK | started TASK-004 real Waymo batch baseline after single-frame Docker proof passed
 2026-05-02 20:50 +0800 | SHIP | added streaming Waymo batch execution with aggregate ADE and latency reporting
 2026-05-02 21:02 +0800 | QA | TASK-004 passed final review and QA with real 10-frame Waymo batch baseline evidence
+2026-05-02 21:34 +0800 | TASK | started TASK-005 batch experiment harness to compare current planner against deterministic baselines
+2026-05-02 21:34 +0800 | SHIP | added rule trajectory baselines and cross-strategy experiment runner
