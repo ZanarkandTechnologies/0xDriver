@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: building
+- state: done
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-003, local validation shard in `data/`
@@ -89,7 +89,7 @@ honest baseline for local Docker and later cloud GPU experiments.
 - Keep `mock` as the reasoner backend; no GPU or VLA service is introduced in this ticket.
 - Commit `f75405d` added `iter_waymo_frames`, `run_loaded_scene`, Waymo
   `run-batch` frame ranges, batch summaries/reports, and fake-Waymo tests.
-- Local proof: `bash scripts/pre_push_check.sh` passed with 31 unittest cases.
+- Local proof: `bash scripts/pre_push_check.sh` passed with 34 unittest cases.
 - Docker proof: `scripts/run_waymo_docker.sh python -m driverx run-batch
   --config configs/waymo_local.sample.yaml --run-id waymo-batch-10
   --frame-count 10` completed successfully.
@@ -109,7 +109,7 @@ honest baseline for local Docker and later cloud GPU experiments.
 - Waymo frame range: PASS
 - Batch summary/report: PASS
 - Real-data Docker proof: PASS
-- Review: PENDING
+- Review: PASS, final score `4.4 / 5.0`
 - QA report: PASS
 
 ### Artifact Links
@@ -121,17 +121,21 @@ honest baseline for local Docker and later cloud GPU experiments.
 - `artifacts/runs/waymo-batch-default-10/batch_report.md`
 - `artifacts/runs/waymo-batch-default-10/frame-000006/scene_prediction.svg`
 - `tickets/TASK-004/artifacts/qa/2026-05-02T125206Z/report.md`
+- `docs/reviews/TASK-004-batch-baseline-review.md`
 
 ### User Evidence
 
-- Final verdict:
+- Final verdict: PASS for real Waymo batch baseline and report.
 - Supporting evidence: `waymo-batch-10` real-data Docker run produced 10
-  per-frame run dirs, aggregate ADE/timing tables, and worst-scene SVG.
+  per-frame run dirs; `waymo-batch-default-10` proved the default 10-frame path
+  without `--frame-count`; both produced aggregate ADE/timing tables and
+  worst-scene SVGs.
 - QA report: `tickets/TASK-004/artifacts/qa/2026-05-02T125206Z/report.md`
+- Review result: `docs/reviews/TASK-004-batch-baseline-review.md`
 
 ### Required Evidence
 
 - [x] Unit/integration/e2e tests pass as applicable.
 - [x] Docker real-data batch proof captured.
 - [x] QA report attached.
-- [ ] Final review attached.
+- [x] Final review attached.
