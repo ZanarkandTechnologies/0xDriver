@@ -64,6 +64,26 @@ class CliTest(unittest.TestCase):
         self.assertEqual(run_batch.call_args.kwargs["frame_count"], 2)
         self.assertIsNone(run_batch.call_args.kwargs["fixture_names"])
 
+    def test_run_experiment_accepts_waymo_frame_range_flags(self) -> None:
+        with patch(
+            "driverx.pipeline.experiment_run.run_experiment",
+            return_value={"ok": True},
+        ) as run_experiment:
+            exit_code = main(
+                [
+                    "run-experiment",
+                    "--config",
+                    "configs/waymo_fixture.yaml",
+                    "--frame-start",
+                    "4",
+                    "--frame-count",
+                    "2",
+                ]
+            )
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(run_experiment.call_args.kwargs["frame_start"], 4)
+        self.assertEqual(run_experiment.call_args.kwargs["frame_count"], 2)
+
     def test_official_packaging_missing_dependency_is_operator_facing(self) -> None:
         with TemporaryDirectory() as tmp:
             config = DriverConfig(
