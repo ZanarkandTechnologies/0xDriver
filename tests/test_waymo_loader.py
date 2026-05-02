@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from driverx.core.config import DatasetConfig
 from driverx.core.types import CameraImage, FrameBundle
-from driverx.datasets.waymo_e2e import WaymoDependencyError, load_waymo_frame
+from driverx.datasets.waymo_e2e import WaymoDependencyError, iter_waymo_frames, load_waymo_frame
 
 
 class WaymoLoaderTest(unittest.TestCase):
@@ -86,6 +86,34 @@ class WaymoLoaderTest(unittest.TestCase):
                 )
         self.assertEqual(frame.metadata["source_path"], str(second))
         self.assertEqual(frame.metadata["frame_index"], 1)
+
+    def test_iter_waymo_frames_streams_requested_range(self) -> None:
+        with TemporaryDirectory() as tmp:
+            first = Path(tmp) / "a.tfrecord"
+            second = Path(tmp) / "b.tfrecord"
+            third = Path(tmp) / "c.tfrecord"
+            first.write_bytes(b"first")
+            second.write_bytes(b"second")
+            third.write_bytes(b"third")
+            with patch(
+                "driverx.datasets.waymo_e2e._load_waymo_dependencies",
+                return_value=(_FakeTf(), _FakeWaymoPb2),
+            ), patch(
+                "driverx.datasets.waymo_e2e._frame_from_waymo_proto",
+                side_effect=_fake_frame_from_waymo_proto,
+            ):
+                frames = list(
+                    iter_waymo_frames(
+                        DatasetConfig(kind="waymo", name="multi", path=Path(tmp)),
+                        start_index=1,
+                        count=2,
+                    )
+                )
+        self.assertEqual(
+            [frame.metadata["source_path"] for frame in frames],
+            [str(second), str(third)],
+        )
+        self.assertEqual([frame.metadata["frame_index"] for frame in frames], [1, 2])
 
 
 class _FakeDataset:

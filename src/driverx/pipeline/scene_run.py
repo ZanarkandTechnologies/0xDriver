@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 from driverx.core.artifacts import prepare_run_dir, write_json_artifact
@@ -100,13 +101,13 @@ def inspect_scene(config: DriverConfig) -> SceneRunResult:
     )
 
 
-def run_scene(config: DriverConfig) -> SceneRunResult:
-    timer = StageTimer()
+def _execute_loaded_scene(
+    config: DriverConfig,
+    frame: FrameBundle,
+    run_dir: Path,
+    timer: StageTimer,
+) -> SceneRunResult:
     artifacts: list[ArtifactRef] = []
-    run_dir = prepare_run_dir(config.output.root, config.output.run_id)
-
-    with timer.track("load_frame"):
-        frame = load_frame(config.dataset)
     artifacts.append(write_json_artifact(run_dir, "run_metadata", _metadata_payload(config)))
     artifacts.append(write_json_artifact(run_dir, "frame", _frame_payload(frame)))
 
@@ -189,3 +190,20 @@ def run_scene(config: DriverConfig) -> SceneRunResult:
         timings_ms=timer.timings_ms,
         artifacts=artifacts,
     )
+
+
+def run_loaded_scene(config: DriverConfig, frame: FrameBundle) -> SceneRunResult:
+    """Run a preloaded frame through the shared scene pipeline."""
+
+    timer = StageTimer()
+    run_dir = prepare_run_dir(config.output.root, config.output.run_id)
+    return _execute_loaded_scene(config, frame, run_dir, timer)
+
+
+def run_scene(config: DriverConfig) -> SceneRunResult:
+    timer = StageTimer()
+    run_dir = prepare_run_dir(config.output.root, config.output.run_id)
+
+    with timer.track("load_frame"):
+        frame = load_frame(config.dataset)
+    return _execute_loaded_scene(config, frame, run_dir, timer)

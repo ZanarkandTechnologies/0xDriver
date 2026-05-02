@@ -11,6 +11,27 @@ from driverx.pipeline.scene_run import run_scene
 
 
 class CliTest(unittest.TestCase):
+    def test_run_batch_accepts_waymo_frame_range_flags(self) -> None:
+        with patch(
+            "driverx.pipeline.batch_run.run_batch",
+            return_value={"ok": True},
+        ) as run_batch:
+            exit_code = main(
+                [
+                    "run-batch",
+                    "--config",
+                    "configs/waymo_fixture.yaml",
+                    "--frame-start",
+                    "4",
+                    "--frame-count",
+                    "2",
+                ]
+            )
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(run_batch.call_args.kwargs["frame_start"], 4)
+        self.assertEqual(run_batch.call_args.kwargs["frame_count"], 2)
+        self.assertIsNone(run_batch.call_args.kwargs["fixture_names"])
+
     def test_official_packaging_missing_dependency_is_operator_facing(self) -> None:
         with TemporaryDirectory() as tmp:
             config = DriverConfig(

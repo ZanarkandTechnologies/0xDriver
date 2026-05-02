@@ -10,7 +10,7 @@ import glob
 import importlib
 import json
 from pathlib import Path
-from typing import Any, cast
+from typing import Any, Iterator, cast
 
 from driverx.core.config import DatasetConfig
 from driverx.core.types import CameraImage, FrameBundle, RgbColor
@@ -46,33 +46,66 @@ def load_waymo_frame(config: DatasetConfig) -> FrameBundle:
 def load_waymo_tfrecord_frame(config: DatasetConfig) -> FrameBundle:
     """Load one Waymo E2E frame from a TFRecord file, directory, or glob."""
 
+    return next(iter_waymo_frames(config, start_index=config.frame_index, count=1))
+
+
+def iter_waymo_frames(
+    config: DatasetConfig,
+    start_index: int,
+    count: int,
+) -> Iterator[FrameBundle]:
+    """Stream a contiguous Waymo E2E frame range once."""
+
     if config.path is None:
         raise FileNotFoundError("Waymo TFRecord path is required.")
-    if config.frame_index < 0:
-        raise ValueError("dataset.frame_index must be non-negative.")
-    if config.limit is not None and config.frame_index >= config.limit:
-        raise ValueError("dataset.frame_index must be smaller than dataset.limit.")
+    if start_index < 0:
+        raise ValueError("start_index must be non-negative.")
+    if count < 0:
+        raise ValueError("count must be non-negative.")
+    if count == 0:
+        return
+    if config.limit is not None and start_index >= config.limit:
+        raise ValueError("start_index must be smaller than dataset.limit.")
+
+    has_glob = any(char in str(config.path) for char in "*?[]")
+    if not has_glob and config.path.suffix.lower() == ".json":
+        if start_index > 0:
+            raise IndexError(f"No Waymo JSON fixture frame found at index {start_index}.")
+        yield _load_waymo_json_fixture(config.path)
+        if count > 1:
+            raise IndexError(
+                f"Requested {count} Waymo frames from JSON fixture, but only 1 is available."
+            )
+        return
 
     paths = _expand_tfrecord_paths(config.path)
     tf, e2e_pb2 = _load_waymo_dependencies()
     global_index = 0
+    yielded = 0
+    stop_index = start_index + count
     for path in paths:
         dataset = tf.data.TFRecordDataset([str(path)], compression_type="")
         for raw_data in dataset.as_numpy_iterator():
             if config.limit is not None and global_index >= config.limit:
                 break
-            if global_index == config.frame_index:
+            if global_index >= stop_index:
+                return
+            if global_index >= start_index:
                 frame = e2e_pb2.E2EDFrame()
                 frame.ParseFromString(raw_data)
-                return _frame_from_waymo_proto(
+                yield _frame_from_waymo_proto(
                     frame,
                     source_path=path,
                     frame_index=global_index,
                     tf=tf,
                 )
+                yielded += 1
+                if yielded >= count:
+                    return
             global_index += 1
     raise IndexError(
-        f"No Waymo E2E frame found at index {config.frame_index} in {config.path}."
+        f"Requested {count} Waymo E2E frames starting at {start_index}, "
+        f"but only {yielded} frame(s) were available in {config.path}."
     )
 
 

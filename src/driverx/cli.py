@@ -65,7 +65,15 @@ def _command_run_batch(args: argparse.Namespace) -> int:
     from driverx.pipeline.batch_run import run_batch
 
     config = _load_config_from_args(args)
-    result = run_batch(config, fixture_names=args.fixtures)
+    fixture_names = args.fixtures
+    if fixture_names is None and config.dataset.kind == "fixture":
+        fixture_names = ["construction_merge", "straight_clear"]
+    result = run_batch(
+        config,
+        fixture_names=fixture_names,
+        frame_start=args.frame_start,
+        frame_count=args.frame_count,
+    )
     print(json.dumps(result, indent=2))
     return 0
 
@@ -115,14 +123,24 @@ def build_parser() -> argparse.ArgumentParser:
 
     batch_parser = subparsers.add_parser(
         "run-batch",
-        help="Run a tiny validation batch over one or more fixture scenes.",
+        help="Run a tiny validation batch over fixture scenes or Waymo frames.",
     )
     _add_config_arg(batch_parser)
     batch_parser.add_argument(
         "--fixtures",
         nargs="+",
-        default=["construction_merge", "straight_clear"],
-        help="Fixture names to run.",
+        default=None,
+        help="Fixture names to run. Defaults to two fixtures for fixture configs.",
+    )
+    batch_parser.add_argument(
+        "--frame-start",
+        type=int,
+        help="First global Waymo frame index to stream for dataset.kind=waymo.",
+    )
+    batch_parser.add_argument(
+        "--frame-count",
+        type=int,
+        help="Number of Waymo frames to stream for dataset.kind=waymo.",
     )
     batch_parser.set_defaults(func=_command_run_batch)
 

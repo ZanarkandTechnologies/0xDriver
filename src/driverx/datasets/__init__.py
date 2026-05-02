@@ -3,7 +3,7 @@
 from driverx.core.config import DatasetConfig
 from driverx.core.types import FrameBundle
 from driverx.datasets.fixtures import load_fixture_frame
-from driverx.datasets.waymo_e2e import load_waymo_frame
+from driverx.datasets.waymo_e2e import iter_waymo_frames, load_waymo_frame
 
 
 def load_frame(config: DatasetConfig) -> FrameBundle:
@@ -14,4 +14,4 @@ def load_frame(config: DatasetConfig) -> FrameBundle:
     raise ValueError(f"Unsupported dataset kind: {config.kind}")
 
 
-__all__ = ["load_frame", "load_fixture_frame", "load_waymo_frame"]
+__all__ = ["iter_waymo_frames", "load_frame", "load_fixture_frame", "load_waymo_frame"]
