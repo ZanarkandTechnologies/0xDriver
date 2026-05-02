@@ -18,12 +18,13 @@ fixture path:
 
 - [x] TASK-001 fixture-backed loop complete.
 - [x] Create TASK-002 for real Waymo/protobuf optional integration.
-- [ ] Add optional dependency metadata and config fields.
-- [ ] Implement real TFRecord loader path.
-- [ ] Implement official protobuf packaging path.
-- [ ] Add tests for optional-dependency and fixture continuity.
-- [ ] Update README and durable docs.
-- [ ] Run tests, review, and commit.
+- [x] Add optional dependency metadata and config fields.
+- [x] Implement real TFRecord loader path.
+- [x] Implement official protobuf packaging path.
+- [x] Add tests for optional-dependency and fixture continuity.
+- [x] Update README and durable docs.
+- [x] Run tests and commit implementation.
+- [ ] Run review and final QA.
 
 ## Commit Plan
 
@@ -37,6 +38,8 @@ fixture path:
 
 - Real Waymo data is not needed to implement the optional parser, but it is
   needed to validate against an actual downloaded shard.
+- Current clean proof without real data is: optional dependency paths fail with
+  actionable setup guidance and no traceback.
 - Mock/fixture runs remain the default proof path so the repo works without
   cloud GPU, TensorFlow, Waymo downloads, or model credentials.
 - Cloud VLA backends remain out of scope until official data/package surfaces

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import importlib
 import json
+import re
 import struct
 from pathlib import Path
 from typing import Any
@@ -20,6 +21,9 @@ WAYMO_SUBMISSION_INSTALL_HINT = (
 
 class WaymoSubmissionDependencyError(ImportError):
     """Raised when official submission packaging is requested without Waymo deps."""
+
+
+PARAMETER_COUNT_PATTERN = re.compile(r"^\d+[KMBTPE]$")
 
 
 def _varint(value: int) -> bytes:
@@ -128,6 +132,15 @@ message E2EDChallengeSubmissionDryRun {
     return schema_path
 
 
+def _public_model_names(metadata: dict[str, Any]) -> list[str]:
+    raw_names = metadata.get("public_model_names")
+    if isinstance(raw_names, list):
+        return [str(name) for name in raw_names if str(name)]
+    if isinstance(raw_names, str) and raw_names.strip():
+        return [part.strip() for part in raw_names.split(",") if part.strip()]
+    return ["mock-vla-intent-reasoner"]
+
+
 def _build_package(run_dir: Path) -> dict[str, Any]:
     trajectory_path = run_dir / "selected_trajectory.json"
     frame_path = run_dir / "frame.json"
@@ -155,8 +168,8 @@ def _build_package(run_dir: Path) -> dict[str, Any]:
         "method_link": str(metadata.get("method_link", "")),
         "description": str(metadata.get("description", "")),
         "uses_public_model_pretraining": True,
-        "public_model_names": ["mock-vla-intent-reasoner"],
-        "num_model_parameters": "0",
+        "public_model_names": _public_model_names(metadata),
+        "num_model_parameters": str(metadata.get("num_model_parameters", "0K")),
         "predictions": [
             {
                 "frame_name": frame["frame_name"],
@@ -168,6 +181,36 @@ def _build_package(run_dir: Path) -> dict[str, Any]:
         ],
     }
     return package
+
+
+def _validate_official_package(package: dict[str, Any]) -> None:
+    if not package["account_name"] or "@" not in package["account_name"]:
+        raise ValueError(
+            "Official Waymo submission requires account_name to be the email "
+            "used to register at waymo.com/open."
+        )
+    if not package["unique_method_name"]:
+        raise ValueError("Official Waymo submission requires unique_method_name.")
+    if not package["authors"] or not all(package["authors"]):
+        raise ValueError("Official Waymo submission requires at least one author.")
+    if not PARAMETER_COUNT_PATTERN.fullmatch(package["num_model_parameters"]):
+        raise ValueError(
+            "Official Waymo submission requires num_model_parameters as an "
+            "integer plus suffix, for example '200K', '7B', or '0K'."
+        )
+    if package["uses_public_model_pretraining"] and not package["public_model_names"]:
+        raise ValueError(
+            "Official Waymo submission requires public_model_names when "
+            "uses_public_model_pretraining is true."
+        )
+    for prediction in package["predictions"]:
+        pos_x = prediction["trajectory"]["pos_x"]
+        pos_y = prediction["trajectory"]["pos_y"]
+        if len(pos_x) != 20 or len(pos_y) != 20:
+            raise ValueError(
+                "Official Waymo submission trajectories must contain exactly "
+                "20 x/y waypoints."
+            )
 
 
 def _write_dry_run_package(
@@ -191,6 +234,7 @@ def _write_official_package(
     run_dir: Path, package: dict[str, Any], output_path: Path | None
 ) -> dict[str, Any]:
     submission_pb2 = _load_submission_pb2()
+    _validate_official_package(package)
     predictions = []
     for prediction in package["predictions"]:
         trajectory = submission_pb2.TrajectoryPrediction(

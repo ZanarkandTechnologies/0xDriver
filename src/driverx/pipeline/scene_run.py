@@ -48,6 +48,7 @@ def _metadata_payload(config: DriverConfig) -> dict[str, Any]:
         "method_name": config.method_name,
         "method_link": config.method_link,
         "description": config.description,
+        "num_model_parameters": config.num_model_parameters,
         "dataset": {
             "kind": config.dataset.kind,
             "name": config.dataset.name,

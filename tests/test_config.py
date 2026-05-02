@@ -23,6 +23,12 @@ class ConfigTest(unittest.TestCase):
         self.assertEqual(config.dataset.kind, "waymo")
         self.assertEqual(config.dataset.path, Path("tests/fixtures/waymo_e2e_frame.json"))
 
+    def test_blank_top_level_metadata_fields_remain_empty_strings(self) -> None:
+        config = load_config(Path("configs/waymo_local.sample.yaml"))
+        self.assertEqual(config.account_name, "")
+        self.assertEqual(config.method_link, "")
+        self.assertEqual(config.num_model_parameters, "0K")
+
 
 if __name__ == "__main__":
     unittest.main()

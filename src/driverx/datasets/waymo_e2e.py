@@ -60,15 +60,22 @@ def load_waymo_tfrecord_frame(config: DatasetConfig) -> FrameBundle:
 
     paths = _expand_tfrecord_paths(config.path)
     tf, e2e_pb2 = _load_waymo_dependencies()
-    dataset = tf.data.TFRecordDataset([str(path) for path in paths], compression_type="")
-    for index, raw_data in enumerate(dataset.as_numpy_iterator()):
-        if config.limit is not None and index >= config.limit:
-            break
-        if index < config.frame_index:
-            continue
-        frame = e2e_pb2.E2EDFrame()
-        frame.ParseFromString(raw_data)
-        return _frame_from_waymo_proto(frame, source_path=paths[0], frame_index=index, tf=tf)
+    global_index = 0
+    for path in paths:
+        dataset = tf.data.TFRecordDataset([str(path)], compression_type="")
+        for raw_data in dataset.as_numpy_iterator():
+            if config.limit is not None and global_index >= config.limit:
+                break
+            if global_index == config.frame_index:
+                frame = e2e_pb2.E2EDFrame()
+                frame.ParseFromString(raw_data)
+                return _frame_from_waymo_proto(
+                    frame,
+                    source_path=path,
+                    frame_index=global_index,
+                    tf=tf,
+                )
+            global_index += 1
     raise IndexError(
         f"No Waymo E2E frame found at index {config.frame_index} in {config.path}."
     )

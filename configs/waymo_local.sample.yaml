@@ -19,3 +19,4 @@ account_name:
 method_name: waymo_e2e_intent_planner
 method_link:
 description: Latency-aware VLA-intent trajectory planner for Waymo E2E scenes.
+num_model_parameters: 0K

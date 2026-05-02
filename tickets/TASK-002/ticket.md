@@ -111,21 +111,21 @@ and, when requested, uses the official Waymo submission protobuf class.
 
 ## Acceptance Criteria
 
-- [ ] `dataset.kind=waymo` still loads the JSON fixture without TensorFlow.
-- [ ] A TFRecord path/glob/directory attempts real Waymo parsing through optional
+- [x] `dataset.kind=waymo` still loads the JSON fixture without TensorFlow.
+- [x] A TFRecord path/glob/directory attempts real Waymo parsing through optional
   official dependencies.
-- [ ] Missing optional dependencies fail with a clear install command and no
+- [x] Missing optional dependencies fail with a clear install command and no
   stack-trace mystery.
-- [ ] `package-submission --official` uses official Waymo protobufs when present
+- [x] `package-submission --official` uses official Waymo protobufs when present
   and fails clearly otherwise.
-- [ ] Default mock pipeline tests still pass with no optional Waymo deps.
-- [ ] README documents what the user must download/configure for real validation.
+- [x] Default mock pipeline tests still pass with no optional Waymo deps.
+- [x] README documents what the user must download/configure for real validation.
 
 ## Evidence Checklist
 
-- [ ] Unit tests for loader and packager optional paths.
-- [ ] `bash scripts/pre_push_check.sh` output.
-- [ ] Waymo fixture smoke artifact.
+- [x] Unit tests for loader and packager optional paths.
+- [x] `bash scripts/pre_push_check.sh` output.
+- [x] Waymo fixture smoke artifact.
 - [ ] Review result linked.
 
 ## Build Notes
@@ -133,25 +133,43 @@ and, when requested, uses the official Waymo submission protobuf class.
 Starting from TASK-001 fixture-backed v1. Real Waymo data is not committed and
 is not required for local CI.
 
+Implemented in modular commits:
+
+- `445535e docs(ticket): start waymo integration task`
+- `b8a0046 feat(waymo): add optional e2e integration`
+
+Fresh validation:
+
+- `bash scripts/pre_push_check.sh`: PASS, 24 tests.
+- `driverx inspect-scene --config configs/waymo_fixture.yaml --run-id task2-waymo-fixture`: PASS.
+- `driverx run-scene --config configs/mock.yaml --run-id task2-mock-run`: PASS, ADE `0.779339`.
+- `driverx package-submission --run-dir artifacts/runs/task2-mock-run --official`: expected setup failure, clean `driverx error:` message, exit code `2`.
+- `WAYMO_E2E_TFRECORD=/tmp/driverx_empty_waymo.tfrecord driverx inspect-scene --config configs/waymo_local.sample.yaml`: expected setup failure, clean `driverx error:` message, exit code `2`.
+
 ## QA Reconciliation
 
-- AC-1: NOT RUN
-- AC-2: NOT RUN
-- AC-3: NOT RUN
-- AC-4: NOT RUN
+- AC-1: PASS
+- AC-2: PASS
+- AC-3: PASS
+- AC-4: PASS
 
 ## Artifact Links
 
-- Pending.
+- Waymo fixture inspect artifact: `artifacts/runs/task2-waymo-fixture/scene_inspection.svg`
+- Mock run prediction artifact: `artifacts/runs/task2-mock-run/scene_prediction.svg`
+- Mock run metrics: `artifacts/runs/task2-mock-run/metrics.json`
+- Mock run submission dry-run: `artifacts/runs/task2-mock-run/submission_dry_run.json`
+- Mock run local protobuf shard: `artifacts/runs/task2-mock-run/submission_shard_00000.pb`
+- Review result: pending.
 
 ## User Evidence
 
-- Hero artifact: pending.
-- Supporting evidence: pending.
-- QA report: pending.
-- Final verdict: pending.
+- Hero artifact: `artifacts/runs/task2-mock-run/scene_prediction.svg`
+- Supporting evidence: `artifacts/runs/task2-waymo-fixture/scene_inspection.svg`
+- QA report: pending final QA lane.
+- Final verdict: implementation checks pass; review/QA pending.
 
 ## Required Evidence
 
-- [ ] Unit/integration/e2e tests pass as applicable.
-- [ ] Typecheck/lint gate passes through `scripts/pre_push_check.sh`.
+- [x] Unit/integration/e2e tests pass as applicable.
+- [x] Typecheck/lint gate passes through `scripts/pre_push_check.sh`.

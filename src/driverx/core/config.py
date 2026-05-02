@@ -41,6 +41,7 @@ class DriverConfig:
     method_name: str = "fixture_vla_intent_planner"
     method_link: str = ""
     description: str = ""
+    num_model_parameters: str = "0K"
 
     def to_jsonable(self) -> dict[str, Any]:
         return {
@@ -65,6 +66,7 @@ class DriverConfig:
             "method_name": self.method_name,
             "method_link": self.method_link,
             "description": self.description,
+            "num_model_parameters": self.num_model_parameters,
         }
 
 
@@ -116,8 +118,7 @@ def _parse_simple_yaml(text: str) -> dict[str, Any]:
     replace these sample configs with JSON for more complex cases.
     """
 
-    root: dict[str, Any] = {}
-    current_section: str | None = None
+    parsed_lines: list[tuple[str, int, str, str]] = []
     for raw_line in text.splitlines():
         line_without_comment = raw_line.split("#", 1)[0].rstrip()
         if not line_without_comment.strip():
@@ -126,10 +127,24 @@ def _parse_simple_yaml(text: str) -> dict[str, Any]:
         if ":" not in line_without_comment:
             raise ValueError(f"Unsupported config line: {raw_line}")
         key, value = line_without_comment.strip().split(":", 1)
+        parsed_lines.append((raw_line, indent, key, value))
+
+    root: dict[str, Any] = {}
+    current_section: str | None = None
+    for index, (raw_line, indent, key, value) in enumerate(parsed_lines):
         if indent == 0:
             if value.strip() == "":
-                root[key] = {}
-                current_section = key
+                next_indent = (
+                    parsed_lines[index + 1][1]
+                    if index + 1 < len(parsed_lines)
+                    else 0
+                )
+                if next_indent > indent:
+                    root[key] = {}
+                    current_section = key
+                else:
+                    root[key] = None
+                    current_section = None
             else:
                 root[key] = _parse_scalar(value)
                 current_section = None
@@ -141,6 +156,13 @@ def _parse_simple_yaml(text: str) -> dict[str, Any]:
         else:
             raise ValueError(f"Unsupported config indentation: {raw_line}")
     return root
+
+
+def _string_field(raw: dict[str, Any], key: str, default: str = "") -> str:
+    value = raw.get(key, default)
+    if value is None:
+        return default
+    return str(value)
 
 
 def load_config(path: Path) -> DriverConfig:
@@ -183,10 +205,11 @@ def load_config(path: Path) -> DriverConfig:
         dataset=dataset,
         reasoner=reasoner,
         output=output,
-        author=str(raw.get("author", "0xDriver")),
-        affiliation=str(raw.get("affiliation", "Independent")),
-        account_name=str(raw.get("account_name", "")),
-        method_name=str(raw.get("method_name", "fixture_vla_intent_planner")),
-        method_link=str(raw.get("method_link", "")),
-        description=str(raw.get("description", "")),
+        author=_string_field(raw, "author", "0xDriver"),
+        affiliation=_string_field(raw, "affiliation", "Independent"),
+        account_name=_string_field(raw, "account_name", ""),
+        method_name=_string_field(raw, "method_name", "fixture_vla_intent_planner"),
+        method_link=_string_field(raw, "method_link", ""),
+        description=_string_field(raw, "description", ""),
+        num_model_parameters=_string_field(raw, "num_model_parameters", "0K"),
     )
