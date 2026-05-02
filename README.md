@@ -126,3 +126,7 @@ PYTHONPATH=src python3 -m driverx run-scene --config configs/waymo_local.sample.
 If the optional packages are missing, the Waymo loader and `--official`
 submission mode fail with install guidance instead of importing TensorFlow at
 normal startup.
+
+Before using `--official`, fill the submission metadata in your config:
+`account_name` must be the email registered at `waymo.com/open`, and
+`num_model_parameters` must include a suffix such as `200K`, `7B`, or `0K`.

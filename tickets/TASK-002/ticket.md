@@ -140,7 +140,7 @@ Implemented in modular commits:
 
 Fresh validation:
 
-- `bash scripts/pre_push_check.sh`: PASS, 24 tests.
+- `bash scripts/pre_push_check.sh`: PASS, 28 tests.
 - `driverx inspect-scene --config configs/waymo_fixture.yaml --run-id task2-waymo-fixture`: PASS.
 - `driverx run-scene --config configs/mock.yaml --run-id task2-mock-run`: PASS, ADE `0.779339`.
 - `driverx package-submission --run-dir artifacts/runs/task2-mock-run --official`: expected setup failure, clean `driverx error:` message, exit code `2`.
