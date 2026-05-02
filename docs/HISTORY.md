@@ -12,3 +12,4 @@
 2026-05-02 21:02 +0800 | QA | TASK-004 passed final review and QA with real 10-frame Waymo batch baseline evidence
 2026-05-02 21:34 +0800 | TASK | started TASK-005 batch experiment harness to compare current planner against deterministic baselines
 2026-05-02 21:34 +0800 | SHIP | added rule trajectory baselines and cross-strategy experiment runner
+2026-05-02 21:46 +0800 | QA | TASK-005 passed final review and QA with real Waymo experiment comparison evidence

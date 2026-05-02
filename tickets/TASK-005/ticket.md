@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: building
+- state: done
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-004
@@ -237,16 +237,16 @@ Recommended now/later boundary:
 
 ## Acceptance Criteria
 
-- [ ] `run-experiment` works on fixture configs without TensorFlow.
-- [ ] `run-experiment` works on fake Waymo frames in unit tests without TensorFlow.
-- [ ] `run-experiment` supports `--frame-start` and `--frame-count`.
-- [ ] Waymo experiments default to 10 frames when no count is supplied.
-- [ ] Experiment output includes per-frame strategy artifacts,
+- [x] `run-experiment` works on fixture configs without TensorFlow.
+- [x] `run-experiment` works on fake Waymo frames in unit tests without TensorFlow.
+- [x] `run-experiment` supports `--frame-start` and `--frame-count`.
+- [x] Waymo experiments default to 10 frames when no count is supplied.
+- [x] Experiment output includes per-frame strategy artifacts,
   `experiment_summary.json`, and `experiment_report.md`.
-- [ ] Report includes strategy mean ADE table, per-frame ADE table, best/worst
+- [x] Report includes strategy mean ADE table, per-frame ADE table, best/worst
   strategy, and labels `oracle_best_rule` as analysis-only.
-- [ ] Real Docker run over the downloaded validation shard completes.
-- [ ] No dataset shards, generated artifacts, or credentials are committed.
+- [x] Real Docker run over the downloaded validation shard completes.
+- [x] No dataset shards, generated artifacts, or credentials are committed.
 
 ## Verification
 
@@ -267,13 +267,58 @@ scripts/run_waymo_docker.sh python -m driverx run-experiment \
 
 ## Evidence
 
-- Local test output:
-- Docker command output:
-- `artifacts/runs/waymo-experiment-10/experiment_summary.json`:
-- `artifacts/runs/waymo-experiment-10/experiment_report.md`:
-- Worst strategy/frame evidence:
-- Review:
-- QA:
+- Local test output: `bash scripts/pre_push_check.sh` passed with 39 tests.
+- Docker command output: `waymo-experiment-10` completed over 10 real frames.
+- `artifacts/runs/waymo-experiment-10/experiment_summary.json`: captured.
+- `artifacts/runs/waymo-experiment-10/experiment_report.md`: captured.
+- Worst strategy/frame evidence: intent planner worst ADE `13.953167` at frame
+  index `6`; constant acceleration worst ADE `9.15508` at the same frame.
+- Review: `docs/reviews/TASK-005-experiment-review.md`
+- QA: `tickets/TASK-005/artifacts/qa/2026-05-02T133535Z/report.md`
+
+## Build Notes
+
+- `5ee7470` created the TASK-005 plan.
+- `ae2cf7a` added deterministic rule baselines.
+- `1775dce` added the experiment runner and `run-experiment` CLI.
+- `fdbe67a` documented the comparison workflow and durable baseline rule.
+- Real Waymo experiment result: best deployable strategy is
+  `constant_acceleration` mean ADE `3.73323`; current `intent_planner` mean ADE
+  is `6.204769`; `oracle_best_rule` mean ADE is `3.732298` and analysis-only.
+
+## QA Reconciliation
+
+- Fixture experiment: PASS
+- Fake Waymo experiment: PASS
+- CLI frame controls: PASS
+- Default Waymo frame count: PASS
+- Experiment summary/report: PASS
+- Real Docker proof: PASS
+- Review: PASS, final score `4.3 / 5.0`
+- QA report: PASS
+
+## Artifact Links
+
+- `artifacts/runs/waymo-experiment-10/experiment_summary.json`
+- `artifacts/runs/waymo-experiment-10/experiment_report.md`
+- `tickets/TASK-005/artifacts/qa/2026-05-02T133535Z/report.md`
+- `docs/reviews/TASK-005-experiment-review.md`
+
+## User Evidence
+
+- Final verdict: PASS for batch experiment harness and deterministic baseline comparison.
+- Supporting evidence: `waymo-experiment-10` compared six strategies over 10
+  real Waymo validation frames and showed `constant_acceleration` beating the
+  mock `intent_planner`.
+- QA report: `tickets/TASK-005/artifacts/qa/2026-05-02T133535Z/report.md`
+- Review result: `docs/reviews/TASK-005-experiment-review.md`
+
+## Required Evidence
+
+- [x] Unit/integration/e2e tests pass as applicable.
+- [x] Docker real-data experiment proof captured.
+- [x] QA report attached.
+- [x] Final review attached.
 
 ## Blockers
 

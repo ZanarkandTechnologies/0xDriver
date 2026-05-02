@@ -1,0 +1,11 @@
+{
+  "ticket_id": "TASK-005",
+  "phase": "qa",
+  "verdict": "pass",
+  "summary": "QA proved fixture and fake-Waymo experiment paths, CLI frame controls, default Waymo count behavior, real 10-frame Docker comparison, and aggregate experiment artifacts.",
+  "artifacts": [
+    "tickets/TASK-005/artifacts/qa/2026-05-02T133535Z/report.md",
+    "artifacts/runs/waymo-experiment-10/experiment_summary.json",
+    "artifacts/runs/waymo-experiment-10/experiment_report.md"
+  ]
+}

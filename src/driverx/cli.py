@@ -167,7 +167,7 @@ def build_parser() -> argparse.ArgumentParser:
     experiment_parser.add_argument(
         "--frame-count",
         type=int,
-        help="Number of Waymo frames to stream for dataset.kind=waymo.",
+        help="Number of Waymo frames to stream. Defaults to 10 for dataset.kind=waymo.",
     )
     experiment_parser.set_defaults(func=_command_run_experiment)
 

@@ -160,7 +160,8 @@ frame also keeps the normal `scene_prediction.svg`, `metrics.json`, and
 `timings.json` artifacts.
 
 Compare the current intent planner against non-VLA rule baselines on the same
-real slice:
+real slice. When `dataset.kind=waymo`, `run-experiment` defaults to 10 frames
+if `--frame-count` is omitted:
 
 ```bash
 WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \

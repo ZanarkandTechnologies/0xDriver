@@ -42,7 +42,7 @@ before adding VLA/GPU serving:
 - [x] Add `run-experiment` CLI.
 - [x] Run local experiment tests.
 - [x] Run real 10-frame Waymo Docker experiment.
-- [ ] Attach TASK-005 review and QA evidence.
+- [x] Attach TASK-005 review and QA evidence.
 
 ## Commit Plan
 
