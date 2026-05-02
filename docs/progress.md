@@ -4,14 +4,13 @@ Live orchestration log for the first 0xDriver implementation pass.
 
 ## Current Goal
 
-Establish a compatible real Waymo runtime and smoke-test the downloaded
-validation shard:
+Establish the first real-data Waymo batch baseline before adding VLA/GPU serving:
 
-- document macOS ARM native package limitation
-- build Linux amd64 Docker image with official Waymo dependencies
-- run import smoke inside Docker
-- run the validation TFRecord through `driverx inspect-scene`
-- capture the next parser/runtime issue if the real shard exposes one
+- stream a configurable validation frame range once
+- preserve fixture `run-batch` compatibility
+- write per-frame artifacts under the batch root
+- write `batch_summary.json` and `batch_report.md`
+- identify the best/worst ADE scenes and worst-scene SVG failure case
 
 ## Checklist
 
@@ -29,14 +28,20 @@ validation shard:
 - [x] Smoke-test imports inside Docker.
 - [x] Run validation shard through the loader.
 - [x] Document the local-vs-cloud GPU workflow.
+- [x] Create TASK-004 for real Waymo batch baseline.
+- [x] Add loaded-frame execution seam.
+- [x] Add streaming Waymo frame iterator.
+- [x] Extend `run-batch` with Waymo frame ranges and report aggregation.
+- [x] Add fake-Waymo unit tests for batch aggregation.
+- [x] Run real 10-frame Waymo Docker baseline.
+- [ ] Attach TASK-004 review and QA evidence.
 
 ## Commit Plan
 
-1. Ticket and config/dependency metadata.
-2. Waymo loader implementation.
-3. Official submission packager implementation.
-4. Tests and docs.
-5. Review, QA evidence, and commit.
+1. Ticket start.
+2. Streaming batch implementation and unit tests.
+3. Docs and durable baseline rule.
+4. Review, QA evidence, and closeout.
 
 ## Notes
 
@@ -62,3 +67,10 @@ validation shard:
 - Linux native dependency guidance now points to `requirements/waymo-linux.txt`;
   `pip install --dry-run -r requirements/waymo-linux.txt` resolves the Waymo
   tree and finds `jaxlib==0.4.13` through the configured JAX wheel index.
+- TASK-004 local proof: `bash scripts/pre_push_check.sh` passes with 31 unittest
+  cases after adding Waymo batch aggregation tests.
+- TASK-004 Docker proof: `waymo-batch-10` streamed 10 validation frames, wrote
+  `artifacts/runs/waymo-batch-10/batch_summary.json` and
+  `artifacts/runs/waymo-batch-10/batch_report.md`, produced mean ADE
+  `6.204769`, best ADE `0.517203` at frame index `4`, and worst ADE
+  `13.953167` at frame index `6`.

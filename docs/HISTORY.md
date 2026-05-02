@@ -7,3 +7,5 @@
 2026-05-02 16:23 +0800 | TASK | started TASK-003 Waymo Linux Docker runtime after native macOS ARM dependency install failed
 2026-05-02 19:05 +0800 | SHIP | built Linux amd64 Waymo Docker runtime and ran downloaded validation shard through inspect and baseline planner paths
 2026-05-02 19:32 +0800 | QA | TASK-003 passed final runtime review with Docker, real-shard, and Linux requirements evidence
+2026-05-02 20:42 +0800 | TASK | started TASK-004 real Waymo batch baseline after single-frame Docker proof passed
+2026-05-02 20:50 +0800 | SHIP | added streaming Waymo batch execution with aggregate ADE and latency reporting

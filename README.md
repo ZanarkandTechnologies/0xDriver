@@ -71,11 +71,11 @@ planning code should turn that intent into valid trajectories.
 
 ## Current Status
 
-TASK-001 and TASK-002 are complete: the repo can run without Waymo data or a VLA
-model, ingest optional real Waymo TFRecords, and package official submission
-protobufs when the Waymo dependencies are available. TASK-003 is establishing a
-repeatable Linux Docker runtime for those official dependencies on Apple
-Silicon.
+TASK-001 through TASK-004 are complete enough to establish the first measuring
+stick: the repo can run without Waymo data or a VLA model, ingest optional real
+Waymo TFRecords through Docker, package official submission protobufs when the
+Waymo dependencies are available, and stream a small real Waymo validation batch
+into `batch_summary.json` plus `batch_report.md`.
 
 ## Quickstart
 
@@ -91,6 +91,9 @@ PYTHONPATH=src python3 -m driverx run-scene --config configs/mock.yaml --run-id 
 
 # Run a tiny fixture validation batch
 PYTHONPATH=src python3 -m driverx run-batch --config configs/mock.yaml --run-id demo-batch
+
+# Run a Waymo-shaped fixture through the Waymo batch path
+PYTHONPATH=src python3 -m driverx run-batch --config configs/waymo_fixture.yaml --run-id waymo-fixture-batch --frame-count 1
 
 # Evaluate an existing run directory
 PYTHONPATH=src python3 -m driverx evaluate --run-dir artifacts/runs/demo
@@ -133,6 +136,23 @@ WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \
   scripts/run_waymo_docker.sh \
   python -m driverx run-scene --config configs/waymo_local.sample.yaml --run-id waymo-smoke
 ```
+
+Run the first real-data batch baseline before changing planner or VLA-serving
+logic:
+
+```bash
+WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \
+  scripts/run_waymo_docker.sh \
+  python -m driverx run-batch \
+    --config configs/waymo_local.sample.yaml \
+    --run-id waymo-batch-10 \
+    --frame-start 0 \
+    --frame-count 10
+```
+
+The batch root will include `batch_summary.json` and `batch_report.md`; each
+frame also keeps the normal `scene_prediction.svg`, `metrics.json`, and
+`timings.json` artifacts.
 
 On a Linux x86_64 machine, such as a rented GPU server, the same image can be
 built natively. If you do not use Docker there, install the Waymo dependency

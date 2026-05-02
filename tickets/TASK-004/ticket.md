@@ -55,12 +55,12 @@ honest baseline for local Docker and later cloud GPU experiments.
 
 ### Acceptance Criteria
 
-- [ ] Fixture `run-batch` behavior remains compatible with existing tests and CLI defaults.
-- [ ] Waymo `run-batch` supports configurable `frame_start` and `frame_count`.
-- [ ] Waymo batch defaults to 10 frames when no count is supplied.
-- [ ] Real Waymo batch output includes per-frame run dirs, `batch_summary.json`, and `batch_report.md`.
-- [ ] Report includes ADE table, latency table, best/worst scene, and a path to the worst-scene SVG.
-- [ ] No dataset shards, generated artifacts, or credentials are committed.
+- [x] Fixture `run-batch` behavior remains compatible with existing tests and CLI defaults.
+- [x] Waymo `run-batch` supports configurable `frame_start` and `frame_count`.
+- [x] Waymo batch defaults to 10 frames when no count is supplied.
+- [x] Real Waymo batch output includes per-frame run dirs, `batch_summary.json`, and `batch_report.md`.
+- [x] Report includes ADE table, latency table, best/worst scene, and a path to the worst-scene SVG.
+- [x] No dataset shards, generated artifacts, or credentials are committed.
 
 ### Agent Contract
 
@@ -76,36 +76,49 @@ honest baseline for local Docker and later cloud GPU experiments.
 
 ### Evidence Checklist
 
-- [ ] Snapshot: local unit/pre-push output
-- [ ] Snapshot: Docker real-data batch command output
-- [ ] Snapshot: `batch_summary.json`
-- [ ] Snapshot: `batch_report.md`
-- [ ] Snapshot: worst-scene `scene_prediction.svg` path
+- [x] Snapshot: local unit/pre-push output
+- [x] Snapshot: Docker real-data batch command output
+- [x] Snapshot: `batch_summary.json`
+- [x] Snapshot: `batch_report.md`
+- [x] Snapshot: worst-scene `scene_prediction.svg` path
 - [ ] QA report linked:
 
 ### Build Notes
 
 - Implementation started 2026-05-02 20:42 +0800.
 - Keep `mock` as the reasoner backend; no GPU or VLA service is introduced in this ticket.
+- Commit `f75405d` added `iter_waymo_frames`, `run_loaded_scene`, Waymo
+  `run-batch` frame ranges, batch summaries/reports, and fake-Waymo tests.
+- Local proof: `bash scripts/pre_push_check.sh` passed with 31 unittest cases.
+- Docker proof: `scripts/run_waymo_docker.sh python -m driverx run-batch
+  --config configs/waymo_local.sample.yaml --run-id waymo-batch-10
+  --frame-count 10` completed successfully.
+- Real batch result: mean ADE `6.204769`; best scene frame index `4` ADE
+  `0.517203`; worst scene frame index `6` ADE `13.953167`.
 
 ### QA Reconciliation
 
-- Fixture compatibility: PENDING
-- Waymo frame range: PENDING
-- Batch summary/report: PENDING
-- Real-data Docker proof: PENDING
+- Fixture compatibility: PASS
+- Waymo frame range: PASS
+- Batch summary/report: PASS
+- Real-data Docker proof: PASS
 - Review: PENDING
 
 ### Artifact Links
 
+- `artifacts/runs/waymo-batch-10/batch_summary.json`
+- `artifacts/runs/waymo-batch-10/batch_report.md`
+- `artifacts/runs/waymo-batch-10/frame-000006/scene_prediction.svg`
+
 ### User Evidence
 
 - Final verdict:
-- Supporting evidence:
+- Supporting evidence: `waymo-batch-10` real-data Docker run produced 10
+  per-frame run dirs, aggregate ADE/timing tables, and worst-scene SVG.
 - QA report:
 
 ### Required Evidence
 
-- [ ] Unit/integration/e2e tests pass as applicable.
-- [ ] Docker real-data batch proof captured.
+- [x] Unit/integration/e2e tests pass as applicable.
+- [x] Docker real-data batch proof captured.
 - [ ] Final review attached.
