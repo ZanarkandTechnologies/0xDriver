@@ -177,7 +177,7 @@ WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \
     --frame-count 10
 ```
 
-Compare the current intent planner against non-VLA rule baselines on the same
+Compare the current hybrid planner against non-VLA rule baselines on the same
 real slice. When `dataset.kind=waymo`, `run-experiment` defaults to 10 frames
 if `--frame-count` is omitted:
 

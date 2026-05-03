@@ -24,6 +24,7 @@ RULE_STRATEGIES = (
     "constant_acceleration",
     "cautious_stop",
 )
+MAIN_PLANNER_STRATEGY = "hybrid_planner"
 ANALYSIS_ONLY_STRATEGIES = {"oracle_best_rule"}
 
 
@@ -291,19 +292,19 @@ def _run_frame_experiment(
     frame_dir.mkdir(parents=True, exist_ok=False)
 
     strategy_results: dict[str, dict[str, Any]] = {}
-    intent_config = replace(
+    main_config = replace(
         config,
-        output=OutputConfig(root=frame_dir, run_id="intent_planner"),
+        output=OutputConfig(root=frame_dir, run_id=MAIN_PLANNER_STRATEGY),
     )
-    intent_result = run_loaded_scene(intent_config, frame)
-    if intent_result.selected_trajectory is not None:
-        trajectory_path = intent_result.run_dir / "selected_trajectory.json"
-        strategy_results["intent_planner"] = _strategy_result(
-            strategy="intent_planner",
+    main_result = run_loaded_scene(main_config, frame)
+    if main_result.selected_trajectory is not None:
+        trajectory_path = main_result.run_dir / "selected_trajectory.json"
+        strategy_results[MAIN_PLANNER_STRATEGY] = _strategy_result(
+            strategy=MAIN_PLANNER_STRATEGY,
             frame=frame,
-            candidate=intent_result.selected_trajectory,
+            candidate=main_result.selected_trajectory,
             trajectory_path=trajectory_path,
-            run_dir=intent_result.run_dir,
+            run_dir=main_result.run_dir,
         )
 
     strategy_results.update(_rule_strategy_results(frame, frame_dir))
@@ -311,7 +312,7 @@ def _run_frame_experiment(
         "frame_index": frame_index,
         "frame_name": frame.frame_name,
         "run_dir": str(frame_dir),
-        "intent_planner_run_dir": str(intent_result.run_dir),
+        "hybrid_planner_run_dir": str(main_result.run_dir),
         "strategies": strategy_results,
     }
 

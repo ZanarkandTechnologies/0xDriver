@@ -20,7 +20,7 @@ class ExperimentTest(unittest.TestCase):
 
             self.assertEqual(summary["dataset_kind"], "fixture")
             self.assertEqual(summary["num_scenes"], 1)
-            self.assertIn("intent_planner", summary["strategy_summaries"])
+            self.assertIn("hybrid_planner", summary["strategy_summaries"])
             self.assertIn("constant_velocity", summary["strategy_summaries"])
             self.assertIn("oracle_best_rule", summary["strategy_summaries"])
             self.assertTrue(Path(summary["summary_path"]).exists())

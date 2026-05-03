@@ -169,6 +169,8 @@ candidates
   `run-scene`/`run-batch` path through it.
 - Motion-prior candidates now carry `candidate_family=motion_prior`; semantic
   candidates carry `candidate_family=semantic_intent`.
+- `run-experiment` now labels the current main planner as `hybrid_planner`
+  rather than the stale `intent_planner` name.
 - The deployable rule score ordering now allows `constant_acceleration` to win
   when no safety/ranking penalty outweighs it.
 - Local gate passed with 40 unit tests.
