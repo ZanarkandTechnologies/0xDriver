@@ -1,0 +1,9 @@
+scenario:
+  seeds_path: tests/fixtures/fail2drive_like/seeds.json
+  count: 8
+  random_seed: 7
+  mutations: obstacle_substitution,occlusion,visual_noise,lane_blockage,regional_driving_behavior
+
+output:
+  root: artifacts/runs
+  run_id: scenario-forge

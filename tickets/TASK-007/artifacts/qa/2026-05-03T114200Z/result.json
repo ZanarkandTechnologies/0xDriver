@@ -1,0 +1,25 @@
+{
+  "ticket": "TASK-007",
+  "verdict": "PASS",
+  "qa_time": "2026-05-03 19:50 +0800",
+  "commands": [
+    "bash scripts/pre_push_check.sh",
+    "PYTHONPATH=src python3 -m driverx forge-scenarios --config configs/scenario_forge.sample.yaml --count 8 --seed 7 --run-id task7-scenario-forge",
+    "PYTHONPATH=src python3 -m driverx build-memory --results tests/fixtures/fail2drive_like/results.json --run-id task7-memory-bank",
+    "PYTHONPATH=src python3 -m driverx plan-carla-run --config configs/carla_local.sample.yaml --recipe artifacts/runs/task7-scenario-forge/scenario_recipes.json --recipe-id generated-base-animals-0076-visual-noise-000 --run-id task7-carla-plan",
+    "PYTHONPATH=src python3 -m driverx smoke-carla --config configs/carla_local.sample.yaml"
+  ],
+  "evidence": {
+    "scenario_report": "artifacts/runs/task7-scenario-forge/scenario_suite_report.md",
+    "memory_report": "artifacts/runs/task7-memory-bank/memory_bank.md",
+    "carla_plan": "artifacts/runs/task7-carla-plan/carla_command_plan.json",
+    "selected_recipe": "generated-base-animals-0076-visual-noise-000",
+    "selected_route": "/Users/kenjipcx/SOTA/external/fail2drive/fail2drive_split/Base_Animals_0076.xml",
+    "smoke_reachable": false
+  },
+  "residual_risk": [
+    "Apple Silicon CARLA wrapper not launched during QA.",
+    "Generated recipes are not yet exported into executable Fail2Drive XML.",
+    "Real SimLingo and Alpamayo policies remain follow-up runtime tickets."
+  ]
+}

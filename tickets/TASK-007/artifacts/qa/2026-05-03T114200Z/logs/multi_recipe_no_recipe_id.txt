@@ -1,0 +1,2 @@
+driverx error: artifacts/runs/task7-scenario-forge/scenario_recipes.json contains 8 recipes; pass --recipe-id to plan one explicit route.
+exit_code=2

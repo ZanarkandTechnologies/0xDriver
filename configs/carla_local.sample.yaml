@@ -1,0 +1,12 @@
+carla:
+  host: 127.0.0.1
+  port: 2000
+  timeout_s: 0.25
+  root:
+
+fail2drive:
+  root: ../external/fail2drive
+  route_path: fail2drive_split/Generalization_PedestriansOnRoad_1088.xml
+  agent_path: team_code/visu_agent.py
+  output_dir: artifacts/carla
+  track: MAP

@@ -1,0 +1,47 @@
+{
+  "results": [
+    {
+      "scenario_id": "Generalization_Animals_1078",
+      "policy": "fixture_policy",
+      "success": false,
+      "driving_score": 42.0,
+      "route_completion": 88.0,
+      "infractions": {
+        "collisions_layout": ["hit unfamiliar animal proxy"]
+      },
+      "failure_summary": "Policy ignored an unknown animal-like object on the route and treated occupied space as visual noise.",
+      "latency_ms": {
+        "policy_inference": 122.5
+      },
+      "tags": ["animals", "unknown_obstacle", "occupied_space"]
+    },
+    {
+      "scenario_id": "Generalization_PedestriansOnRoad_1088",
+      "policy": "fixture_policy",
+      "success": false,
+      "driving_score": 55.0,
+      "route_completion": 91.0,
+      "infractions": {
+        "collisions_pedestrian": ["late braking near crossing"]
+      },
+      "failure_summary": "Policy committed too early around a hidden pedestrian crossing and failed to creep through occlusion.",
+      "latency_ms": {
+        "policy_inference": 118.2
+      },
+      "tags": ["pedestrian", "hidden_hazard", "occlusion"]
+    },
+    {
+      "scenario_id": "Base_ClearRoute_0001",
+      "policy": "fixture_policy",
+      "success": true,
+      "driving_score": 98.0,
+      "route_completion": 100.0,
+      "infractions": {},
+      "failure_summary": null,
+      "latency_ms": {
+        "policy_inference": 90.0
+      },
+      "tags": ["clear"]
+    }
+  ]
+}

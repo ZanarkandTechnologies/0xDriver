@@ -18,3 +18,6 @@
 2026-05-03 14:34 +0800 | QA | TASK-006 passed review and QA with real hybrid Waymo batch and experiment evidence
 2026-05-03 18:37 +0800 | PLAN | reframed project PRD around CARLA plus Fail2Drive scenario generation, retrieval memory, SimLingo-first policy proof, Alpamayo adapter extension, and later serving acceleration
 2026-05-03 18:37 +0800 | PLAN | incorporated community Apple Silicon CARLA wrapper as optional local smoke-test path while preserving Linux NVIDIA as reproducible Fail2Drive/VLA runtime target
+2026-05-03 19:31 +0800 | TASK | started TASK-007 local scenario forge and CARLA smoke adapter with Fail2Drive cloned externally
+2026-05-03 19:50 +0800 | SHIP | added local scenario forge, failure memory bank, CARLA smoke check, and route-faithful Fail2Drive dry-run planning
+2026-05-03 19:50 +0800 | QA | TASK-007 passed local review and QA with 57-test pre-push gate and explicit recipe-to-route evidence

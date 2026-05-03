@@ -104,6 +104,138 @@ def _command_package_submission(args: argparse.Namespace) -> int:
     return 0
 
 
+def _mapping_output(raw: dict, default_run_id: str) -> OutputConfig:
+    from driverx.core.config import OutputConfig
+
+    output = raw.get("output", {})
+    if not isinstance(output, dict):
+        raise ValueError("Config field 'output' must be a mapping.")
+    return OutputConfig(
+        root=Path(str(output.get("root", "artifacts/runs"))),
+        run_id=str(output.get("run_id", default_run_id)),
+    )
+
+
+def _command_forge_scenarios(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.core.config import read_config_mapping
+    from driverx.scenarios import (
+        MutationPolicy,
+        generate_scenario_recipes,
+        load_scenario_seeds,
+        write_scenario_suite,
+    )
+
+    raw = read_config_mapping(args.config)
+    scenario = raw.get("scenario", {})
+    if not isinstance(scenario, dict):
+        raise ValueError("Config field 'scenario' must be a mapping.")
+    output = _mapping_output(raw, "scenario-forge")
+    if args.output_root is not None or args.run_id is not None:
+        output = OutputConfig(
+            root=args.output_root or output.root,
+            run_id=args.run_id if args.run_id is not None else output.run_id,
+        )
+    seed_path = Path(str(scenario.get("seeds_path", "tests/fixtures/fail2drive_like/seeds.json")))
+    count = args.count if args.count is not None else int(scenario.get("count", 8))
+    random_seed = args.seed if args.seed is not None else int(scenario.get("random_seed", 7))
+    mutations_raw = str(
+        scenario.get(
+            "mutations",
+            "obstacle_substitution,occlusion,visual_noise,lane_blockage,regional_driving_behavior",
+        )
+    )
+    mutations = tuple(item.strip() for item in mutations_raw.split(",") if item.strip())
+    seeds = load_scenario_seeds(seed_path)
+    recipes = generate_scenario_recipes(
+        seeds,
+        MutationPolicy(mutations=mutations),
+        count=count,
+        random_seed=random_seed,
+    )
+    run_dir = prepare_run_dir(output.root, output.run_id)
+    summary = write_scenario_suite(run_dir, seeds, recipes)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
+def _command_build_memory(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.memory import build_memory_bank, write_memory_bank
+    from driverx.scenarios import load_scenario_results
+
+    results = load_scenario_results(args.results)
+    bank = build_memory_bank(results)
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = write_memory_bank(run_dir, bank)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
+def _select_recipe_payload(
+    recipes: list[dict[str, object]],
+    recipe_id: str | None,
+    path: Path,
+) -> dict[str, object]:
+    if not recipes:
+        raise ValueError(f"No recipes found in {path}")
+    if recipe_id is not None:
+        for recipe in recipes:
+            if str(recipe.get("recipe_id")) == recipe_id:
+                return recipe
+        raise ValueError(f"Recipe id not found in {path}: {recipe_id}")
+    if len(recipes) == 1:
+        return recipes[0]
+    raise ValueError(
+        f"{path} contains {len(recipes)} recipes; pass --recipe-id to plan one explicit route."
+    )
+
+
+def _load_recipe(path: Path, recipe_id: str | None):
+    from driverx.scenarios import ScenarioRecipe
+
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(raw, list):
+        return ScenarioRecipe.from_jsonable(
+            _select_recipe_payload([dict(recipe) for recipe in raw], recipe_id, path)
+        )
+    if isinstance(raw, dict) and "recipes" in raw:
+        recipes = raw.get("recipes", [])
+        return ScenarioRecipe.from_jsonable(
+            _select_recipe_payload([dict(recipe) for recipe in recipes], recipe_id, path)
+        )
+    if isinstance(raw, dict):
+        if recipe_id is not None and str(raw.get("recipe_id")) != recipe_id:
+            raise ValueError(f"Recipe id not found in {path}: {recipe_id}")
+        return ScenarioRecipe.from_jsonable(raw)
+    raise ValueError(f"Unsupported recipe JSON: {path}")
+
+
+def _command_plan_carla_run(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import load_carla_run_config, plan_fail2drive_run
+
+    config = load_carla_run_config(args.config)
+    recipe = _load_recipe(args.recipe, args.recipe_id)
+    plan = plan_fail2drive_run(config, recipe)
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    path = run_dir / "carla_command_plan.json"
+    payload = plan.to_jsonable()
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    payload["plan_path"] = str(path)
+    print(json.dumps(payload, indent=2))
+    return 0
+
+
+def _command_smoke_carla(args: argparse.Namespace) -> int:
+    from driverx.simulators import load_carla_run_config, smoke_carla_server
+
+    config = load_carla_run_config(args.config)
+    result = smoke_carla_server(config.host, config.port, config.timeout_s)
+    print(json.dumps(result.to_jsonable(), indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -191,6 +323,59 @@ def build_parser() -> argparse.ArgumentParser:
     )
     package_parser.set_defaults(func=_command_package_submission)
 
+    forge_parser = subparsers.add_parser(
+        "forge-scenarios",
+        help="Generate deterministic OOD scenario recipes from Fail2Drive-style seeds.",
+    )
+    forge_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/scenario_forge.sample.yaml"),
+    )
+    forge_parser.add_argument("--count", type=int)
+    forge_parser.add_argument("--seed", type=int)
+    forge_parser.add_argument("--output-root", type=Path)
+    forge_parser.add_argument("--run-id")
+    forge_parser.set_defaults(func=_command_forge_scenarios)
+
+    memory_parser = subparsers.add_parser(
+        "build-memory",
+        help="Build compact safety memory from scenario result records.",
+    )
+    memory_parser.add_argument("--results", type=Path, required=True)
+    memory_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    memory_parser.add_argument("--run-id", default="memory-bank")
+    memory_parser.set_defaults(func=_command_build_memory)
+
+    plan_parser = subparsers.add_parser(
+        "plan-carla-run",
+        help="Write a dry-run CARLA/Fail2Drive command plan for one recipe.",
+    )
+    plan_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/carla_local.sample.yaml"),
+    )
+    plan_parser.add_argument("--recipe", type=Path, required=True)
+    plan_parser.add_argument(
+        "--recipe-id",
+        help="Recipe id to select when --recipe points at a multi-recipe suite.",
+    )
+    plan_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    plan_parser.add_argument("--run-id", default="carla-plan")
+    plan_parser.set_defaults(func=_command_plan_carla_run)
+
+    smoke_parser = subparsers.add_parser(
+        "smoke-carla",
+        help="Check whether a CARLA server TCP port is reachable.",
+    )
+    smoke_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/carla_local.sample.yaml"),
+    )
+    smoke_parser.set_defaults(func=_command_smoke_carla)
+
     config_parser = subparsers.add_parser(
         "show-config",
         help="Print the resolved config.",
@@ -206,7 +391,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         return int(args.func(args))
-    except (FileNotFoundError, ImportError, IndexError, ValueError) as exc:
+    except (FileNotFoundError, ImportError, IndexError, OSError, ValueError) as exc:
         print(f"driverx error: {exc}", file=sys.stderr)
         return 2
 

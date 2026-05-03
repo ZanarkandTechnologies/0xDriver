@@ -1,0 +1,51 @@
+ARCHITECTURE.md:3:0xDriver is now a CARLA/Fail2Drive-first minimal-shot autonomy harness. The
+ARCHITECTURE.md:4:Waymo E2E pipeline remains a supporting open-loop evidence track.
+ARCHITECTURE.md:11:memory, and prepares CARLA/Fail2Drive runs without requiring CARLA during local
+ARCHITECTURE.md:18:    A["Fail2Drive route XML or fixture seeds"] --> B["Scenario seed loader"]
+ARCHITECTURE.md:21:    E["Fail2Drive result records"] --> F["Failure memory builder"]
+ARCHITECTURE.md:26:    C --> J["CARLA/Fail2Drive command planner"]
+ARCHITECTURE.md:28:    L["Waymo E2E support track"] --> M["Open-loop ADE and trajectory evidence"]
+ARCHITECTURE.md:37:- `src/driverx/simulators`: CARLA smoke checks and Fail2Drive command planning.
+ARCHITECTURE.md:39:  Waymo/open-loop support track.
+ARCHITECTURE.md:47:- Fail2Drive command dry-runs
+ARCHITECTURE.md:48:- optional Apple Silicon CARLA TCP smoke checks
+ARCHITECTURE.md:49:- Waymo fixture and Docker bridge commands
+ARCHITECTURE.md:53:- reproducible CARLA/Fail2Drive execution
+ARCHITECTURE.md:65:6. archived tickets for prior Waymo evidence when needed
+ARCHITECTURE.md:69:- TASK-007 does not run SimLingo, Alpamayo, or live Fail2Drive.
+ARCHITECTURE.md:70:- CARLA on Apple Silicon is treated as an optional smoke path until server,
+ARCHITECTURE.md:71:  Python client, Fail2Drive, and policy execution work together.
+README.md:6:> Use CARLA/Fail2Drive to generate closed-loop long-tail scenarios, turn policy
+README.md:10:The earlier Waymo E2E work remains in the repo as an open-loop real-data support
+README.md:11:track. The main submission direction is now CARLA/Fail2Drive scenario
+README.md:18:- load Fail2Drive route seeds or tiny local fixtures
+README.md:21:- prepare CARLA/Fail2Drive dry-run command plans
+README.md:22:- smoke-check a local CARLA server when available
+README.md:23:- preserve Waymo ADE/batch evidence as supporting real-world context
+README.md:29:    A["Fail2Drive routes / fixture seeds"] --> B["Scenario seed loader"]
+README.md:36:    C --> I["CARLA/Fail2Drive dry-run command plan"]
+README.md:38:    K["Waymo E2E support track"] --> L["Open-loop ADE evidence"]
+README.md:45:- [Fail2Drive](https://github.com/autonomousvision/fail2drive): paired
+README.md:46:  CARLA routes for closed-loop generalization, 17 unseen scenario classes, novel
+README.md:48:- [CARLA](https://carla.readthedocs.io/en/latest/start_introduction/): Unreal
+README.md:50:- [SimLingo](https://github.com/RenzKa/simlingo): CARLA-native VLA-style policy
+README.md:54:- [Waymo Open Dataset](https://waymo.com/open/): retained as real logged
+README.md:62:- `tickets/archive/`: completed Waymo/fixture support-track tickets.
+README.md:65:- `src/driverx/simulators/`: CARLA smoke checks and Fail2Drive command plans.
+README.md:66:- `src/driverx/datasets/`, `planning/`, `pipeline/`, `submission/`: Waymo and
+README.md:71:TASK-001 through TASK-006 established a working Waymo/open-loop measuring stick:
+README.md:72:fixture runs, optional real Waymo TFRecords through Docker, streaming batch
+README.md:77:CARLA/Fail2Drive dry-run planning without requiring CARLA to be installed.
+README.md:93:# Plan a dry-run Fail2Drive/CARLA command from one generated recipe file
+README.md:99:# Check whether a local CARLA server is reachable
+README.md:107:## External Fail2Drive Checkout
+README.md:109:Fail2Drive is used as a read-only external reference, not vendored into this
+README.md:119:CARLA, Conda, or model checkpoints.
+README.md:121:## Optional CARLA On Apple Silicon
+README.md:123:CARLA can reportedly run on Apple Silicon through a community
+README.md:124:Wine/Kegworks/D3DMetal wrapper for the Windows CARLA package. Treat that as a
+README.md:125:local smoke-test path until CARLA server, Python client, Fail2Drive routes, and
+README.md:128:For reproducible Fail2Drive + VLA experiments, use Linux NVIDIA hardware.
+README.md:130:## Waymo Support Track
+README.md:132:The existing Waymo commands remain available:
+README.md:142:Real Waymo TFRecords still use the Docker compatibility bridge documented by

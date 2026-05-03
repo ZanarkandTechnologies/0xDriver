@@ -89,6 +89,12 @@ def _read_mapping(path: Path) -> dict[str, Any]:
     return raw
 
 
+def read_config_mapping(path: Path) -> dict[str, Any]:
+    """Read the repo's dependency-light YAML/JSON mapping format."""
+
+    return _read_mapping(path)
+
+
 def _parse_scalar(value: str) -> Any:
     stripped = value.strip()
     if stripped in {"", "null", "None", "~"}:

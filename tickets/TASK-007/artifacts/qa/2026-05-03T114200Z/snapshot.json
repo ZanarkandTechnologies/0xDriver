@@ -1,0 +1,22 @@
+{
+  "ticket_id": "TASK-007",
+  "phase": "qa",
+  "verifications": {
+    "pre_push_check_passed": true,
+    "tests_ran": 57,
+    "selected_recipe_id": "generated-base-animals-0076-visual-noise-000",
+    "selected_recipe_route_path": "fail2drive_split/Base_Animals_0076.xml",
+    "plan_route_path": "/Users/kenjipcx/SOTA/external/fail2drive/fail2drive_split/Base_Animals_0076.xml",
+    "plan_matches_selected_recipe_route": true,
+    "multi_recipe_without_recipe_id_exit_code": 2,
+    "multi_recipe_without_recipe_id_failed_cleanly": true,
+    "qa_artifact_dir_exists": true
+  },
+  "qa_artifacts_present": [
+    "tickets/TASK-007/artifacts/qa/2026-05-03T114200Z/logs/multi_recipe_no_recipe_id.txt",
+    "tickets/TASK-007/artifacts/qa/2026-05-03T114200Z/logs/pre_push_check.txt",
+    "tickets/TASK-007/artifacts/qa/2026-05-03T114200Z/report.md",
+    "tickets/TASK-007/artifacts/qa/2026-05-03T114200Z/result.json",
+    "tickets/TASK-007/artifacts/qa/2026-05-03T114200Z/snapshot.json"
+  ]
+}

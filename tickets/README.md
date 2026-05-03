@@ -1,8 +1,13 @@
 # Tickets
 
-Tickets are created after PRD/spec acceptance. Use `tickets/templates/ticket.md`
-as the starting point, keep active work under `tickets/TASK-*/ticket.md`, and
-move completed work to `tickets/archive/`.
+Active work lives under `tickets/TASK-*/ticket.md`. Completed tickets move to
+`tickets/archive/`.
 
-No active tickets exist yet because this pass is limited to bootstrap, PRD, and
-directory planning.
+## Active
+
+- `TASK-007`: Local Scenario Forge and CARLA smoke adapter.
+
+## Archived Evidence
+
+- `TASK-001` through `TASK-006` preserve the fixture and Waymo E2E support-track
+  implementation history.

@@ -23,3 +23,7 @@
 2026-05-03 14:27 +0800 | RULE | MEM-0011 | planning,realtime-vla,hybrid | The default main planner must stay hybrid: structured VLA/VLM intent can steer semantic candidates, but the deployable local action layer must include motion-prior candidates, smoothing, and label-free ranking; future VLA/GPU backends should beat this hybrid baseline rather than bypass it.
 
 2026-05-03 18:37 +0800 | RULE | MEM-0012 | carla,fail2drive,simulation | The main simulation path for the SoTA pivot is CARLA plus Fail2Drive scenario generation and OOD evaluation; the local Mac is the default authoring, fixture, report, and dry-run environment, with an optional community Wine/Kegworks Apple Silicon CARLA smoke-test path, while reproducible Fail2Drive runtime and heavy VLA inference should target Linux NVIDIA GPU infrastructure unless the Mac wrapper proves stable end to end.
+
+2026-05-03 19:31 +0800 | RULE | MEM-0013 | external-repos,fail2drive | Fail2Drive must be treated as an external read-only checkout by default (`../external/fail2drive`), not vendored into 0xDriver; commit only tiny fixtures, parsers, adapters, and config paths needed for reproducible local tests.
+
+2026-05-03 19:50 +0800 | RULE | MEM-0014 | carla,fail2drive,planning | Fail2Drive command plans must be route-faithful: generated recipes need an explicit `route_path`, multi-recipe files require `--recipe-id`, and planner validation must fail fast when the checkout, evaluator, agent, or selected route is missing.
