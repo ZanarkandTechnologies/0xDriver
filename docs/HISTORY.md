@@ -15,3 +15,4 @@
 2026-05-02 21:46 +0800 | QA | TASK-005 passed final review and QA with real Waymo experiment comparison evidence
 2026-05-03 14:24 +0800 | TASK | started TASK-006 motion-prior hybrid planner after deterministic baselines beat mock intent planner
 2026-05-03 14:27 +0800 | SHIP | routed main scene and batch pipeline through hybrid semantic-intent and motion-prior candidates
+2026-05-03 14:34 +0800 | QA | TASK-006 passed review and QA with real hybrid Waymo batch and experiment evidence

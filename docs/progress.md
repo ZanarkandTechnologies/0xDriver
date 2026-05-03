@@ -48,6 +48,9 @@ adding VLA/GPU serving:
 - [x] Route `run-scene` and `run-batch` through the hybrid planner.
 - [x] Run local checks for the hybrid planner.
 - [x] Run real 10-frame Waymo Docker hybrid batch.
+- [x] Run fresh real 10-frame Waymo Docker hybrid experiment after renaming the
+  main experiment strategy.
+- [x] Attach TASK-006 review and QA evidence.
 
 ## Commit Plan
 
@@ -101,3 +104,6 @@ adding VLA/GPU serving:
   `constant_acceleration_smooth` for all 10 validation frames, mean ADE was
   `3.73323`, best ADE was `0.012684` at frame index `4`, and worst ADE was
   `9.15508` at frame index `6`.
+- TASK-006 experiment proof: `waymo-hybrid-experiment-10` records the current
+  main strategy as `hybrid_planner`, with mean ADE `3.73323`. `oracle_best_rule`
+  remains analysis-only at mean ADE `3.732298`.

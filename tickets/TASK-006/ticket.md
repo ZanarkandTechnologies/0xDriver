@@ -125,15 +125,15 @@ candidates
 
 ## Acceptance Criteria
 
-- [ ] AC-1: Main `run-scene`/`run-batch` uses hybrid candidates by default.
-- [ ] AC-2: Hybrid candidate generation includes semantic and motion-prior
+- [x] AC-1: Main `run-scene`/`run-batch` uses hybrid candidates by default.
+- [x] AC-2: Hybrid candidate generation includes semantic and motion-prior
   sources and all trajectories contain exactly 20 points.
-- [ ] AC-3: Ranking remains deployable and does not inspect `future_xy`.
-- [ ] AC-4: Real 10-frame Waymo batch evidence is captured with mean ADE and
+- [x] AC-3: Ranking remains deployable and does not inspect `future_xy`.
+- [x] AC-4: Real 10-frame Waymo batch evidence is captured with mean ADE and
   selected source table.
-- [ ] AC-5: Existing fixture, batch, experiment, CLI, and packaging behavior
+- [x] AC-5: Existing fixture, batch, experiment, CLI, and packaging behavior
   remains compatible.
-- [ ] AC-6: Docs, history, memory, review, and QA evidence are updated.
+- [x] AC-6: Docs, history, memory, review, and QA evidence are updated.
 
 ## Agent Contract
 
@@ -157,10 +157,10 @@ candidates
 
 ## Evidence Checklist
 
-- [ ] Snapshot: local pre-push check output.
-- [ ] Snapshot: real 10-frame Waymo Docker batch summary/report.
-- [ ] Snapshot: worst-scene SVG path from batch report.
-- [ ] QA report linked.
+- [x] Snapshot: local pre-push check output.
+- [x] Snapshot: real 10-frame Waymo Docker batch summary/report.
+- [x] Snapshot: worst-scene SVG path from batch report.
+- [x] QA report linked.
 
 ## Build Notes
 
@@ -176,6 +176,8 @@ candidates
 - Local gate passed with 40 unit tests.
 - Real Docker proof `waymo-hybrid-batch-10` produced mean ADE `3.73323`; all
   10 selected sources were `constant_acceleration_smooth`.
+- Fresh Docker experiment `waymo-hybrid-experiment-10` records the current main
+  strategy as `hybrid_planner` with mean ADE `3.73323`.
 
 ## QA Reconciliation
 
@@ -188,15 +190,19 @@ candidates
   `batch_report.md`, and worst-scene SVG path.
 - AC-5: PASS - local pre-push check passed with existing fixture, batch,
   experiment, CLI, packaging, and optional-dependency tests.
-- AC-6: PENDING - review and QA evidence still need final writeback.
+- AC-6: PASS - docs, history, memory, review, and QA evidence are linked below.
 
 ## Artifact Links
 
-- Review: pending
-- QA: pending
+- Review: `docs/reviews/TASK-006-hybrid-planner-review.md`
+- QA: `tickets/TASK-006/artifacts/qa/2026-05-03T063433Z/report.md`
 - Real batch summary:
   `artifacts/runs/waymo-hybrid-batch-10/batch_summary.json`
 - Real batch report: `artifacts/runs/waymo-hybrid-batch-10/batch_report.md`
+- Real experiment summary:
+  `artifacts/runs/waymo-hybrid-experiment-10/experiment_summary.json`
+- Real experiment report:
+  `artifacts/runs/waymo-hybrid-experiment-10/experiment_report.md`
 - Worst-scene SVG:
   `artifacts/runs/waymo-hybrid-batch-10/frame-000006/scene_prediction.svg`
 
@@ -204,8 +210,9 @@ candidates
 
 - Supporting evidence: hybrid batch mean ADE `3.73323`, best ADE `0.012684`
   at frame index `4`, worst ADE `9.15508` at frame index `6`.
-- QA report: pending
-- Final verdict: pending
+- QA report: `tickets/TASK-006/artifacts/qa/2026-05-03T063433Z/report.md`
+- Final verdict: PASS - main planner is now hybrid and ready for the next
+  VLA/GPU backend ticket.
 
 ## Required Evidence
 

@@ -1,0 +1,13 @@
+{
+  "ticket_id": "TASK-006",
+  "phase": "qa",
+  "verdict": "pass",
+  "summary": "QA proved the hybrid main planner, label-free ranking, local checks, real 10-frame Waymo batch evidence, and fresh hybrid_planner experiment evidence.",
+  "artifacts": [
+    "tickets/TASK-006/artifacts/qa/2026-05-03T063433Z/report.md",
+    "artifacts/runs/waymo-hybrid-batch-10/batch_summary.json",
+    "artifacts/runs/waymo-hybrid-batch-10/batch_report.md",
+    "artifacts/runs/waymo-hybrid-experiment-10/experiment_summary.json",
+    "artifacts/runs/waymo-hybrid-experiment-10/experiment_report.md"
+  ]
+}
