@@ -4,6 +4,7 @@ import unittest
 from driverx.datasets.fixtures import load_fixture_frame
 from driverx.planning.baselines import generate_rule_baselines
 from driverx.planning.candidates import generate_candidates
+from driverx.planning.hybrid import generate_hybrid_candidates
 from driverx.planning.ranking import rank_candidates
 from driverx.planning.smoothing import smooth_candidate
 from driverx.reasoning.mock import MockReasoner
@@ -49,6 +50,19 @@ class TrajectoryTest(unittest.TestCase):
             self.assertEqual(len(candidate.points_xy), 20)
             self.assertEqual(candidate.metadata["strategy"], candidate.source)
             self.assertTrue(candidate.metadata["baseline"])
+
+    def test_hybrid_candidates_include_semantic_and_motion_priors(self) -> None:
+        frame = load_fixture_frame("construction_merge")
+        intent = MockReasoner().infer_intent(frame)
+        candidates = generate_hybrid_candidates(frame, intent)
+        families = {candidate.metadata["candidate_family"] for candidate in candidates}
+        sources = {candidate.source for candidate in candidates}
+
+        self.assertEqual(families, {"semantic_intent", "motion_prior"})
+        self.assertIn("intent_primary", sources)
+        self.assertIn("constant_acceleration", sources)
+        for candidate in candidates:
+            self.assertEqual(len(candidate.points_xy), 20)
 
 
 if __name__ == "__main__":

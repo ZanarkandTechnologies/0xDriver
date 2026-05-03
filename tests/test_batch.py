@@ -62,6 +62,10 @@ class BatchTest(unittest.TestCase):
             self.assertEqual(summary["frame_count"], 2)
             self.assertEqual(summary["num_scenes"], 2)
             self.assertIsNotNone(summary["mean_ade"])
+            self.assertEqual(
+                summary["scenes"][0]["selected_source"],
+                "constant_acceleration_smooth",
+            )
             self.assertIn("load_frame", summary["mean_timings_ms"])
             self.assertTrue(summary_path.exists())
             self.assertTrue(report_path.exists())

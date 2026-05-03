@@ -66,13 +66,13 @@ def generate_rule_baselines(frame: FrameBundle) -> list[TrajectoryCandidate]:
         _candidate(
             frame,
             strategy="constant_velocity",
-            score=0.25,
+            score=0.27,
             velocity_scale=1.0,
         ),
         _candidate(
             frame,
             strategy="constant_acceleration",
-            score=0.30,
+            score=0.20,
             velocity_scale=1.0,
             acceleration_scale=1.0,
         ),

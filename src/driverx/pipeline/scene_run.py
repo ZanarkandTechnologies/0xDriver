@@ -11,7 +11,7 @@ from driverx.core.timing import StageTimer
 from driverx.core.types import ArtifactRef, FrameBundle, SceneRunResult, TrajectoryCandidate
 from driverx.datasets import load_frame
 from driverx.evaluation.ade import average_displacement_error
-from driverx.planning.candidates import generate_candidates
+from driverx.planning.hybrid import generate_hybrid_candidates
 from driverx.planning.ranking import rank_candidates
 from driverx.planning.smoothing import smooth_candidate
 from driverx.reasoning import build_reasoner
@@ -128,7 +128,7 @@ def _execute_loaded_scene(
     artifacts.append(write_json_artifact(run_dir, "intent", intent.__dict__))
 
     with timer.track("generate_candidates"):
-        raw_candidates = generate_candidates(frame, intent)
+        raw_candidates = generate_hybrid_candidates(frame, intent)
     artifacts.append(
         write_json_artifact(
             run_dir,
@@ -157,6 +157,15 @@ def _execute_loaded_scene(
             "num_candidates": len(candidates),
             "selected_source": selected.source,
             "selected_score": selected.score,
+            "selected_family": selected.metadata.get("candidate_family"),
+            "candidate_sources": [candidate.source for candidate in candidates],
+            "candidate_families": sorted(
+                {
+                    str(candidate.metadata.get("candidate_family"))
+                    for candidate in candidates
+                    if candidate.metadata.get("candidate_family") is not None
+                }
+            ),
         }
         if frame.future_xy is not None:
             metrics["ade"] = round(

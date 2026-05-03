@@ -31,6 +31,12 @@ class PipelineMockTest(unittest.TestCase):
             self.assertIsNotNone(result.intent)
             self.assertIsNotNone(result.selected_trajectory)
             self.assertIn("ade", result.metrics)
+            self.assertIn("semantic_intent", result.metrics["candidate_families"])
+            self.assertIn("motion_prior", result.metrics["candidate_families"])
+            self.assertIn(
+                result.metrics["selected_family"],
+                result.metrics["candidate_families"],
+            )
             run_dir = Path(tmp) / "run"
             self.assertTrue((run_dir / "scene_prediction.svg").exists())
             self.assertTrue((run_dir / "raw_candidates.json").exists())
