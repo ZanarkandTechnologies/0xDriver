@@ -21,3 +21,5 @@
 2026-05-02 21:34 +0800 | RULE | MEM-0010 | waymo,baselines,vla | Future VLA/GPU comparisons must include deterministic rule baselines from TASK-005; on the first 10-frame validation slice, `constant_acceleration` mean ADE `3.73323` beat the mock `intent_planner` mean ADE `6.204769`.
 
 2026-05-03 14:27 +0800 | RULE | MEM-0011 | planning,realtime-vla,hybrid | The default main planner must stay hybrid: structured VLA/VLM intent can steer semantic candidates, but the deployable local action layer must include motion-prior candidates, smoothing, and label-free ranking; future VLA/GPU backends should beat this hybrid baseline rather than bypass it.
+
+2026-05-03 18:37 +0800 | RULE | MEM-0012 | carla,fail2drive,simulation | The main simulation path for the SoTA pivot is CARLA plus Fail2Drive scenario generation and OOD evaluation; the local Mac is the default authoring, fixture, report, and dry-run environment, with an optional community Wine/Kegworks Apple Silicon CARLA smoke-test path, while reproducible Fail2Drive runtime and heavy VLA inference should target Linux NVIDIA GPU infrastructure unless the Mac wrapper proves stable end to end.
