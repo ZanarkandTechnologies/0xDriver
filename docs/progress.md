@@ -4,14 +4,14 @@ Live orchestration log for the first 0xDriver implementation pass.
 
 ## Current Goal
 
-Compare the current mock intent planner against deterministic non-VLA baselines
-before adding VLA/GPU serving:
+Promote the strongest deployable motion prior into the main planner before
+adding VLA/GPU serving:
 
-- keep the TASK-004 batch evidence intact
-- add simple rule strategies from ego history
-- run all strategies over the same frame slice
-- write `experiment_summary.json` and `experiment_report.md`
-- identify the strongest deployable baseline and the analysis-only oracle bound
+- keep TASK-004 and TASK-005 evidence intact
+- combine semantic intent candidates with deterministic ego-history priors
+- keep ranking label-free and deployable
+- rerun the first 10 real Waymo validation frames
+- make the hybrid planner the local action layer future VLA backends must beat
 
 ## Checklist
 
@@ -43,14 +43,18 @@ before adding VLA/GPU serving:
 - [x] Run local experiment tests.
 - [x] Run real 10-frame Waymo Docker experiment.
 - [x] Attach TASK-005 review and QA evidence.
+- [x] Create TASK-006 for the motion-prior hybrid planner.
+- [x] Add hybrid semantic plus motion-prior candidate generation.
+- [x] Route `run-scene` and `run-batch` through the hybrid planner.
+- [x] Run local checks for the hybrid planner.
+- [x] Run real 10-frame Waymo Docker hybrid batch.
 
 ## Commit Plan
 
-1. Ticket start.
-2. Rule baseline strategies.
-3. Experiment runner and CLI.
-4. Tests and docs.
-5. Review, QA evidence, and closeout.
+1. TASK-006 ticket start.
+2. Hybrid planner implementation and tests.
+3. Docs and real-data evidence.
+4. Review, QA evidence, and closeout.
 
 ## Notes
 
@@ -92,3 +96,8 @@ before adding VLA/GPU serving:
   `constant_acceleration` with mean ADE `3.73323`; current `intent_planner`
   mean ADE was `6.204769`; `oracle_best_rule` was analysis-only with mean ADE
   `3.732298`.
+- TASK-006 Docker proof: `waymo-hybrid-batch-10` routed the main planner through
+  hybrid semantic and motion-prior candidates. The selected source was
+  `constant_acceleration_smooth` for all 10 validation frames, mean ADE was
+  `3.73323`, best ADE was `0.012684` at frame index `4`, and worst ADE was
+  `9.15508` at frame index `6`.

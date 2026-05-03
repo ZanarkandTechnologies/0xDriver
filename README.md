@@ -71,13 +71,19 @@ planning code should turn that intent into valid trajectories.
 
 ## Current Status
 
-TASK-001 through TASK-004 are complete enough to establish the first measuring
-stick: the repo can run without Waymo data or a VLA model, ingest optional real
-Waymo TFRecords through Docker, package official submission protobufs when the
-Waymo dependencies are available, and stream a small real Waymo validation batch
-into `batch_summary.json` plus `batch_report.md`. TASK-005 adds a comparison
-harness so the current intent planner can be measured against deterministic
-rule baselines before any VLA/cloud backend is introduced.
+TASK-001 through TASK-006 establish the first credible measuring stick: the repo
+can run without Waymo data or a VLA model, ingest optional real Waymo TFRecords
+through Docker, package official submission protobufs when the Waymo
+dependencies are available, stream a small real Waymo validation batch into
+`batch_summary.json` plus `batch_report.md`, compare deterministic baselines,
+and route the main planner through a hybrid semantic-intent plus motion-prior
+candidate set.
+
+The first real 10-frame hybrid Waymo batch selected
+`constant_acceleration_smooth` for all frames and matched the strongest TASK-005
+deployable baseline with mean ADE `3.73323`, improving over the old mock-intent
+planner mean ADE `6.204769`. This is the local action layer future VLA/GPU
+backends should steer and beat.
 
 ## Quickstart
 
@@ -158,6 +164,18 @@ WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \
 The batch root will include `batch_summary.json` and `batch_report.md`; each
 frame also keeps the normal `scene_prediction.svg`, `metrics.json`, and
 `timings.json` artifacts.
+
+Run the current hybrid planner over the first 10 real validation frames:
+
+```bash
+WAYMO_E2E_TFRECORD=data/val_202504211843.tfrecord-00000-of-00093 \
+  scripts/run_waymo_docker.sh \
+  python -m driverx run-batch \
+    --config configs/waymo_local.sample.yaml \
+    --run-id waymo-hybrid-batch-10 \
+    --frame-start 0 \
+    --frame-count 10
+```
 
 Compare the current intent planner against non-VLA rule baselines on the same
 real slice. When `dataset.kind=waymo`, `run-experiment` defaults to 10 frames

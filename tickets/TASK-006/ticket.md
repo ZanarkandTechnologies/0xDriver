@@ -165,31 +165,48 @@ candidates
 ## Build Notes
 
 - Started 2026-05-03 14:24 +0800.
+- Added `generate_hybrid_candidates(frame, intent)` and routed the main
+  `run-scene`/`run-batch` path through it.
+- Motion-prior candidates now carry `candidate_family=motion_prior`; semantic
+  candidates carry `candidate_family=semantic_intent`.
+- The deployable rule score ordering now allows `constant_acceleration` to win
+  when no safety/ranking penalty outweighs it.
+- Local gate passed with 40 unit tests.
+- Real Docker proof `waymo-hybrid-batch-10` produced mean ADE `3.73323`; all
+  10 selected sources were `constant_acceleration_smooth`.
 
 ## QA Reconciliation
 
-- AC-1: PENDING
-- AC-2: PENDING
-- AC-3: PENDING
-- AC-4: PENDING
-- AC-5: PENDING
-- AC-6: PENDING
+- AC-1: PASS - `run-scene` calls `generate_hybrid_candidates`.
+- AC-2: PASS - tests cover semantic and motion-prior families with 20-point
+  trajectories.
+- AC-3: PASS - ranking still consumes only candidates, metadata, and frame
+  metadata; ADE/future labels remain in evaluation/report surfaces.
+- AC-4: PASS - `waymo-hybrid-batch-10` captured `batch_summary.json`,
+  `batch_report.md`, and worst-scene SVG path.
+- AC-5: PASS - local pre-push check passed with existing fixture, batch,
+  experiment, CLI, packaging, and optional-dependency tests.
+- AC-6: PENDING - review and QA evidence still need final writeback.
 
 ## Artifact Links
 
 - Review: pending
 - QA: pending
-- Real batch summary: pending
-- Real batch report: pending
+- Real batch summary:
+  `artifacts/runs/waymo-hybrid-batch-10/batch_summary.json`
+- Real batch report: `artifacts/runs/waymo-hybrid-batch-10/batch_report.md`
+- Worst-scene SVG:
+  `artifacts/runs/waymo-hybrid-batch-10/frame-000006/scene_prediction.svg`
 
 ## User Evidence
 
-- Supporting evidence: pending
+- Supporting evidence: hybrid batch mean ADE `3.73323`, best ADE `0.012684`
+  at frame index `4`, worst ADE `9.15508` at frame index `6`.
 - QA report: pending
 - Final verdict: pending
 
 ## Required Evidence
 
-- [ ] Unit/integration/e2e tests pass
-- [ ] Typecheck passes or remains not configured
-- [ ] Lint/syntax passes
+- [x] Unit/integration/e2e tests pass
+- [x] Typecheck passes or remains not configured
+- [x] Lint/syntax passes

@@ -19,3 +19,5 @@
 2026-05-02 20:50 +0800 | RULE | MEM-0009 | waymo,baseline,evaluation | Before adding or comparing VLA/GPU backends, establish a small real Waymo batch baseline with `batch_summary.json`, `batch_report.md`, per-frame artifacts, mean ADE, mean timings, and best/worst ADE scenes.
 
 2026-05-02 21:34 +0800 | RULE | MEM-0010 | waymo,baselines,vla | Future VLA/GPU comparisons must include deterministic rule baselines from TASK-005; on the first 10-frame validation slice, `constant_acceleration` mean ADE `3.73323` beat the mock `intent_planner` mean ADE `6.204769`.
+
+2026-05-03 14:27 +0800 | RULE | MEM-0011 | planning,realtime-vla,hybrid | The default main planner must stay hybrid: structured VLA/VLM intent can steer semantic candidates, but the deployable local action layer must include motion-prior candidates, smoothing, and label-free ranking; future VLA/GPU backends should beat this hybrid baseline rather than bypass it.
