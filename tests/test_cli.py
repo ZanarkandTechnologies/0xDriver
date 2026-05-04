@@ -579,6 +579,96 @@ class CliTest(unittest.TestCase):
             self.assertGreater(result["improvement"]["driving_score_delta"], 0)
             self.assertTrue(Path(result["report_path"]).exists())
 
+    def test_inspect_simlingo_cli_writes_readiness(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp) / "simlingo"
+            for path in [
+                "team_code",
+                "Bench2Drive/leaderboard/leaderboard",
+                "Bench2Drive/scenario_runner",
+                "simlingo_training",
+            ]:
+                (root / path).mkdir(parents=True, exist_ok=True)
+            for path in [
+                "README.md",
+                "environment.yaml",
+                "team_code/agent_simlingo.py",
+                "team_code/config_simlingo.py",
+                "Bench2Drive/leaderboard/leaderboard/leaderboard_evaluator.py",
+            ]:
+                (root / path).write_text("# fake\n", encoding="utf-8")
+
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "inspect-simlingo",
+                        "--root",
+                        str(root),
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "simlingo",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+
+            self.assertEqual(exit_code, 0)
+            self.assertTrue(result["requires_cuda"])
+            self.assertFalse(result["apple_silicon_live_supported"])
+            self.assertTrue(Path(result["json_path"]).exists())
+
+    def test_plan_simlingo_run_cli_writes_command_plan(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp) / "simlingo"
+            for path in [
+                "team_code",
+                "Bench2Drive/leaderboard/leaderboard",
+                "Bench2Drive/scenario_runner",
+                "simlingo_training",
+            ]:
+                (root / path).mkdir(parents=True, exist_ok=True)
+            for path in [
+                "README.md",
+                "environment.yaml",
+                "team_code/agent_simlingo.py",
+                "team_code/config_simlingo.py",
+                "Bench2Drive/leaderboard/leaderboard/leaderboard_evaluator.py",
+            ]:
+                (root / path).write_text("# fake\n", encoding="utf-8")
+            config_path = Path(tmp) / "simlingo.yaml"
+            config_path.write_text(
+                "\n".join(
+                    [
+                        "simlingo:",
+                        f"  root: {root}",
+                        f"  output_dir: {Path(tmp) / 'out'}",
+                        "carla:",
+                        f"  root: {Path(tmp) / 'carla0915'}",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "plan-simlingo-run",
+                        "--config",
+                        str(config_path),
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "simlingo-plan",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+
+            self.assertEqual(exit_code, 0)
+            self.assertIn("leaderboard_evaluator.py", " ".join(result["command"]))
+            self.assertTrue(Path(result["json_path"]).exists())
+
 
 if __name__ == "__main__":
     unittest.main()

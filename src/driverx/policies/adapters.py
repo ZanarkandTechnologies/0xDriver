@@ -121,7 +121,7 @@ def select_policy_adapter(name: str, *, memory_aware: bool = False) -> PolicyAda
     if normalized in {"simlingo", "carllava"}:
         return SetupCheckedStubPolicyAdapter(
             "simlingo",
-            "Install the SimLingo/CarLLaVA runtime and checkpoint path before live CARLA policy runs.",
+            "Run inspect-simlingo and plan-simlingo-run, then provide Linux NVIDIA, CARLA 0.9.15, and a SimLingo checkpoint before live CARLA policy runs.",
         )
     if normalized == "alpamayo":
         return SetupCheckedStubPolicyAdapter(

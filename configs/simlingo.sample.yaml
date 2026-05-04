@@ -1,0 +1,12 @@
+simlingo:
+  root: ../external/simlingo
+  checkpoint_path: outputs/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt
+  route_path: leaderboard/data/bench2drive_split/bench2drive_00.xml
+  output_dir: artifacts/simlingo
+  seed: 1
+  world_port: 20000
+  traffic_manager_port: 10000
+  timeout_s: 600
+
+carla:
+  root: ~/software/carla0915

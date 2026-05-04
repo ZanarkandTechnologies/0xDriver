@@ -30,3 +30,4 @@
 2026-05-04 19:22 +0800 | SHIP | TASK-012 added generated OOD asset requests, dry-run manifests, Meshy setup blocking, manifest validation, and recipe asset references
 2026-05-04 19:27 +0800 | SHIP | TASK-013 added policy adapter contracts, mock and memory-aware decisions, local hybrid fallback, and setup-checked VLM/SimLingo/Alpamayo stubs
 2026-05-04 19:30 +0800 | SHIP | TASK-014 added retrieval-augmented policy comparison reports with matched no-memory and memory-guided runs plus live-model setup blocker logging
+2026-05-04 23:05 +0800 | SHIP | TASK-015 added SimLingo checkout readiness and Bench2Drive dry-run command planning against external RenzKa/simlingo

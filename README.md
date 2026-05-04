@@ -140,6 +140,13 @@ PYTHONPATH=src python3 -m driverx run-policy-fixture \
 PYTHONPATH=src python3 -m driverx run-rag-comparison \
   --policy mock \
   --run-id task14-rag
+
+# Inspect and plan the external SimLingo/CarLLaVA backend
+PYTHONPATH=src python3 -m driverx inspect-simlingo \
+  --run-id task15-simlingo-readiness
+PYTHONPATH=src python3 -m driverx plan-simlingo-run \
+  --config configs/simlingo.sample.yaml \
+  --run-id task15-simlingo-plan
 ```
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored
@@ -147,17 +154,18 @@ by git.
 
 ## External Fail2Drive Checkout
 
-Fail2Drive is used as a read-only external reference, not vendored into this
-repo:
+Fail2Drive and SimLingo are used as read-only external references, not vendored
+into this repo:
 
 ```bash
 mkdir -p ../external
 git clone https://github.com/autonomousvision/fail2drive.git ../external/fail2drive
+git clone https://github.com/RenzKa/simlingo.git ../external/simlingo
 ```
 
 `configs/carla_local.sample.yaml` defaults to `../external/fail2drive`. The
-local tests use tiny fixtures, so they do not require the full benchmark clone,
-CARLA, Conda, or model checkpoints.
+SimLingo planner defaults to `../external/simlingo`. Local tests use tiny
+fixtures, so they do not require CARLA, Conda, model checkpoints, or CUDA.
 
 ## Optional CARLA On Apple Silicon
 

@@ -28,10 +28,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-012 generated asset pipeline
 - [x] TASK-013 policy adapter interface
 - [x] TASK-014 retrieval-augmented VLA comparison harness
+- [x] TASK-015 SimLingo backend readiness and run planner
 
 ## Active Roadmap
 
-- [ ] TASK-015 final demo/evidence packaging
+- [ ] TASK-016 live GPU SimLingo execution
+- [ ] TASK-017 generated route/scenario injection into Bench2Drive/SimLingo
 
 ## Latest Evidence
 
@@ -55,6 +57,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - TASK-014 compared mock policy and mock+memory on the same
   `motorcycle_filtering` pressure case, improving the proxy driving score from
   `58.0` to `95.0` while keeping `live_model_claim=false`.
+- TASK-015 cloned external SimLingo, inspected commit
+  `743b243afd6cf5ff51b9fa1f8cac86f22d569684`, confirmed CARLA `0.9.15`,
+  Python `3.8`, CUDA-required live inference, and generated a Bench2Drive
+  dry-run command plan.
 - Full local gate after TASK-008: `bash scripts/pre_push_check.sh` passed with
   61 tests.
 
@@ -64,8 +70,8 @@ Useful soon:
 
 - keep CARLA open for live TASK-009 proof
 - Meshy or equivalent API key for real TASK-012 asset generation
-- real VLA target/checkpoint/API for TASK-013/TASK-014
-- cloud GPU budget/provider for reproducible Fail2Drive + VLA runs
+- SimLingo checkpoint path or Hugging Face access
+- Linux NVIDIA GPU instance with CARLA 0.9.15 for reproducible SimLingo runs
 
 Missing inputs should be logged as blockers on the relevant ticket while local
 mock/dry-run work continues.

@@ -28,6 +28,16 @@ from driverx.simulators.carla_ego import (
     write_ego_smoke,
 )
 from driverx.simulators.fail2drive import CarlaCommandPlan, plan_fail2drive_run
+from driverx.simulators.simlingo import (
+    SimLingoCommandPlan,
+    SimLingoReadiness,
+    SimLingoRunConfig,
+    inspect_simlingo_checkout,
+    load_simlingo_run_config,
+    plan_simlingo_run,
+    write_simlingo_plan,
+    write_simlingo_readiness,
+)
 
 __all__ = [
     "CarlaCommandPlan",
@@ -41,8 +51,14 @@ __all__ = [
     "CarlaSensorScript",
     "CarlaSmokeResult",
     "EntityTrack",
+    "SimLingoCommandPlan",
+    "SimLingoReadiness",
+    "SimLingoRunConfig",
+    "inspect_simlingo_checkout",
     "load_carla_run_config",
+    "load_simlingo_run_config",
     "plan_fail2drive_run",
+    "plan_simlingo_run",
     "probe_carla_client",
     "run_ego_spawn_smoke",
     "smoke_carla_server",
@@ -51,4 +67,6 @@ __all__ = [
     "write_carla_script_plan",
     "write_carla_probe",
     "write_ego_smoke",
+    "write_simlingo_plan",
+    "write_simlingo_readiness",
 ]

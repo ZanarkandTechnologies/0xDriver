@@ -383,6 +383,35 @@ def _command_run_rag_comparison(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_inspect_simlingo(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import inspect_simlingo_checkout, write_simlingo_readiness
+
+    readiness = inspect_simlingo_checkout(args.root)
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = write_simlingo_readiness(run_dir, readiness)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
+def _command_plan_simlingo_run(args: argparse.Namespace) -> int:
+    from dataclasses import replace
+
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import load_simlingo_run_config, plan_simlingo_run
+    from driverx.simulators import write_simlingo_plan
+
+    config = load_simlingo_run_config(args.config)
+    if args.checkpoint_path is not None:
+        config = replace(config, checkpoint_path=args.checkpoint_path)
+    if args.route_path is not None:
+        config = replace(config, route_path=args.route_path)
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = write_simlingo_plan(run_dir, plan_simlingo_run(config))
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -618,6 +647,30 @@ def build_parser() -> argparse.ArgumentParser:
     rag_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     rag_parser.add_argument("--run-id", default="rag-comparison")
     rag_parser.set_defaults(func=_command_run_rag_comparison)
+
+    simlingo_inspect_parser = subparsers.add_parser(
+        "inspect-simlingo",
+        help="Inspect an external SimLingo/CarLLaVA checkout and write readiness artifacts.",
+    )
+    simlingo_inspect_parser.add_argument("--root", type=Path, default=Path("../external/simlingo"))
+    simlingo_inspect_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    simlingo_inspect_parser.add_argument("--run-id", default="simlingo-readiness")
+    simlingo_inspect_parser.set_defaults(func=_command_inspect_simlingo)
+
+    simlingo_plan_parser = subparsers.add_parser(
+        "plan-simlingo-run",
+        help="Write a dry-run SimLingo Bench2Drive evaluation command plan.",
+    )
+    simlingo_plan_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/simlingo.sample.yaml"),
+    )
+    simlingo_plan_parser.add_argument("--checkpoint-path", type=Path)
+    simlingo_plan_parser.add_argument("--route-path", type=Path)
+    simlingo_plan_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    simlingo_plan_parser.add_argument("--run-id", default="simlingo-plan")
+    simlingo_plan_parser.set_defaults(func=_command_plan_simlingo_run)
 
     config_parser = subparsers.add_parser(
         "show-config",

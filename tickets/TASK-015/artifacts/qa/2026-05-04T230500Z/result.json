@@ -1,0 +1,28 @@
+{
+  "ticket": "TASK-015",
+  "result": "pass",
+  "commands": [
+    "PYTHONPATH=src python3 -m unittest tests.test_simlingo_adapter tests.test_cli tests.test_policies",
+    "PYTHONPATH=src python3 -m driverx inspect-simlingo --run-id task15-simlingo-readiness",
+    "PYTHONPATH=src python3 -m driverx plan-simlingo-run --run-id task15-simlingo-plan"
+  ],
+  "artifacts": [
+    "artifacts/runs/task15-simlingo-readiness/simlingo_readiness.json",
+    "artifacts/runs/task15-simlingo-readiness/simlingo_readiness.md",
+    "artifacts/runs/task15-simlingo-plan-001/simlingo_command_plan.json",
+    "artifacts/runs/task15-simlingo-plan-001/simlingo_command_plan.md"
+  ],
+  "snapshot": {
+    "simlingo_root": "/Users/kenjipcx/SOTA/external/simlingo",
+    "commit": "743b243afd6cf5ff51b9fa1f8cac86f22d569684",
+    "carla_version": "0.9.15",
+    "python_version": "3.8",
+    "requires_cuda": true,
+    "apple_silicon_live_supported": false
+  },
+  "blockers": [
+    "CARLA 0.9.15 root missing locally.",
+    "SimLingo checkpoint missing locally.",
+    "Linux NVIDIA CUDA required for live inference."
+  ]
+}
