@@ -1,0 +1,51 @@
+{
+  "ticket": "TASK-016",
+  "verdict": "conditional_pass",
+  "docker_client": {
+    "image": "driverx-carla-client:0.9.16",
+    "carla_python_package": "0.9.16",
+    "import_proof": "passed"
+  },
+  "live_carla": {
+    "connected": false,
+    "endpoint": "host.docker.internal:2000",
+    "blocker": "CARLA server did not answer from Docker during this pass"
+  },
+  "commands": [
+    {
+      "command": "PYTHONPATH=src python3 -m unittest tests.test_carla_docker_scripts",
+      "status": "passed",
+      "tests": 5
+    },
+    {
+      "command": "bash -n scripts/build_carla_client_docker.sh scripts/run_carla_client_docker.sh scripts/prove_carla_0916_docker.sh",
+      "status": "passed"
+    },
+    {
+      "command": "bash scripts/run_carla_client_docker.sh python -c 'import carla; from importlib.metadata import version; print(version(\"carla\"))'",
+      "status": "passed",
+      "stdout": "0.9.16"
+    },
+    {
+      "command": "bash scripts/prove_carla_0916_docker.sh",
+      "status": "conditional_pass",
+      "stdout_contains": "CARLA Python API: 0.9.16",
+      "live_carla_result": "timeout"
+    },
+    {
+      "command": "bash scripts/pre_push_check.sh",
+      "status": "passed",
+      "tests": 107
+    }
+  ],
+  "artifacts": [
+    "artifacts/runs/task16-proof-probe/carla_probe.json",
+    "artifacts/runs/task16-proof-probe/carla_probe.md",
+    "artifacts/runs/task16-proof-ego/ego_smoke.json",
+    "artifacts/runs/task16-proof-ego/ego_smoke.md",
+    "artifacts/runs/task16-proof-probe-001/carla_probe.json",
+    "artifacts/runs/task16-proof-probe-001/carla_probe.md",
+    "artifacts/runs/task16-proof-ego-001/ego_smoke.json",
+    "artifacts/runs/task16-proof-ego-001/ego_smoke.md"
+  ]
+}

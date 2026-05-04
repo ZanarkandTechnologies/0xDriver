@@ -31,3 +31,5 @@
 2026-05-04 19:27 +0800 | SHIP | TASK-013 added policy adapter contracts, mock and memory-aware decisions, local hybrid fallback, and setup-checked VLM/SimLingo/Alpamayo stubs
 2026-05-04 19:30 +0800 | SHIP | TASK-014 added retrieval-augmented policy comparison reports with matched no-memory and memory-guided runs plus live-model setup blocker logging
 2026-05-04 23:05 +0800 | SHIP | TASK-015 added SimLingo checkout readiness and Bench2Drive dry-run command planning against external RenzKa/simlingo
+2026-05-05 02:35 +0800 | TASK | started TASK-016 local CARLA 0.9.16 Docker proof while GPU provisioning was blocked
+2026-05-05 02:42 +0800 | SHIP | TASK-016 added reusable CARLA 0.9.16 Docker client image, proof script, and timeout evidence path for local simulator reachability

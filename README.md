@@ -103,6 +103,7 @@ PYTHONPATH=src python3 -m driverx smoke-carla \
   --config configs/carla_local.sample.yaml
 
 # Probe the live CARLA Python API through Docker
+bash scripts/build_carla_client_docker.sh
 bash scripts/run_carla_client_docker.sh python -m driverx probe-carla \
   --host host.docker.internal \
   --port 2000 \
@@ -113,6 +114,13 @@ bash scripts/run_carla_client_docker.sh python -m driverx spawn-ego-smoke \
   --host host.docker.internal \
   --port 2000 \
   --run-id task9-ego-smoke
+
+# Build the local CARLA 0.9.16 client image and run both live proofs
+bash scripts/prove_carla_0916_docker.sh
+
+# If Docker times out on host.docker.internal:2000, the client image is still
+# valid; keep CARLA.app open, wait for the town to finish loading, and rerun.
+# Use DRIVERX_DOCKER_ENV_FILE=.env only when a container needs local env vars.
 
 # Generate regional/OOD behavior traces and metrics
 PYTHONPATH=src python3 -m driverx generate-behaviors \

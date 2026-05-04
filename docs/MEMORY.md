@@ -29,3 +29,5 @@
 2026-05-03 19:50 +0800 | RULE | MEM-0014 | carla,fail2drive,planning | Fail2Drive command plans must be route-faithful: generated recipes need an explicit `route_path`, multi-recipe files require `--recipe-id`, and planner validation must fail fast when the checkout, evaluator, agent, or selected route is missing.
 
 2026-05-04 18:58 +0800 | RULE | MEM-0015 | roadmap,autonomy | After TASK-007, autonomous work should continue through dependency-light implementations of CARLA probing, entity tracks, behavior traces, asset manifests, policy adapters, and RAG comparison harnesses; missing Meshy keys, real VLA checkpoints, or cloud GPU access should be logged as ticket blockers rather than stopping unrelated local work.
+
+2026-05-05 02:35 +0800 | RULE | MEM-0016 | carla,docker,apple-silicon | Local CARLA 0.9.16 development should use the dedicated Linux amd64 `driverx-carla-client:0.9.16` Docker image for Python API commands; keep this client bridge separate from later SimLingo/CUDA/GPU serving images and do not auto-inject repo `.env` into containers unless `DRIVERX_DOCKER_ENV_FILE` is explicitly set.
