@@ -1,0 +1,25 @@
+{
+  "ticket": "TASK-014",
+  "result": "pass",
+  "commands": [
+    "PYTHONPATH=src python3 -m unittest tests.test_rag_comparison tests.test_policies tests.test_cli",
+    "PYTHONPATH=src python3 -m driverx run-rag-comparison --policy mock --run-id task14-rag",
+    "PYTHONPATH=src python3 -m driverx run-rag-comparison --policy alpamayo --run-id task14-rag-alpamayo-blocked"
+  ],
+  "artifacts": [
+    "artifacts/runs/task14-rag/rag_comparison.json",
+    "artifacts/runs/task14-rag/rag_comparison.md",
+    "artifacts/runs/task14-rag-alpamayo-blocked/rag_comparison.json",
+    "artifacts/runs/task14-rag-alpamayo-blocked/rag_comparison.md"
+  ],
+  "snapshot": {
+    "scenario_id": "construction_merge::motorcycle_filtering",
+    "no_memory_score": 58.0,
+    "memory_guided_score": 95.0,
+    "infraction_delta": -2,
+    "live_model_claim": false
+  },
+  "blockers": [
+    "Real VLA comparison requires selected backend credentials/checkpoints and runtime."
+  ]
+}

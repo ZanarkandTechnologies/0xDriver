@@ -135,6 +135,11 @@ PYTHONPATH=src python3 -m driverx run-policy-fixture \
   --policy mock \
   --with-memory \
   --run-id task13-policy-memory
+
+# Compare a policy with and without retrieved safety memory
+PYTHONPATH=src python3 -m driverx run-rag-comparison \
+  --policy mock \
+  --run-id task14-rag
 ```
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored

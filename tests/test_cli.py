@@ -557,6 +557,28 @@ class CliTest(unittest.TestCase):
             self.assertEqual(exit_code, 0)
             self.assertIn("Alpamayo", result["setup_blocker"])
 
+    def test_run_rag_comparison_cli_writes_report(self) -> None:
+        with TemporaryDirectory() as tmp:
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "run-rag-comparison",
+                        "--policy",
+                        "mock",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "rag",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(result["scenario_id"], "construction_merge::motorcycle_filtering")
+            self.assertGreater(result["improvement"]["driving_score_delta"], 0)
+            self.assertTrue(Path(result["report_path"]).exists())
+
 
 if __name__ == "__main__":
     unittest.main()

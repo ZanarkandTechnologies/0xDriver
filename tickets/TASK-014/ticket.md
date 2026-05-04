@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: review
+- state: building
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-010, TASK-013
@@ -21,14 +21,14 @@ Until a real VLA is attached, the mock policy proves harness behavior only.
 
 ## Acceptance Criteria
 
-- [ ] Comparison runner executes `policy` and `policy+memory` modes on the same
+- [x] Comparison runner executes `policy` and `policy+memory` modes on the same
   scenario seed.
-- [ ] Report includes scenario id, retrieved memory ids, behavior metrics,
+- [x] Report includes scenario id, retrieved memory ids, behavior metrics,
   policy outputs, latency, and improvement/regression notes.
-- [ ] Mock policy demonstrates a controlled memory-sensitive outcome without
+- [x] Mock policy demonstrates a controlled memory-sensitive outcome without
   claiming real model performance.
-- [ ] Tests cover deterministic A/B pairing and report aggregation.
-- [ ] Live-model blockers are logged without blocking local harness tests.
+- [x] Tests cover deterministic A/B pairing and report aggregation.
+- [x] Live-model blockers are logged without blocking local harness tests.
 
 ## Verification
 
@@ -38,3 +38,14 @@ Until a real VLA is attached, the mock policy proves harness behavior only.
 ## Blockers
 
 - Real VLA comparison requires a selected policy backend and credentials.
+
+## Evidence
+
+- Local tests: `PYTHONPATH=src python3 -m unittest tests.test_rag_comparison tests.test_policies tests.test_cli` passed with 27 tests.
+- Mock comparison proof: `PYTHONPATH=src python3 -m driverx run-rag-comparison --policy mock --run-id task14-rag`.
+- Alpamayo blocker proof: `PYTHONPATH=src python3 -m driverx run-rag-comparison --policy alpamayo --run-id task14-rag-alpamayo-blocked`.
+- Mock report: `artifacts/runs/task14-rag/rag_comparison.md`.
+- Mock JSON: `artifacts/runs/task14-rag/rag_comparison.json`.
+- Blocker report: `artifacts/runs/task14-rag-alpamayo-blocked/rag_comparison.md`.
+- Controlled mock outcome: no-memory proxy score `58.0`; memory-guided proxy
+  score `95.0`; `live_model_claim=false`.

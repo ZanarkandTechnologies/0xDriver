@@ -29,3 +29,4 @@
 2026-05-04 19:04 +0800 | SHIP | TASK-011 compiled scenario recipes and behavior traces into validated CARLA actor, sensor, tick, output, and cleanup script plans
 2026-05-04 19:22 +0800 | SHIP | TASK-012 added generated OOD asset requests, dry-run manifests, Meshy setup blocking, manifest validation, and recipe asset references
 2026-05-04 19:27 +0800 | SHIP | TASK-013 added policy adapter contracts, mock and memory-aware decisions, local hybrid fallback, and setup-checked VLM/SimLingo/Alpamayo stubs
+2026-05-04 19:30 +0800 | SHIP | TASK-014 added retrieval-augmented policy comparison reports with matched no-memory and memory-guided runs plus live-model setup blocker logging

@@ -369,6 +369,20 @@ def _command_run_policy_fixture(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_run_rag_comparison(args: argparse.Namespace) -> int:
+    from driverx.pipeline.rag_comparison import run_rag_comparison
+
+    summary = run_rag_comparison(
+        policy=args.policy,
+        fixture=args.fixture,
+        behavior_id=args.behavior_id,
+        output_root=args.output_root,
+        run_id=args.run_id,
+    )
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -589,6 +603,21 @@ def build_parser() -> argparse.ArgumentParser:
     policy_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     policy_parser.add_argument("--run-id", default="policy-fixture")
     policy_parser.set_defaults(func=_command_run_policy_fixture)
+
+    rag_parser = subparsers.add_parser(
+        "run-rag-comparison",
+        help="Compare one policy with and without retrieved safety memory.",
+    )
+    rag_parser.add_argument(
+        "--policy",
+        choices=["mock", "hybrid", "vlm-api", "simlingo", "carllava", "alpamayo"],
+        default="mock",
+    )
+    rag_parser.add_argument("--fixture", default="construction_merge")
+    rag_parser.add_argument("--behavior-id", default="motorcycle_filtering")
+    rag_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    rag_parser.add_argument("--run-id", default="rag-comparison")
+    rag_parser.set_defaults(func=_command_run_rag_comparison)
 
     config_parser = subparsers.add_parser(
         "show-config",
