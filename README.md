@@ -124,6 +124,11 @@ PYTHONPATH=src python3 -m driverx compile-carla-script \
   --recipe-id generated-base-animals-0076-visual-noise-000 \
   --behavior-id motorcycle_filtering \
   --run-id task11-carla-script
+
+# Plan generated OOD assets and attach asset ids to scenario recipes
+PYTHONPATH=src python3 -m driverx plan-assets \
+  --recipe artifacts/runs/scenario-forge/scenario_recipes.json \
+  --run-id task12-assets
 ```
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored

@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: review
+- state: building
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-010
@@ -21,12 +21,12 @@ behind a provider seam when a key is available.
 
 ## Acceptance Criteria
 
-- [ ] Asset requests include prompt, semantic tags, dimensions, collision proxy,
+- [x] Asset requests include prompt, semantic tags, dimensions, collision proxy,
   intended placement, and license/source metadata.
-- [ ] Dry-run provider writes deterministic asset manifests.
-- [ ] Manifest validator rejects missing scale/collision/license fields.
-- [ ] Real provider is disabled without an API key and fails with setup guidance.
-- [ ] Scenario recipes can reference generated asset ids.
+- [x] Dry-run provider writes deterministic asset manifests.
+- [x] Manifest validator rejects missing scale/collision/license fields.
+- [x] Real provider is disabled without an API key and fails with setup guidance.
+- [x] Scenario recipes can reference generated asset ids.
 
 ## Verification
 
@@ -41,3 +41,13 @@ behind a provider seam when a key is available.
 ## Blockers
 
 - Real asset generation requires API key and provider docs.
+
+## Evidence
+
+- Local tests: `PYTHONPATH=src python3 -m unittest tests.test_assets tests.test_cli` passed with 22 tests.
+- Dry-run command: `PYTHONPATH=src python3 -m driverx plan-assets --run-id task12-assets`.
+- Meshy setup-block command: `PYTHONPATH=src python3 -m driverx plan-assets --provider meshy --run-id task12-assets-meshy-blocked`.
+- Dry-run manifest: `artifacts/runs/task12-assets/asset_manifests.json`.
+- Dry-run report: `artifacts/runs/task12-assets/asset_report.md`.
+- Meshy blocked manifest: `artifacts/runs/task12-assets-meshy-blocked/asset_manifests.json`.
+- External blocker retained: live asset generation still requires `MESHY_API_KEY` and provider submission docs.

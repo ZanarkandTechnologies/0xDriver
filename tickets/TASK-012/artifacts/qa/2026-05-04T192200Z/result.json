@@ -1,0 +1,20 @@
+{
+  "ticket": "TASK-012",
+  "result": "pass",
+  "commands": [
+    "PYTHONPATH=src python3 -m unittest tests.test_assets tests.test_cli",
+    "PYTHONPATH=src python3 -m driverx plan-assets --run-id task12-assets",
+    "PYTHONPATH=src python3 -m driverx plan-assets --provider meshy --run-id task12-assets-meshy-blocked"
+  ],
+  "artifacts": [
+    "artifacts/runs/task12-assets/asset_manifests.json",
+    "artifacts/runs/task12-assets/asset_summary.json",
+    "artifacts/runs/task12-assets/asset_report.md",
+    "artifacts/runs/task12-assets-meshy-blocked/asset_manifests.json",
+    "artifacts/runs/task12-assets-meshy-blocked/asset_summary.json",
+    "artifacts/runs/task12-assets-meshy-blocked/asset_report.md"
+  ],
+  "blockers": [
+    "Live Meshy generation requires MESHY_API_KEY and provider submission docs."
+  ]
+}

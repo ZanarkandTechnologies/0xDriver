@@ -211,6 +211,22 @@ def _load_recipe(path: Path, recipe_id: str | None):
     raise ValueError(f"Unsupported recipe JSON: {path}")
 
 
+def _load_recipes(path: Path) -> list[object]:
+    from driverx.scenarios import ScenarioRecipe
+
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(raw, list):
+        return [ScenarioRecipe.from_jsonable(dict(recipe)) for recipe in raw]
+    if isinstance(raw, dict) and "recipes" in raw:
+        return [
+            ScenarioRecipe.from_jsonable(dict(recipe))
+            for recipe in list(raw.get("recipes", []))
+        ]
+    if isinstance(raw, dict):
+        return [ScenarioRecipe.from_jsonable(raw)]
+    raise ValueError(f"Unsupported recipe JSON: {path}")
+
+
 def _command_plan_carla_run(args: argparse.Namespace) -> int:
     from driverx.core.artifacts import prepare_run_dir
     from driverx.simulators import load_carla_run_config, plan_fail2drive_run
@@ -303,6 +319,28 @@ def _command_compile_carla_script(args: argparse.Namespace) -> int:
     trace = simulate_behavior(plans[args.behavior_id])
     plan = compile_carla_script_plan(recipe, trace, run_dir)
     summary = write_carla_script_plan(run_dir, plan)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
+def _command_plan_assets(args: argparse.Namespace) -> int:
+    from driverx.assets import (
+        attach_assets_to_recipes,
+        default_asset_requests,
+        generate_assets_with_provider,
+        write_asset_plan,
+    )
+    from driverx.core.artifacts import prepare_run_dir
+
+    requests = default_asset_requests()
+    manifests = generate_assets_with_provider(
+        requests,
+        args.provider,
+        api_key=args.api_key,
+    )
+    recipes = attach_assets_to_recipes(_load_recipes(args.recipe), manifests) if args.recipe else None
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = write_asset_plan(run_dir, manifests, recipes)
     print(json.dumps(summary, indent=2))
     return 0
 
@@ -500,6 +538,17 @@ def build_parser() -> argparse.ArgumentParser:
     script_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     script_parser.add_argument("--run-id", default="carla-script")
     script_parser.set_defaults(func=_command_compile_carla_script)
+
+    asset_parser = subparsers.add_parser(
+        "plan-assets",
+        help="Plan generated OOD assets and optional scenario recipe references.",
+    )
+    asset_parser.add_argument("--provider", choices=["dry_run", "meshy"], default="dry_run")
+    asset_parser.add_argument("--api-key")
+    asset_parser.add_argument("--recipe", type=Path)
+    asset_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    asset_parser.add_argument("--run-id", default="asset-plan")
+    asset_parser.set_defaults(func=_command_plan_assets)
 
     config_parser = subparsers.add_parser(
         "show-config",

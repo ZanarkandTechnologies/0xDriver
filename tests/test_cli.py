@@ -474,6 +474,47 @@ class CliTest(unittest.TestCase):
             self.assertEqual(result["validation_errors"], [])
             self.assertTrue(Path(result["json_path"]).exists())
 
+    def test_plan_assets_cli_writes_manifests_and_recipe_references(self) -> None:
+        with TemporaryDirectory() as tmp:
+            recipe_path = Path(tmp) / "recipes.json"
+            recipe_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "recipe_id": "generated-test",
+                            "parent_seed_id": "seed",
+                            "mutation": "visual_noise",
+                            "actors": [],
+                            "environment": {},
+                            "expected_failure_mode": "novel artifact distractor",
+                            "memory_query": ["visual_noise"],
+                            "route_path": "fail2drive_split/Generalization_PedestriansOnRoad_1088.xml",
+                        }
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "plan-assets",
+                        "--recipe",
+                        str(recipe_path),
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "assets",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+            recipe_payload = json.loads(Path(result["recipe_path"]).read_text(encoding="utf-8"))
+
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(result["num_assets"], 3)
+            self.assertEqual(result["validation_errors"], {})
+            self.assertIn("generated_asset_ids", recipe_payload[0]["environment"])
+
 
 if __name__ == "__main__":
     unittest.main()
