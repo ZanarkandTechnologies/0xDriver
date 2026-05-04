@@ -35,6 +35,13 @@ from driverx.simulators.carla_ego import (
     write_ego_smoke,
 )
 from driverx.simulators.fail2drive import CarlaCommandPlan, plan_fail2drive_run
+from driverx.simulators.overlay_injection import (
+    OverlayInjectionPlan,
+    OverlayInjectionRoute,
+    compact_overlay_injection_summary,
+    compile_overlay_injection_plan,
+    write_overlay_injection_plan,
+)
 from driverx.simulators.simlingo import (
     SimLingoCommandPlan,
     SimLingoReadiness,
@@ -67,12 +74,15 @@ __all__ = [
     "CarlaSensorScript",
     "CarlaSmokeResult",
     "EntityTrack",
+    "OverlayInjectionPlan",
+    "OverlayInjectionRoute",
     "SimLingoCommandPlan",
     "SimLingoReadiness",
     "SimLingoRouteRecord",
     "SimLingoRunRecord",
     "SimLingoRunConfig",
     "build_bench2drive_route_suite",
+    "compact_overlay_injection_summary",
     "compact_simlingo_result_summary",
     "inspect_simlingo_checkout",
     "load_carla_run_config",
@@ -85,11 +95,13 @@ __all__ = [
     "run_ego_spawn_smoke",
     "smoke_carla_server",
     "compile_carla_script_plan",
+    "compile_overlay_injection_plan",
     "validate_carla_script_plan",
     "write_carla_script_plan",
     "write_bench2drive_route_suite",
     "write_carla_probe",
     "write_ego_smoke",
+    "write_overlay_injection_plan",
     "write_simlingo_plan",
     "write_simlingo_readiness",
     "write_simlingo_result_report",

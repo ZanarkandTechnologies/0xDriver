@@ -279,6 +279,25 @@ def _command_export_bench2drive_suite(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_plan_overlay_injection(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        compact_overlay_injection_summary,
+        compile_overlay_injection_plan,
+        write_overlay_injection_plan,
+    )
+
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    plan = compile_overlay_injection_plan(
+        args.route_pack,
+        run_dir,
+        behavior_id=args.behavior_id,
+    )
+    summary = write_overlay_injection_plan(run_dir, plan)
+    print(json.dumps(compact_overlay_injection_summary(summary), indent=2))
+    return 0
+
+
 def _command_smoke_carla(args: argparse.Namespace) -> int:
     from driverx.simulators import load_carla_run_config, smoke_carla_server
 
@@ -618,6 +637,19 @@ def build_parser() -> argparse.ArgumentParser:
     route_export_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     route_export_parser.add_argument("--run-id", default="bench2drive-route-pack")
     route_export_parser.set_defaults(func=_command_export_bench2drive_suite)
+
+    overlay_parser = subparsers.add_parser(
+        "plan-overlay-injection",
+        help="Compile DriverX route-pack overlays into dry-run companion CARLA scripts.",
+    )
+    overlay_parser.add_argument("--route-pack", type=Path, required=True)
+    overlay_parser.add_argument(
+        "--behavior-id",
+        help="Override the behavior id stored in the route-pack overlays.",
+    )
+    overlay_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    overlay_parser.add_argument("--run-id", default="overlay-injection")
+    overlay_parser.set_defaults(func=_command_plan_overlay_injection)
 
     smoke_parser = subparsers.add_parser(
         "smoke-carla",

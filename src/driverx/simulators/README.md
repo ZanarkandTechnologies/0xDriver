@@ -15,6 +15,8 @@ dry-run command planning.
 - `plan_fail2drive_run(config, recipe)`
 - `build_bench2drive_route_suite(run_dir, recipes, route_root, behavior_id)`
 - `write_bench2drive_route_suite(run_dir, suite, simlingo_plan=...)`
+- `compile_overlay_injection_plan(route_pack_path, output_dir, behavior_id=...)`
+- `write_overlay_injection_plan(run_dir, plan)`
 - `parse_simlingo_result(path)`
 - `write_simlingo_result_report(run_dir, record, ...)`
 
@@ -39,6 +41,8 @@ PYTHONPATH=src python3 -m driverx export-bench2drive-suite \
   --recipe-id generated-base-animals-0076-visual-noise-000 \
   --route-root ../external/fail2drive \
   --behavior-id motorcycle_filtering
+PYTHONPATH=src python3 -m driverx plan-overlay-injection \
+  --route-pack artifacts/runs/bench2drive-route-pack/bench2drive_route_pack.json
 PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
   --result tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/seed_1_res.json \
   --compatibility tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/torch_cuda_compatibility.json \
@@ -50,5 +54,6 @@ PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
 ```bash
 PYTHONPATH=src python3 -m unittest tests.test_simulator_adapters
 PYTHONPATH=src python3 -m unittest tests.test_bench2drive_route_export
+PYTHONPATH=src python3 -m unittest tests.test_overlay_injection
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_result_ingestion
 ```

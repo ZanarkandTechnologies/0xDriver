@@ -131,6 +131,13 @@ Parse SimLingo/Bench2Drive result JSON, route logs, and CUDA compatibility
 snapshots into stable JSON/Markdown reports for comparison and final demo
 evidence.
 
+### TASK-021: Overlay Injection Plan
+
+Compile DriverX route-pack sidecar overlays into dry-run companion CARLA script
+plans. This produces the actor, sensor, tick, memory-query, and cleanup
+schedule that a future live injector will run beside stock SimLingo, while
+remaining honest that current artifacts do not yet alter SimLingo behavior.
+
 ## Mesh / Asset API Readiness
 
 A Meshy API key is useful for TASK-012, but it is not needed for TASK-008

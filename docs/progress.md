@@ -33,11 +33,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-017 remote GPU SimLingo one-route proof with precise runtime blocker
 - [x] TASK-019 SimLingo result ingestion
 - [x] TASK-018 generated Bench2Drive route pack export
+- [x] TASK-021 overlay injection dry-run plan
 
 ## Active Roadmap
 
 - [ ] TASK-020 H100/H200 stock SimLingo rerun
-- [ ] TASK-021 companion CARLA actor injector for DriverX overlays
+- [ ] TASK-022 live companion CARLA actor injector for DriverX overlays
 
 ## Latest Evidence
 
@@ -76,6 +77,14 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - TASK-018 exports generated OOD recipes to stock-compatible Bench2Drive route
   XML, DriverX sidecar overlays, and a SimLingo command plan with an absolute
   `--routes` path.
+- TASK-021 compiles TASK-018 sidecar overlays into dry-run companion CARLA
+  actor/sensor/tick plans with `2` routes, distinct overlay actors
+  (`occluder`, `distractor`), route-specific companion blueprints
+  (`static.prop.streetbarrier`, `static.prop.trafficwarning`), preserved
+  runtime contracts, `25` behavior samples plus `1` companion spawn tick per
+  route (`26` ticks total), and zero validation errors.
+- Full local gate during TASK-021: `bash scripts/pre_push_check.sh` passed with
+  130 tests.
 - Full local gate during TASK-018: `bash scripts/pre_push_check.sh` passed with
   125 tests.
 - Full local gate during TASK-019: `bash scripts/pre_push_check.sh` passed with

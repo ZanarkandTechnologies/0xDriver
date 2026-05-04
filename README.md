@@ -142,6 +142,9 @@ PYTHONPATH=src python3 -m driverx export-bench2drive-suite \
   --behavior-id motorcycle_filtering \
   --config configs/simlingo.sample.yaml \
   --run-id task18-route-pack
+PYTHONPATH=src python3 -m driverx plan-overlay-injection \
+  --route-pack artifacts/runs/task18-route-pack/bench2drive_route_pack.json \
+  --run-id task21-overlay-injection
 
 # Plan generated OOD assets and attach asset ids to scenario recipes
 PYTHONPATH=src python3 -m driverx plan-assets \

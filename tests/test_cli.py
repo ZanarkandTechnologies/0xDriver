@@ -513,6 +513,97 @@ class CliTest(unittest.TestCase):
                 "\n".join(result["simlingo_live_blockers"]),
             )
 
+    def test_plan_overlay_injection_cli_writes_companion_plan(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            recipe_path = tmp_path / "recipes.json"
+            recipe_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "recipe_id": "generated-base-animals",
+                            "parent_seed_id": "Base_Animals_0076",
+                            "mutation": "regional_driving_behavior",
+                            "actors": [
+                                {
+                                    "role": "two_wheeler",
+                                    "asset": "motorcycle_filtering_or_scooter",
+                                    "placement": "adjacent lane gap",
+                                }
+                            ],
+                            "environment": {"traffic_style": "dense_asian_urban"},
+                            "expected_failure_mode": "misses motorcycle filtering",
+                            "memory_query": ["motorcycle_filtering"],
+                            "route_path": "fail2drive_split/Base_Animals_0076.xml",
+                        },
+                        {
+                            "recipe_id": "generated-pedestrian-occlusion",
+                            "parent_seed_id": "Generalization_PedestriansOnRoad_1088",
+                            "mutation": "occlusion",
+                            "actors": [
+                                {
+                                    "role": "occluder",
+                                    "asset": "parked_vehicle_or_construction_barrier",
+                                    "placement": "before crossing point",
+                                }
+                            ],
+                            "environment": {"occlusion": "high"},
+                            "expected_failure_mode": "commits before hidden crossing",
+                            "memory_query": ["occlusion", "creep"],
+                            "route_path": "fail2drive_split/Generalization_PedestriansOnRoad_1088.xml",
+                        },
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            export_stream = StringIO()
+            with redirect_stdout(export_stream):
+                export_code = main(
+                    [
+                        "export-bench2drive-suite",
+                        "--recipe",
+                        str(recipe_path),
+                        "--route-root",
+                        "tests/fixtures/fail2drive_like",
+                        "--behavior-id",
+                        "motorcycle_filtering",
+                        "--no-simlingo-plan",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "route-pack",
+                    ]
+                )
+            route_pack = json.loads(export_stream.getvalue())
+            inject_stream = StringIO()
+            with redirect_stdout(inject_stream):
+                inject_code = main(
+                    [
+                        "plan-overlay-injection",
+                        "--route-pack",
+                        route_pack["manifest_path"],
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "inject",
+                    ]
+                )
+            result = json.loads(inject_stream.getvalue())
+
+            self.assertEqual(export_code, 0)
+            self.assertEqual(inject_code, 0)
+            self.assertEqual(result["num_routes"], 2)
+            self.assertEqual(result["validation_errors"], [])
+            self.assertTrue(Path(result["json_path"]).exists())
+            self.assertEqual(result["routes"][0]["behavior_id"], "motorcycle_filtering")
+            self.assertEqual(result["routes"][0]["overlay_actor_count"], 1)
+            self.assertEqual(result["routes"][0]["overlay_roles"], ["two_wheeler"])
+            self.assertEqual(result["routes"][1]["overlay_roles"], ["occluder"])
+            payload = json.loads(Path(result["json_path"]).read_text(encoding="utf-8"))
+            self.assertEqual(payload["routes"][0]["script_plan"]["actors"][2]["role"], "two_wheeler")
+            self.assertEqual(payload["routes"][1]["script_plan"]["actors"][2]["role"], "occluder")
+            self.assertIn("driverx_runtime_contract", payload["routes"][0])
+
     def test_smoke_carla_cli_reports_unreachable_without_traceback(self) -> None:
         stream = StringIO()
         with redirect_stdout(stream):
@@ -847,67 +938,6 @@ class CliTest(unittest.TestCase):
             self.assertEqual(exit_code, 0)
             self.assertIn("leaderboard_evaluator.py", " ".join(result["command"]))
             self.assertTrue(Path(result["json_path"]).exists())
-
-    def test_ingest_simlingo_result_cli_writes_compact_report(self) -> None:
-        with TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            result_path = root / "seed_1_res.json"
-            result_path.write_text(
-                json.dumps(
-                    {
-                        "_checkpoint": {
-                            "global_record": {
-                                "status": "Failed",
-                                "scores_mean": {
-                                    "score_route": 0,
-                                    "score_penalty": 1.0,
-                                    "score_composed": 0.0,
-                                },
-                                "meta": {"exceptions": [["route-1", 0, "Failed - Agent crashed"]]},
-                            },
-                            "progress": [1, 1],
-                            "records": [
-                                {
-                                    "route_id": "route-1",
-                                    "scenario_name": "ParkingCutIn_1",
-                                    "town_name": "Town12",
-                                    "status": "Failed - Agent crashed",
-                                    "scores": {
-                                        "score_route": 0,
-                                        "score_penalty": 1.0,
-                                        "score_composed": 0.0,
-                                    },
-                                    "infractions": {"route_timeout": []},
-                                    "meta": {},
-                                }
-                            ],
-                        },
-                    }
-                ),
-                encoding="utf-8",
-            )
-            stream = StringIO()
-            with redirect_stdout(stream):
-                exit_code = main(
-                    [
-                        "ingest-simlingo-result",
-                        "--result",
-                        str(result_path),
-                        "--output-root",
-                        tmp,
-                        "--run-id",
-                        "simlingo-result",
-                    ]
-                )
-            result = json.loads(stream.getvalue())
-
-            self.assertEqual(exit_code, 0)
-            self.assertFalse(result["record"]["success"])
-            self.assertEqual(result["primary_route"]["route_id"], "route-1")
-            self.assertTrue(Path(result["json_path"]).exists())
-            self.assertTrue(Path(result["report_path"]).exists())
-            self.assertNotIn("route_log", result)
-            self.assertNotIn("tail", stream.getvalue())
 
 
 if __name__ == "__main__":
