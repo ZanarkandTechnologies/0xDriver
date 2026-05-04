@@ -22,6 +22,10 @@ bash scripts/run_carla_client_docker.sh python -m driverx probe-carla \
   --host host.docker.internal \
   --port 2000 \
   --run-id task8-carla-probe
+bash scripts/run_carla_client_docker.sh python -m driverx spawn-ego-smoke \
+  --host host.docker.internal \
+  --port 2000 \
+  --run-id task9-ego-smoke
 PYTHONPATH=src python3 -m driverx plan-carla-run \
   --config configs/carla_local.sample.yaml \
   --recipe artifacts/runs/scenario-forge/scenario_recipes.json \

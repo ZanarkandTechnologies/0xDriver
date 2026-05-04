@@ -254,6 +254,27 @@ def _command_probe_carla(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_spawn_ego_smoke(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import CarlaEgoSmokeConfig, load_carla_run_config
+    from driverx.simulators import run_ego_spawn_smoke, write_ego_smoke
+
+    config = load_carla_run_config(args.config)
+    smoke_config = CarlaEgoSmokeConfig(
+        host=args.host if args.host is not None else config.host,
+        port=args.port if args.port is not None else config.port,
+        timeout_s=args.timeout_s if args.timeout_s is not None else config.timeout_s,
+        tick_count=args.tick_count,
+        camera_width=args.camera_width,
+        camera_height=args.camera_height,
+    )
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    result = run_ego_spawn_smoke(smoke_config, run_dir)
+    summary = write_ego_smoke(run_dir, result)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -409,6 +430,25 @@ def build_parser() -> argparse.ArgumentParser:
     probe_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     probe_parser.add_argument("--run-id", default="carla-probe")
     probe_parser.set_defaults(func=_command_probe_carla)
+
+    ego_parser = subparsers.add_parser(
+        "spawn-ego-smoke",
+        help="Spawn one CARLA ego vehicle and camera, capture tracks, then clean up.",
+    )
+    ego_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/carla_local.sample.yaml"),
+    )
+    ego_parser.add_argument("--host")
+    ego_parser.add_argument("--port", type=int)
+    ego_parser.add_argument("--timeout-s", type=float)
+    ego_parser.add_argument("--tick-count", type=int, default=5)
+    ego_parser.add_argument("--camera-width", type=int, default=320)
+    ego_parser.add_argument("--camera-height", type=int, default=180)
+    ego_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    ego_parser.add_argument("--run-id", default="ego-smoke")
+    ego_parser.set_defaults(func=_command_spawn_ego_smoke)
 
     config_parser = subparsers.add_parser(
         "show-config",

@@ -10,7 +10,7 @@ from driverx.cli import main
 from driverx.core.config import DatasetConfig, DriverConfig, OutputConfig, ReasonerConfig
 from driverx.pipeline.batch_run import run_batch
 from driverx.pipeline.scene_run import run_scene
-from driverx.simulators import CarlaProbeResult
+from driverx.simulators import CarlaEgoSmokeResult, CarlaProbeResult
 
 
 def _write_fake_carla_config(tmp: Path) -> Path:
@@ -377,6 +377,44 @@ class CliTest(unittest.TestCase):
             self.assertEqual(result["map_name"], "Carla/Maps/Town10HD_Opt")
             self.assertTrue(Path(result["json_path"]).exists())
             self.assertTrue(Path(result["report_path"]).exists())
+
+    def test_spawn_ego_smoke_cli_writes_artifacts(self) -> None:
+        with TemporaryDirectory() as tmp:
+            stream = StringIO()
+            with patch(
+                "driverx.simulators.run_ego_spawn_smoke",
+                return_value=CarlaEgoSmokeResult(
+                    connected=True,
+                    host="host.docker.internal",
+                    port=2000,
+                    map_name="Carla/Maps/Town10HD_Opt",
+                    ego_actor_id=101,
+                    camera_actor_id=202,
+                    spawned_actor_ids=[101, 202],
+                    destroyed_actor_ids=[202, 101],
+                    track_count=10,
+                ),
+            ), redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "spawn-ego-smoke",
+                        "--config",
+                        "configs/carla_local.sample.yaml",
+                        "--host",
+                        "host.docker.internal",
+                        "--port",
+                        "2000",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "ego",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+            self.assertEqual(exit_code, 0)
+            self.assertTrue(result["connected"])
+            self.assertEqual(result["destroyed_actor_ids"], [202, 101])
+            self.assertTrue(Path(result["json_path"]).exists())
 
 
 if __name__ == "__main__":

@@ -107,6 +107,12 @@ bash scripts/run_carla_client_docker.sh python -m driverx probe-carla \
   --host host.docker.internal \
   --port 2000 \
   --run-id task8-carla-probe
+
+# Spawn one ego vehicle/camera, capture a frame, log tracks, and clean up
+bash scripts/run_carla_client_docker.sh python -m driverx spawn-ego-smoke \
+  --host host.docker.internal \
+  --port 2000 \
+  --run-id task9-ego-smoke
 ```
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored

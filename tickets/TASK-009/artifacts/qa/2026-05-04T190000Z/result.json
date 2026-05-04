@@ -1,0 +1,24 @@
+{
+  "ticket": "TASK-009",
+  "verdict": "PASS",
+  "qa_time": "2026-05-04 19:00 +0800",
+  "commands": [
+    "PYTHONPATH=src python3 -m unittest tests.test_carla_ego tests.test_carla_probe tests.test_cli",
+    "bash scripts/pre_push_check.sh",
+    "bash scripts/run_carla_client_docker.sh python -m driverx spawn-ego-smoke --host host.docker.internal --port 2000 --timeout-s 10 --tick-count 5 --run-id task9-ego-smoke"
+  ],
+  "evidence": {
+    "targeted_tests": "18 passed",
+    "pre_push_check": "65 passed",
+    "map_name": "Carla/Maps/Town10HD_Opt",
+    "spawned_actor_ids": [24, 25],
+    "destroyed_actor_ids": [25, 24],
+    "track_count": 10,
+    "image_path": "artifacts/runs/task9-ego-smoke/ego_camera.png",
+    "tracks_path": "artifacts/runs/task9-ego-smoke/entity_tracks.json"
+  },
+  "residual_risk": [
+    "Actor spawning is smoke-only and not yet route-following.",
+    "Actor ids vary by live CARLA session."
+  ]
+}

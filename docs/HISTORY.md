@@ -23,3 +23,5 @@
 2026-05-03 19:50 +0800 | QA | TASK-007 passed local review and QA with 57-test pre-push gate and explicit recipe-to-route evidence
 2026-05-04 18:58 +0800 | PLAN | expanded roadmap through TASK-014 for live CARLA probing, entity tracking, regional behavior generation, asset generation, policy adapters, and retrieval-augmented VLA comparison
 2026-05-04 18:58 +0800 | TASK | started TASK-008 live CARLA probe and Docker bridge after local CARLA app reached TCP smoke on port 2000
+2026-05-04 18:58 +0800 | SHIP | TASK-008 live Docker probe reached CARLA 0.9.16 and recorded Town10HD_Opt with 23 actors
+2026-05-04 19:00 +0800 | SHIP | TASK-009 live ego smoke spawned vehicle and RGB camera, captured a frame, logged entity tracks, and cleaned up actors
