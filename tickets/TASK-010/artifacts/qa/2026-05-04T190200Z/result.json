@@ -1,0 +1,24 @@
+{
+  "ticket": "TASK-010",
+  "verdict": "PASS",
+  "qa_time": "2026-05-04 19:02 +0800",
+  "commands": [
+    "PYTHONPATH=src python3 -m unittest tests.test_behaviors tests.test_cli",
+    "bash scripts/pre_push_check.sh",
+    "PYTHONPATH=src python3 -m driverx generate-behaviors --run-id task10-behaviors"
+  ],
+  "evidence": {
+    "targeted_tests": "19 passed",
+    "pre_push_check": "72 passed",
+    "behavior_count": 6,
+    "report_path": "artifacts/runs/task10-behaviors/behavior_report.md",
+    "traces_path": "artifacts/runs/task10-behaviors/behavior_traces.json",
+    "sudden_brake_max_deceleration_mps2": 13.6,
+    "wrong_way_distance_m": 15.0,
+    "motorcycle_filtering_max_lateral_speed_mps": 4.3592
+  },
+  "residual_risk": [
+    "Behavior traces are stress patterns, not calibrated traffic distributions.",
+    "CARLA control compilation is TASK-011."
+  ]
+}

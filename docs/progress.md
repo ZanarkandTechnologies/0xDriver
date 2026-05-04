@@ -23,10 +23,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-007 local scenario forge, memory bank, CARLA smoke, Fail2Drive dry-run planning
 - [x] TASK-008 live CARLA Python API probe through Docker
 - [x] TASK-009 ego spawn, camera capture, and entity tracks
+- [x] TASK-010 regional driving behavior library
 
 ## Active Roadmap
 
-- [ ] TASK-010 regional driving behavior library
 - [ ] TASK-011 scenario-to-CARLA script compiler
 - [ ] TASK-012 generated asset pipeline
 - [ ] TASK-013 policy adapter interface
@@ -40,6 +40,9 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   version `0.9.16`, and client version `0.9.16`.
 - TASK-009 live ego smoke spawned ego actor `24`, camera actor `25`, captured
   `ego_camera.png`, wrote `entity_tracks.json`, and destroyed actors `[25, 24]`.
+- TASK-010 generated six OOD behavior traces covering no-signal cut-ins,
+  sudden brakes, motorcycle filtering, wrong-way shoulder creep, informal
+  right-of-way pushes, and fast low-profile two-wheeler proxies.
 - Full local gate after TASK-008: `bash scripts/pre_push_check.sh` passed with
   61 tests.
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: review
+- state: building
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-007
@@ -37,11 +37,11 @@ Out of scope:
 
 ## Acceptance Criteria
 
-- [ ] At least six behavior templates exist.
-- [ ] Each template generates deterministic actor coordinates over time.
-- [ ] Tests assert the intended erratic property for each behavior.
-- [ ] Reports summarize behavior metrics and expected failure pressure.
-- [ ] Scenario recipes can reference behavior ids.
+- [x] At least six behavior templates exist.
+- [x] Each template generates deterministic actor coordinates over time.
+- [x] Tests assert the intended erratic property for each behavior.
+- [x] Reports summarize behavior metrics and expected failure pressure.
+- [x] Scenario recipes can reference behavior ids through stable behavior ids/tags.
 
 ## Verification
 
@@ -51,3 +51,13 @@ Out of scope:
 ## Blockers
 
 - None.
+
+## Evidence
+
+- Local tests: `PYTHONPATH=src python3 -m unittest tests.test_behaviors tests.test_cli` passed with 19 tests.
+- Behavior suite command: `PYTHONPATH=src python3 -m driverx generate-behaviors --run-id task10-behaviors`.
+- Report: `artifacts/runs/task10-behaviors/behavior_report.md`.
+- Trace JSON: `artifacts/runs/task10-behaviors/behavior_traces.json`.
+- Generated behaviors: `no_signal_cut_in`, `sudden_brake`,
+  `motorcycle_filtering`, `wrong_way_shoulder_creep`,
+  `informal_right_of_way_push`, `stunt_motorcycle_proxy`.

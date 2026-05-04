@@ -275,6 +275,18 @@ def _command_spawn_ego_smoke(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_generate_behaviors(args: argparse.Namespace) -> int:
+    from driverx.behaviors import default_behavior_plans, simulate_behavior
+    from driverx.behaviors import write_behavior_suite
+    from driverx.core.artifacts import prepare_run_dir
+
+    traces = [simulate_behavior(plan) for plan in default_behavior_plans()]
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = write_behavior_suite(run_dir, traces)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -449,6 +461,14 @@ def build_parser() -> argparse.ArgumentParser:
     ego_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     ego_parser.add_argument("--run-id", default="ego-smoke")
     ego_parser.set_defaults(func=_command_spawn_ego_smoke)
+
+    behavior_parser = subparsers.add_parser(
+        "generate-behaviors",
+        help="Generate deterministic OOD behavior traces and metrics.",
+    )
+    behavior_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    behavior_parser.add_argument("--run-id", default="behavior-suite")
+    behavior_parser.set_defaults(func=_command_generate_behaviors)
 
     config_parser = subparsers.add_parser(
         "show-config",

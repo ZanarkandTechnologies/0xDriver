@@ -416,6 +416,25 @@ class CliTest(unittest.TestCase):
             self.assertEqual(result["destroyed_actor_ids"], [202, 101])
             self.assertTrue(Path(result["json_path"]).exists())
 
+    def test_generate_behaviors_cli_writes_suite(self) -> None:
+        with TemporaryDirectory() as tmp:
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "generate-behaviors",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "behaviors",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(result["num_behaviors"], 6)
+            self.assertTrue(Path(result["traces_path"]).exists())
+            self.assertTrue(Path(result["report_path"]).exists())
+
 
 if __name__ == "__main__":
     unittest.main()

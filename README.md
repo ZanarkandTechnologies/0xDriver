@@ -113,6 +113,10 @@ bash scripts/run_carla_client_docker.sh python -m driverx spawn-ego-smoke \
   --host host.docker.internal \
   --port 2000 \
   --run-id task9-ego-smoke
+
+# Generate regional/OOD behavior traces and metrics
+PYTHONPATH=src python3 -m driverx generate-behaviors \
+  --run-id task10-behaviors
 ```
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored

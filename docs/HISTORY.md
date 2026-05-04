@@ -25,3 +25,4 @@
 2026-05-04 18:58 +0800 | TASK | started TASK-008 live CARLA probe and Docker bridge after local CARLA app reached TCP smoke on port 2000
 2026-05-04 18:58 +0800 | SHIP | TASK-008 live Docker probe reached CARLA 0.9.16 and recorded Town10HD_Opt with 23 actors
 2026-05-04 19:00 +0800 | SHIP | TASK-009 live ego smoke spawned vehicle and RGB camera, captured a frame, logged entity tracks, and cleaned up actors
+2026-05-04 19:02 +0800 | SHIP | TASK-010 added deterministic regional OOD behavior traces for no-signal cut-ins, sudden braking, motorcycle filtering, wrong-way creep, informal right-of-way pushes, and fast low-profile two-wheelers
