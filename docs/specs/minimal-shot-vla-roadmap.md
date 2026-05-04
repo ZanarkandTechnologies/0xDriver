@@ -145,6 +145,13 @@ actors beside a stock CARLA/Bench2Drive route. The injector should spawn
 route-specific overlay actors, apply planned ticks, log entity tracks, and
 clean up actors without taking over ego control from SimLingo.
 
+### TASK-023: SimLingo Sidecar Orchestration Plan
+
+Pair the stock SimLingo/Bench2Drive command plan with the DriverX companion
+overlay injector command. This produces a manual two-process launch artifact
+with blockers and expected outputs, but does not yet supervise live timing or
+claim model behavior changes.
+
 ## Mesh / Asset API Readiness
 
 A Meshy API key is useful for TASK-012, but it is not needed for TASK-008

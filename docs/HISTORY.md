@@ -43,3 +43,6 @@
 2026-05-05 05:15 +0800 | TASK | started TASK-022 live companion CARLA actor injector for TASK-021 overlay plans
 2026-05-05 05:15 +0800 | SHIP | TASK-022 added a companion-only CARLA overlay runner with fake-CARLA spawn, tick, track, and cleanup coverage
 2026-05-05 05:15 +0800 | QA | TASK-022 passed fake-CARLA focused tests and the 135-test pre-push gate; live CARLA proof remains optional Docker execution
+2026-05-05 05:30 +0800 | TASK | started TASK-023 SimLingo sidecar orchestration planning for stock policy plus DriverX overlay injection
+2026-05-05 05:30 +0800 | SHIP | TASK-023 added a dry-run two-process sidecar launch plan combining SimLingo and DriverX overlay injector commands
+2026-05-05 05:30 +0800 | QA | TASK-023 passed sidecar planner focused tests and the 139-test pre-push gate

@@ -67,6 +67,12 @@ from driverx.simulators.simlingo_results import (
     parse_simlingo_result,
     write_simlingo_result_report,
 )
+from driverx.simulators.simlingo_sidecar import (
+    SidecarCommandEntry,
+    SimLingoSidecarPlan,
+    build_simlingo_sidecar_plan,
+    write_simlingo_sidecar_plan,
+)
 
 __all__ = [
     "CarlaCommandPlan",
@@ -93,7 +99,10 @@ __all__ = [
     "SimLingoRouteRecord",
     "SimLingoRunRecord",
     "SimLingoRunConfig",
+    "SidecarCommandEntry",
+    "SimLingoSidecarPlan",
     "build_bench2drive_route_suite",
+    "build_simlingo_sidecar_plan",
     "compact_overlay_injection_summary",
     "compact_simlingo_result_summary",
     "inspect_simlingo_checkout",
@@ -119,4 +128,5 @@ __all__ = [
     "write_simlingo_plan",
     "write_simlingo_readiness",
     "write_simlingo_result_report",
+    "write_simlingo_sidecar_plan",
 ]

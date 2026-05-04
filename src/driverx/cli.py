@@ -516,6 +516,28 @@ def _command_ingest_simlingo_result(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_plan_simlingo_sidecar(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        build_simlingo_sidecar_plan,
+        write_simlingo_sidecar_plan,
+    )
+
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    plan = build_simlingo_sidecar_plan(
+        simlingo_plan_path=args.simlingo_plan,
+        overlay_plan_path=args.overlay_plan,
+        output_dir=run_dir,
+        carla_config_path=args.carla_config,
+        tick_limit=args.tick_limit,
+        overlay_start_delay_s=args.overlay_start_delay_s,
+        use_docker_carla_client=args.docker_carla_client,
+    )
+    summary = write_simlingo_sidecar_plan(run_dir, plan)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -841,6 +863,24 @@ def build_parser() -> argparse.ArgumentParser:
     simlingo_ingest_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     simlingo_ingest_parser.add_argument("--run-id", default="simlingo-result")
     simlingo_ingest_parser.set_defaults(func=_command_ingest_simlingo_result)
+
+    sidecar_parser = subparsers.add_parser(
+        "plan-simlingo-sidecar",
+        help="Plan a two-process SimLingo plus DriverX overlay-injector run.",
+    )
+    sidecar_parser.add_argument("--simlingo-plan", type=Path, required=True)
+    sidecar_parser.add_argument("--overlay-plan", type=Path, required=True)
+    sidecar_parser.add_argument(
+        "--carla-config",
+        type=Path,
+        default=Path("configs/carla_local.sample.yaml"),
+    )
+    sidecar_parser.add_argument("--tick-limit", type=int)
+    sidecar_parser.add_argument("--overlay-start-delay-s", type=float, default=5.0)
+    sidecar_parser.add_argument("--docker-carla-client", action="store_true")
+    sidecar_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    sidecar_parser.add_argument("--run-id", default="simlingo-sidecar")
+    sidecar_parser.set_defaults(func=_command_plan_simlingo_sidecar)
 
     config_parser = subparsers.add_parser(
         "show-config",

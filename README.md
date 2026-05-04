@@ -150,6 +150,11 @@ bash scripts/run_carla_client_docker.sh python -m driverx run-overlay-injection 
   --plan artifacts/runs/task21-overlay-injection/overlay_injection_plan.json \
   --route-limit 1 \
   --run-id task22-overlay-injection-run
+PYTHONPATH=src python3 -m driverx plan-simlingo-sidecar \
+  --simlingo-plan artifacts/runs/task18-route-pack/simlingo_command_plan.json \
+  --overlay-plan artifacts/runs/task21-overlay-injection/overlay_injection_plan.json \
+  --docker-carla-client \
+  --run-id task23-sidecar-plan
 
 # Plan generated OOD assets and attach asset ids to scenario recipes
 PYTHONPATH=src python3 -m driverx plan-assets \

@@ -1,0 +1,91 @@
+{
+  "simlingo_plan_path": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/simlingo_command_plan.json",
+  "overlay_plan_path": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-021/artifacts/qa/2026-05-04T220000Z/overlay-injection/overlay_injection_plan.json",
+  "dry_run": true,
+  "launch_mode": "manual_two_process_sidecar",
+  "route_count": 2,
+  "commands": [
+    {
+      "label": "simlingo_bench2drive",
+      "command": [
+        "python",
+        "/Users/kenjipcx/SOTA/external/simlingo/Bench2Drive/leaderboard/leaderboard/leaderboard_evaluator.py",
+        "--routes=/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/bench2drive_routes/generated_routes.xml",
+        "--repetitions=1",
+        "--track=SENSORS",
+        "--checkpoint=/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/simlingo_outputs/res/seed_1_res.json",
+        "--timeout=600",
+        "--agent=/Users/kenjipcx/SOTA/external/simlingo/team_code/agent_simlingo.py",
+        "--agent-config=/workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt",
+        "--traffic-manager-seed=1",
+        "--port=20000",
+        "--traffic-manager-port=10000"
+      ],
+      "cwd": "/Users/kenjipcx/SOTA/external/simlingo",
+      "env": {
+        "CARLA_ROOT": "/Users/kenjipcx/software/carla0915",
+        "WORK_DIR": "/Users/kenjipcx/SOTA/external/simlingo",
+        "PYTHONPATH": "/Users/kenjipcx/SOTA/external/simlingo:/Users/kenjipcx/software/carla0915/PythonAPI:/Users/kenjipcx/software/carla0915/PythonAPI/carla:/Users/kenjipcx/software/carla0915/carla:/Users/kenjipcx/software/carla0915/PythonAPI/carla/dist/carla-0.9.15-py3.8-linux-x86_64.egg:/Users/kenjipcx/software/carla0915/PythonAPI/carla/dist/carla-0.9.15-py3.7-linux-x86_64.egg:/Users/kenjipcx/software/carla0915/carla/dist/carla-0.9.15-py3.7-linux-x86_64.egg:/Users/kenjipcx/SOTA/external/simlingo/Bench2Drive/scenario_runner:/Users/kenjipcx/SOTA/external/simlingo/Bench2Drive/leaderboard",
+        "SCENARIO_RUNNER_ROOT": "/Users/kenjipcx/SOTA/external/simlingo/Bench2Drive/scenario_runner",
+        "LEADERBOARD_ROOT": "/Users/kenjipcx/SOTA/external/simlingo/Bench2Drive/leaderboard",
+        "SAVE_PATH": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/simlingo_outputs/viz"
+      },
+      "start_after_s": 0.0,
+      "expected_outputs": [
+        "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/simlingo_outputs/res/seed_1_res.json",
+        "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/simlingo_outputs/viz"
+      ],
+      "notes": [
+        "Launches stock SimLingo/Bench2Drive. It owns ego control and benchmark route lifecycle."
+      ]
+    },
+    {
+      "label": "driverx_overlay_injector",
+      "command": [
+        "bash",
+        "scripts/run_carla_client_docker.sh",
+        "python",
+        "-m",
+        "driverx",
+        "run-overlay-injection",
+        "--config",
+        "configs/carla_local.sample.yaml",
+        "--plan",
+        "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-021/artifacts/qa/2026-05-04T220000Z/overlay-injection/overlay_injection_plan.json",
+        "--output-root",
+        "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-023/artifacts/qa/2026-05-05T053000Z/sidecar-plan/overlay-injection-run",
+        "--run-id",
+        "overlay-injection-run"
+      ],
+      "cwd": "/Users/kenjipcx/SOTA/0xDriver",
+      "env": {
+        "PYTHONPATH": "src"
+      },
+      "start_after_s": 5.0,
+      "expected_outputs": [
+        "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-023/artifacts/qa/2026-05-05T053000Z/sidecar-plan/overlay-injection-run/overlay-injection-run/overlay_injection_run.json",
+        "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-023/artifacts/qa/2026-05-05T053000Z/sidecar-plan/overlay-injection-run/overlay-injection-run/entity_tracks.json"
+      ],
+      "notes": [
+        "Runs DriverX companion actors only; it must not spawn ego or stock route actors.",
+        "Start delay is a coarse launch offset until live route lifecycle hooks exist."
+      ]
+    }
+  ],
+  "blockers": [
+    "SimLingo live execution requires Linux NVIDIA; current platform is Darwin.",
+    "CARLA 0.9.15 root not found: /Users/kenjipcx/software/carla0915",
+    "SimLingo checkpoint not found: /workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt"
+  ],
+  "expected_outputs": [
+    "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/simlingo_outputs/res/seed_1_res.json",
+    "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/simlingo_outputs/viz",
+    "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-023/artifacts/qa/2026-05-05T053000Z/sidecar-plan/overlay-injection-run/overlay-injection-run/overlay_injection_run.json",
+    "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-023/artifacts/qa/2026-05-05T053000Z/sidecar-plan/overlay-injection-run/overlay-injection-run/entity_tracks.json"
+  ],
+  "notes": [
+    "This artifact is a launch plan, not a live process supervisor.",
+    "Use it on the same machine/CARLA server that runs SimLingo.",
+    "For stock SimLingo today, prefer an H100/H200 host; RTX PRO 6000 Blackwell needs a rebuild lane."
+  ]
+}
