@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: review
+- state: building
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-009, TASK-010
@@ -21,13 +21,13 @@ cleanup. This is the executable layer before full Fail2Drive XML export.
 
 ## Acceptance Criteria
 
-- [ ] Compiler emits deterministic CARLA script plan JSON.
-- [ ] Actor plans include blueprint filters, spawn transforms, behavior binding,
+- [x] Compiler emits deterministic CARLA script plan JSON.
+- [x] Actor plans include blueprint filters, spawn transforms, behavior binding,
   and cleanup policy.
-- [ ] Sensor plans include camera pose, resolution, and output path.
-- [ ] Plan validator rejects missing route path, unsupported behavior, and
+- [x] Sensor plans include camera pose, resolution, and output path.
+- [x] Plan validator rejects missing route path, unsupported behavior, and
   invalid spawn constraints.
-- [ ] Tests cover valid compile and invalid configs.
+- [x] Tests cover valid compile and invalid configs.
 
 ## Verification
 
@@ -37,3 +37,11 @@ cleanup. This is the executable layer before full Fail2Drive XML export.
 ## Blockers
 
 - TASK-009/TASK-010 supply the spawn and behavior contracts.
+
+## Evidence
+
+- Local tests: `PYTHONPATH=src python3 -m unittest tests.test_carla_script tests.test_behaviors tests.test_cli` passed with 23 tests.
+- Compile command: `PYTHONPATH=src python3 -m driverx compile-carla-script --recipe artifacts/runs/task7-scenario-forge/scenario_recipes.json --recipe-id generated-base-animals-0076-visual-noise-000 --behavior-id motorcycle_filtering --run-id task11-carla-script`.
+- Plan artifact: `artifacts/runs/task11-carla-script/carla_script_plan.json`.
+- Report artifact: `artifacts/runs/task11-carla-script/carla_script_plan.md`.
+- Validation errors: `[]`.

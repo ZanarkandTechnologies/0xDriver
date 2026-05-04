@@ -117,6 +117,13 @@ bash scripts/run_carla_client_docker.sh python -m driverx spawn-ego-smoke \
 # Generate regional/OOD behavior traces and metrics
 PYTHONPATH=src python3 -m driverx generate-behaviors \
   --run-id task10-behaviors
+
+# Compile one generated recipe and behavior into a CARLA script plan
+PYTHONPATH=src python3 -m driverx compile-carla-script \
+  --recipe artifacts/runs/scenario-forge/scenario_recipes.json \
+  --recipe-id generated-base-animals-0076-visual-noise-000 \
+  --behavior-id motorcycle_filtering \
+  --run-id task11-carla-script
 ```
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored

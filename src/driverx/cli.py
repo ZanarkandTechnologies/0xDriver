@@ -287,6 +287,26 @@ def _command_generate_behaviors(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_compile_carla_script(args: argparse.Namespace) -> int:
+    from driverx.behaviors import default_behavior_plans, simulate_behavior
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import compile_carla_script_plan, write_carla_script_plan
+
+    recipe = _load_recipe(args.recipe, args.recipe_id)
+    plans = {
+        plan.behavior_id: plan
+        for plan in default_behavior_plans()
+    }
+    if args.behavior_id not in plans:
+        raise ValueError(f"Unknown behavior id: {args.behavior_id}")
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    trace = simulate_behavior(plans[args.behavior_id])
+    plan = compile_carla_script_plan(recipe, trace, run_dir)
+    summary = write_carla_script_plan(run_dir, plan)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -469,6 +489,17 @@ def build_parser() -> argparse.ArgumentParser:
     behavior_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     behavior_parser.add_argument("--run-id", default="behavior-suite")
     behavior_parser.set_defaults(func=_command_generate_behaviors)
+
+    script_parser = subparsers.add_parser(
+        "compile-carla-script",
+        help="Compile one scenario recipe and behavior into a CARLA script plan.",
+    )
+    script_parser.add_argument("--recipe", type=Path, required=True)
+    script_parser.add_argument("--recipe-id")
+    script_parser.add_argument("--behavior-id", default="no_signal_cut_in")
+    script_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    script_parser.add_argument("--run-id", default="carla-script")
+    script_parser.set_defaults(func=_command_compile_carla_script)
 
     config_parser = subparsers.add_parser(
         "show-config",

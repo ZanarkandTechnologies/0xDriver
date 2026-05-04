@@ -1,0 +1,23 @@
+{
+  "ticket": "TASK-011",
+  "verdict": "PASS",
+  "qa_time": "2026-05-04 19:04 +0800",
+  "commands": [
+    "PYTHONPATH=src python3 -m unittest tests.test_carla_script tests.test_behaviors tests.test_cli",
+    "bash scripts/pre_push_check.sh",
+    "PYTHONPATH=src python3 -m driverx compile-carla-script --recipe artifacts/runs/task7-scenario-forge/scenario_recipes.json --recipe-id generated-base-animals-0076-visual-noise-000 --behavior-id motorcycle_filtering --run-id task11-carla-script"
+  ],
+  "evidence": {
+    "targeted_tests": "23 passed",
+    "pre_push_check": "76 passed with non-blocking CLI size warning",
+    "plan_path": "artifacts/runs/task11-carla-script/carla_script_plan.json",
+    "validation_errors": [],
+    "actors": 2,
+    "sensors": 1,
+    "ticks": 25
+  },
+  "residual_risk": [
+    "Script plans are not executed live yet.",
+    "CLI command handlers should be split soon."
+  ]
+}

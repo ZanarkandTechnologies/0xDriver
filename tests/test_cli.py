@@ -435,6 +435,45 @@ class CliTest(unittest.TestCase):
             self.assertTrue(Path(result["traces_path"]).exists())
             self.assertTrue(Path(result["report_path"]).exists())
 
+    def test_compile_carla_script_cli_writes_plan(self) -> None:
+        with TemporaryDirectory() as tmp:
+            recipe_path = Path(tmp) / "recipe.json"
+            recipe_path.write_text(
+                json.dumps(
+                    {
+                        "recipe_id": "generated-test",
+                        "parent_seed_id": "seed",
+                        "mutation": "occlusion",
+                        "actors": [],
+                        "environment": {},
+                        "expected_failure_mode": "hidden pedestrian",
+                        "memory_query": ["occlusion"],
+                        "route_path": "fail2drive_split/Generalization_PedestriansOnRoad_1088.xml",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "compile-carla-script",
+                        "--recipe",
+                        str(recipe_path),
+                        "--behavior-id",
+                        "sudden_brake",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "script",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(result["behavior_id"], "sudden_brake")
+            self.assertEqual(result["validation_errors"], [])
+            self.assertTrue(Path(result["json_path"]).exists())
+
 
 if __name__ == "__main__":
     unittest.main()
