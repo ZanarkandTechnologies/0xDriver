@@ -1,109 +1,54 @@
 # Progress
 
-Live orchestration log for the first 0xDriver implementation pass.
+Live orchestration log for 0xDriver.
 
 ## Current Goal
 
-Promote the strongest deployable motion prior into the main planner before
-adding VLA/GPU serving:
+Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 
-- keep TASK-004 and TASK-005 evidence intact
-- combine semantic intent candidates with deterministic ego-history priors
-- keep ranking label-free and deployable
-- rerun the first 10 real Waymo validation frames
-- make the hybrid planner the local action layer future VLA backends must beat
+- keep the Waymo/open-loop support track archived and available
+- use Fail2Drive seeds as OOD scenario sources
+- generate regional behavior and object novelty
+- log CARLA entity tracks and policy outputs
+- compare frozen policy behavior with and without retrieved safety memory
 
-## Checklist
+## Completed
 
-- [x] TASK-001 fixture-backed loop complete.
-- [x] Create TASK-002 for real Waymo/protobuf optional integration.
-- [x] Add optional dependency metadata and config fields.
-- [x] Implement real TFRecord loader path.
-- [x] Implement official protobuf packaging path.
-- [x] Add tests for optional-dependency and fixture continuity.
-- [x] Update README and durable docs.
-- [x] Run tests and commit implementation.
-- [x] Run review and final QA.
-- [x] Create TASK-003 for real Waymo runtime setup.
-- [x] Build Docker Waymo runtime.
-- [x] Smoke-test imports inside Docker.
-- [x] Run validation shard through the loader.
-- [x] Document the local-vs-cloud GPU workflow.
-- [x] Create TASK-004 for real Waymo batch baseline.
-- [x] Add loaded-frame execution seam.
-- [x] Add streaming Waymo frame iterator.
-- [x] Extend `run-batch` with Waymo frame ranges and report aggregation.
-- [x] Add fake-Waymo unit tests for batch aggregation.
-- [x] Run real 10-frame Waymo Docker baseline.
-- [x] Attach TASK-004 review and QA evidence.
-- [x] Create TASK-005 for batch experiment harness.
-- [x] Add deterministic rule trajectory baselines.
-- [x] Add cross-strategy experiment runner.
-- [x] Add `run-experiment` CLI.
-- [x] Run local experiment tests.
-- [x] Run real 10-frame Waymo Docker experiment.
-- [x] Attach TASK-005 review and QA evidence.
-- [x] Create TASK-006 for the motion-prior hybrid planner.
-- [x] Add hybrid semantic plus motion-prior candidate generation.
-- [x] Route `run-scene` and `run-batch` through the hybrid planner.
-- [x] Run local checks for the hybrid planner.
-- [x] Run real 10-frame Waymo Docker hybrid batch.
-- [x] Run fresh real 10-frame Waymo Docker hybrid experiment after renaming the
-  main experiment strategy.
-- [x] Attach TASK-006 review and QA evidence.
+- [x] TASK-001 fixture-backed pipeline
+- [x] TASK-002 optional real Waymo integration
+- [x] TASK-003 Waymo Linux Docker runtime
+- [x] TASK-004 real Waymo batch baseline
+- [x] TASK-005 experiment harness and deterministic baselines
+- [x] TASK-006 motion-prior hybrid planner
+- [x] TASK-007 local scenario forge, memory bank, CARLA smoke, Fail2Drive dry-run planning
+- [x] TASK-008 live CARLA Python API probe through Docker
 
-## Commit Plan
+## Active Roadmap
 
-1. TASK-006 ticket start.
-2. Hybrid planner implementation and tests.
-3. Docs and real-data evidence.
-4. Review, QA evidence, and closeout.
+- [ ] TASK-009 ego spawn, camera capture, and entity tracks
+- [ ] TASK-010 regional driving behavior library
+- [ ] TASK-011 scenario-to-CARLA script compiler
+- [ ] TASK-012 generated asset pipeline
+- [ ] TASK-013 policy adapter interface
+- [ ] TASK-014 retrieval-augmented VLA comparison harness
 
-## Notes
+## Latest Evidence
 
-- Real Waymo data is not needed to implement the optional parser, but it is
-  needed to validate against an actual downloaded shard.
-- Current clean proof without real data is: optional dependency paths fail with
-  actionable setup guidance and no traceback.
-- TASK-002 final review passed at `4.2 / 5.0`; final QA passed all stated
-  acceptance criteria.
-- Mock/fixture runs remain the default proof path so the repo works without
-  cloud GPU, TensorFlow, Waymo downloads, or model credentials.
-- Cloud VLA backends remain out of scope until official data/package surfaces
-  are credible.
-- TASK-003 Docker proof: `driverx-waymo:local` imports TensorFlow 2.13.0,
-  Waymo E2E protos, and `driverx`; the downloaded validation shard loads frame
-  `11d68b183960928432c0ab7af24ac86d-058` with three front cameras.
-- Baseline real-frame proof: `waymo-docker-baseline-003` completed with mock intent,
-  a smoothed 20-point trajectory, ADE `11.482393`, and load-frame timing near
-  `4.15s` under local amd64 Docker emulation.
-- Official submission dependency guidance is shared across loader and packager:
-  native macOS failure points to Docker; Docker reaches official dependency
-  loading and then validates missing `account_name` as expected.
-- Linux native dependency guidance now points to `requirements/waymo-linux.txt`;
-  `pip install --dry-run -r requirements/waymo-linux.txt` resolves the Waymo
-  tree and finds `jaxlib==0.4.13` through the configured JAX wheel index.
-- TASK-004 local proof: `bash scripts/pre_push_check.sh` passes with 34 unittest
-  cases after adding Waymo batch aggregation tests.
-- TASK-004 Docker proof: `waymo-batch-10` streamed 10 validation frames, wrote
-  `artifacts/runs/waymo-batch-10/batch_summary.json` and
-  `artifacts/runs/waymo-batch-10/batch_report.md`, produced mean ADE
-  `6.204769`, best ADE `0.517203` at frame index `4`, and worst ADE
-  `13.953167` at frame index `6`.
-- TASK-004 review repair: fixture batch defaults moved into `run_batch`, the CLI
-  now passes fixture names through unchanged, tests prove CLI/API fixture-default
-  agreement, and `waymo-batch-default-10` proves real-data default count without
-  passing `--frame-count`.
-- TASK-005 Docker proof: `waymo-experiment-10` compared six strategies over the
-  same 10 validation frames. Best deployable strategy was
-  `constant_acceleration` with mean ADE `3.73323`; current `intent_planner`
-  mean ADE was `6.204769`; `oracle_best_rule` was analysis-only with mean ADE
-  `3.732298`.
-- TASK-006 Docker proof: `waymo-hybrid-batch-10` routed the main planner through
-  hybrid semantic and motion-prior candidates. The selected source was
-  `constant_acceleration_smooth` for all 10 validation frames, mean ADE was
-  `3.73323`, best ADE was `0.012684` at frame index `4`, and worst ADE was
-  `9.15508` at frame index `6`.
-- TASK-006 experiment proof: `waymo-hybrid-experiment-10` records the current
-  main strategy as `hybrid_planner`, with mean ADE `3.73323`. `oracle_best_rule`
-  remains analysis-only at mean ADE `3.732298`.
+- TASK-008 TCP smoke reached CARLA at `127.0.0.1:2000`.
+- TASK-008 Docker probe reached CARLA through `host.docker.internal:2000`.
+- Probe reported map `Carla/Maps/Town10HD_Opt`, actor count `23`, server
+  version `0.9.16`, and client version `0.9.16`.
+- Full local gate after TASK-008: `bash scripts/pre_push_check.sh` passed with
+  61 tests.
+
+## Operator Inputs
+
+Useful soon:
+
+- keep CARLA open for live TASK-009 proof
+- Meshy or equivalent API key for real TASK-012 asset generation
+- real VLA target/checkpoint/API for TASK-013/TASK-014
+- cloud GPU budget/provider for reproducible Fail2Drive + VLA runs
+
+Missing inputs should be logged as blockers on the relevant ticket while local
+mock/dry-run work continues.

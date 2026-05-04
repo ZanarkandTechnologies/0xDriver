@@ -21,3 +21,5 @@
 2026-05-03 19:31 +0800 | TASK | started TASK-007 local scenario forge and CARLA smoke adapter with Fail2Drive cloned externally
 2026-05-03 19:50 +0800 | SHIP | added local scenario forge, failure memory bank, CARLA smoke check, and route-faithful Fail2Drive dry-run planning
 2026-05-03 19:50 +0800 | QA | TASK-007 passed local review and QA with 57-test pre-push gate and explicit recipe-to-route evidence
+2026-05-04 18:58 +0800 | PLAN | expanded roadmap through TASK-014 for live CARLA probing, entity tracking, regional behavior generation, asset generation, policy adapters, and retrieval-augmented VLA comparison
+2026-05-04 18:58 +0800 | TASK | started TASK-008 live CARLA probe and Docker bridge after local CARLA app reached TCP smoke on port 2000

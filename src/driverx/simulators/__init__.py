@@ -6,13 +6,23 @@ from driverx.simulators.carla import (
     load_carla_run_config,
     smoke_carla_server,
 )
+from driverx.simulators.carla_probe import (
+    CarlaProbeConfig,
+    CarlaProbeResult,
+    probe_carla_client,
+    write_carla_probe,
+)
 from driverx.simulators.fail2drive import CarlaCommandPlan, plan_fail2drive_run
 
 __all__ = [
     "CarlaCommandPlan",
+    "CarlaProbeConfig",
+    "CarlaProbeResult",
     "CarlaRunConfig",
     "CarlaSmokeResult",
     "load_carla_run_config",
     "plan_fail2drive_run",
+    "probe_carla_client",
     "smoke_carla_server",
+    "write_carla_probe",
 ]

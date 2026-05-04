@@ -12,6 +12,9 @@ Top-level companion docs:
 Current design docs:
 
 - `directory-structure-plan.md` - planned implementation layout and future stubs
+- `minimal-shot-vla-roadmap.md` - TASK-008 through TASK-014 roadmap for CARLA,
+  generated assets, regional driving behavior, policy adapters, and RAG
+  comparison
 
 Use this folder for:
 

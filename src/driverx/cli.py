@@ -236,6 +236,24 @@ def _command_smoke_carla(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_probe_carla(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import CarlaProbeConfig, load_carla_run_config
+    from driverx.simulators import probe_carla_client, write_carla_probe
+
+    config = load_carla_run_config(args.config)
+    probe_config = CarlaProbeConfig(
+        host=args.host if args.host is not None else config.host,
+        port=args.port if args.port is not None else config.port,
+        timeout_s=args.timeout_s if args.timeout_s is not None else config.timeout_s,
+    )
+    result = probe_carla_client(probe_config)
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = write_carla_probe(run_dir, result)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -375,6 +393,22 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("configs/carla_local.sample.yaml"),
     )
     smoke_parser.set_defaults(func=_command_smoke_carla)
+
+    probe_parser = subparsers.add_parser(
+        "probe-carla",
+        help="Collect CARLA Python API state into JSON/Markdown artifacts.",
+    )
+    probe_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/carla_local.sample.yaml"),
+    )
+    probe_parser.add_argument("--host")
+    probe_parser.add_argument("--port", type=int)
+    probe_parser.add_argument("--timeout-s", type=float)
+    probe_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    probe_parser.add_argument("--run-id", default="carla-probe")
+    probe_parser.set_defaults(func=_command_probe_carla)
 
     config_parser = subparsers.add_parser(
         "show-config",

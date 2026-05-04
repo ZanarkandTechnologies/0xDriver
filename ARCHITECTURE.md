@@ -31,6 +31,9 @@ flowchart TD
 ## Canonical Surfaces
 
 - `docs/prd.md`: current scenario-forge PRD.
+- `docs/specs/minimal-shot-vla-roadmap.md`: end-to-end roadmap from live CARLA
+  probing through generated assets, behavior scripts, policy adapters, and RAG
+  comparison.
 - `tickets/TASK-007/ticket.md`: active implementation surface.
 - `src/driverx/scenarios`: scenario seed and OOD recipe generation.
 - `src/driverx/memory`: failure-memory creation and retrieval.
@@ -71,3 +74,5 @@ Remote or Linux NVIDIA runtime:
   Python client, Fail2Drive, and policy execution work together.
 - Generated scenarios are recipes and dry-run plans first; executable XML export
   is a follow-up after the route/toolbox adapter is proven.
+- Generated 3D assets and regional driving behavior are roadmap items, not
+  shipped runtime claims yet.

@@ -10,6 +10,7 @@ from driverx.cli import main
 from driverx.core.config import DatasetConfig, DriverConfig, OutputConfig, ReasonerConfig
 from driverx.pipeline.batch_run import run_batch
 from driverx.pipeline.scene_run import run_scene
+from driverx.simulators import CarlaProbeResult
 
 
 def _write_fake_carla_config(tmp: Path) -> Path:
@@ -341,6 +342,41 @@ class CliTest(unittest.TestCase):
 
         self.assertEqual(exit_code, 0)
         self.assertIn("reachable", result)
+
+    def test_probe_carla_cli_writes_probe_artifacts(self) -> None:
+        with TemporaryDirectory() as tmp:
+            stream = StringIO()
+            with patch(
+                "driverx.simulators.probe_carla_client",
+                return_value=CarlaProbeResult(
+                    connected=True,
+                    host="host.docker.internal",
+                    port=2000,
+                    map_name="Carla/Maps/Town10HD_Opt",
+                    actor_count=23,
+                ),
+            ), redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "probe-carla",
+                        "--config",
+                        "configs/carla_local.sample.yaml",
+                        "--host",
+                        "host.docker.internal",
+                        "--port",
+                        "2000",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "probe",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+            self.assertEqual(exit_code, 0)
+            self.assertTrue(result["connected"])
+            self.assertEqual(result["map_name"], "Carla/Maps/Town10HD_Opt")
+            self.assertTrue(Path(result["json_path"]).exists())
+            self.assertTrue(Path(result["report_path"]).exists())
 
 
 if __name__ == "__main__":

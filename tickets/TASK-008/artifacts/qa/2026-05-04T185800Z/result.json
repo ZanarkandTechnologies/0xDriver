@@ -1,0 +1,25 @@
+{
+  "ticket": "TASK-008",
+  "verdict": "PASS",
+  "qa_time": "2026-05-04 18:58 +0800",
+  "commands": [
+    "PYTHONPATH=src python3 -m unittest tests.test_carla_probe tests.test_cli tests.test_simulator_adapters",
+    "bash scripts/pre_push_check.sh",
+    "PYTHONPATH=src python3 -m driverx smoke-carla --config configs/carla_local.sample.yaml",
+    "bash scripts/run_carla_client_docker.sh python -m driverx probe-carla --host host.docker.internal --port 2000 --timeout-s 10 --run-id task8-carla-probe"
+  ],
+  "evidence": {
+    "local_targeted_tests": "19 passed",
+    "pre_push_check": "61 passed",
+    "tcp_smoke_reachable": true,
+    "probe_artifact": "artifacts/runs/task8-carla-probe/carla_probe.json",
+    "map_name": "Carla/Maps/Town10HD_Opt",
+    "actor_count": 23,
+    "server_version": "0.9.16",
+    "client_version": "0.9.16"
+  },
+  "residual_risk": [
+    "Actor spawning and cleanup are TASK-009.",
+    "Docker wheel install is repeated until a cached image is added."
+  ]
+}

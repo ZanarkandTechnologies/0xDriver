@@ -75,6 +75,8 @@ planner.
 
 TASK-007 starts the closed-loop pivot: scenario generation, failure memory, and
 CARLA/Fail2Drive dry-run planning without requiring CARLA to be installed.
+TASK-008 adds the first live CARLA Python API proof through Docker when the
+local CARLA app is running.
 
 ## Quickstart: Scenario Forge
 
@@ -99,6 +101,12 @@ PYTHONPATH=src python3 -m driverx plan-carla-run \
 # Check whether a local CARLA server is reachable
 PYTHONPATH=src python3 -m driverx smoke-carla \
   --config configs/carla_local.sample.yaml
+
+# Probe the live CARLA Python API through Docker
+bash scripts/run_carla_client_docker.sh python -m driverx probe-carla \
+  --host host.docker.internal \
+  --port 2000 \
+  --run-id task8-carla-probe
 ```
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored

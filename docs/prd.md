@@ -198,15 +198,20 @@ closed-loop generated simulation evidence.
 ### Recommended Build Path
 
 1. **TASK-007:** Local Scenario Forge and Memory Harness.
-2. **TASK-008:** Fail2Drive external checkout adapter and route/result parser.
-3. **TASK-009:** Remote CARLA command runner with dry-run and result ingestion.
-4. **TASK-010:** SimLingo/CarLLaVA baseline execution on a small Fail2Drive
-   route subset.
-5. **TASK-011:** Alpamayo adapter spike: CARLA observations to Alpamayo tensors,
-   Alpamayo trajectory to SimLingo-style PID control.
-6. **TASK-012:** Retrieval-augmented VLA comparison and generated OOD demo.
-7. **TASK-013:** Optional runtime acceleration: async inference, caching,
+2. **TASK-008:** Live CARLA probe and Docker client bridge.
+3. **TASK-009:** Ego spawn, camera capture, and entity track logging.
+4. **TASK-010:** Regional driving behavior library for OOD actors.
+5. **TASK-011:** Scenario-to-CARLA script compiler.
+6. **TASK-012:** Generated asset pipeline with dry-run and Meshy-ready provider.
+7. **TASK-013:** Policy adapter interface for mock, VLM/API, SimLingo, and
+   Alpamayo-style policies.
+8. **TASK-014:** Retrieval-augmented VLA comparison harness and generated OOD
+   demo report.
+9. **TASK-015:** Optional runtime acceleration: async inference, caching,
    smaller model/API mode, quantization, or FlashDrive-inspired serving.
+
+Detailed execution shape lives in
+`docs/specs/minimal-shot-vla-roadmap.md`.
 
 ### Adapter Targets
 
