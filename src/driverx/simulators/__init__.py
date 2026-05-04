@@ -38,6 +38,13 @@ from driverx.simulators.simlingo import (
     write_simlingo_plan,
     write_simlingo_readiness,
 )
+from driverx.simulators.simlingo_results import (
+    SimLingoRouteRecord,
+    SimLingoRunRecord,
+    compact_simlingo_result_summary,
+    parse_simlingo_result,
+    write_simlingo_result_report,
+)
 
 __all__ = [
     "CarlaCommandPlan",
@@ -53,12 +60,16 @@ __all__ = [
     "EntityTrack",
     "SimLingoCommandPlan",
     "SimLingoReadiness",
+    "SimLingoRouteRecord",
+    "SimLingoRunRecord",
     "SimLingoRunConfig",
+    "compact_simlingo_result_summary",
     "inspect_simlingo_checkout",
     "load_carla_run_config",
     "load_simlingo_run_config",
     "plan_fail2drive_run",
     "plan_simlingo_run",
+    "parse_simlingo_result",
     "probe_carla_client",
     "run_ego_spawn_smoke",
     "smoke_carla_server",
@@ -69,4 +80,5 @@ __all__ = [
     "write_ego_smoke",
     "write_simlingo_plan",
     "write_simlingo_readiness",
+    "write_simlingo_result_report",
 ]

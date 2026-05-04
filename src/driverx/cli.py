@@ -412,6 +412,26 @@ def _command_plan_simlingo_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_ingest_simlingo_result(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        compact_simlingo_result_summary,
+        parse_simlingo_result,
+        write_simlingo_result_report,
+    )
+
+    record = parse_simlingo_result(args.result)
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = write_simlingo_result_report(
+        run_dir,
+        record,
+        compatibility_path=args.compatibility,
+        route_log_path=args.route_log,
+    )
+    print(json.dumps(compact_simlingo_result_summary(summary), indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -671,6 +691,17 @@ def build_parser() -> argparse.ArgumentParser:
     simlingo_plan_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     simlingo_plan_parser.add_argument("--run-id", default="simlingo-plan")
     simlingo_plan_parser.set_defaults(func=_command_plan_simlingo_run)
+
+    simlingo_ingest_parser = subparsers.add_parser(
+        "ingest-simlingo-result",
+        help="Parse a SimLingo/Bench2Drive result JSON and write a report.",
+    )
+    simlingo_ingest_parser.add_argument("--result", type=Path, required=True)
+    simlingo_ingest_parser.add_argument("--compatibility", type=Path)
+    simlingo_ingest_parser.add_argument("--route-log", type=Path)
+    simlingo_ingest_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    simlingo_ingest_parser.add_argument("--run-id", default="simlingo-result")
+    simlingo_ingest_parser.set_defaults(func=_command_ingest_simlingo_result)
 
     config_parser = subparsers.add_parser(
         "show-config",

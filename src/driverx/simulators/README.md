@@ -13,6 +13,8 @@ dry-run command planning.
 - `probe_carla_client(config)`
 - `write_carla_probe(run_dir, result)`
 - `plan_fail2drive_run(config, recipe)`
+- `parse_simlingo_result(path)`
+- `write_simlingo_result_report(run_dir, record, ...)`
 
 ## Example
 
@@ -30,10 +32,15 @@ PYTHONPATH=src python3 -m driverx plan-carla-run \
   --config configs/carla_local.sample.yaml \
   --recipe artifacts/runs/scenario-forge/scenario_recipes.json \
   --recipe-id generated-base-animals-0076-visual-noise-000
+PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
+  --result tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/seed_1_res.json \
+  --compatibility tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/torch_cuda_compatibility.json \
+  --route-log tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/run_one_route.log
 ```
 
 ## Test
 
 ```bash
 PYTHONPATH=src python3 -m unittest tests.test_simulator_adapters
+PYTHONPATH=src python3 -m unittest tests.test_simlingo_result_ingestion
 ```

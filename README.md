@@ -155,6 +155,11 @@ PYTHONPATH=src python3 -m driverx inspect-simlingo \
 PYTHONPATH=src python3 -m driverx plan-simlingo-run \
   --config configs/simlingo.sample.yaml \
   --run-id task15-simlingo-plan
+PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
+  --result tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/seed_1_res.json \
+  --compatibility tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/torch_cuda_compatibility.json \
+  --route-log tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/run_one_route.log \
+  --run-id task19-simlingo-result
 
 # On a Linux NVIDIA GPU host, sync this repo and launch the SimLingo bootstrap
 # in tmux. `HF_TOKEN` is read from the local environment or ignored `.env`,
