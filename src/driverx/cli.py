@@ -345,6 +345,30 @@ def _command_plan_assets(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_run_policy_fixture(args: argparse.Namespace) -> int:
+    from driverx.policies import (
+        memory_entries_from_json,
+        run_policy_fixture,
+        sample_memory_entries,
+    )
+
+    memory_entries = None
+    if args.memory:
+        memory_entries = memory_entries_from_json(args.memory)
+    elif args.with_memory:
+        memory_entries = sample_memory_entries()
+    summary = run_policy_fixture(
+        policy=args.policy,
+        fixture=args.fixture,
+        output_root=args.output_root,
+        run_id=args.run_id,
+        memory_entries=memory_entries,
+        memory_aware=args.with_memory,
+    )
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -549,6 +573,22 @@ def build_parser() -> argparse.ArgumentParser:
     asset_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     asset_parser.add_argument("--run-id", default="asset-plan")
     asset_parser.set_defaults(func=_command_plan_assets)
+
+    policy_parser = subparsers.add_parser(
+        "run-policy-fixture",
+        help="Run one fixture through a selected policy adapter.",
+    )
+    policy_parser.add_argument(
+        "--policy",
+        choices=["mock", "mock-memory", "hybrid", "vlm-api", "simlingo", "carllava", "alpamayo"],
+        default="mock",
+    )
+    policy_parser.add_argument("--fixture", default="construction_merge")
+    policy_parser.add_argument("--with-memory", action="store_true")
+    policy_parser.add_argument("--memory", type=Path)
+    policy_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    policy_parser.add_argument("--run-id", default="policy-fixture")
+    policy_parser.set_defaults(func=_command_run_policy_fixture)
 
     config_parser = subparsers.add_parser(
         "show-config",

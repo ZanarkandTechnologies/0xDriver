@@ -1,0 +1,20 @@
+{
+  "ticket": "TASK-013",
+  "result": "pass",
+  "commands": [
+    "PYTHONPATH=src python3 -m unittest tests.test_policies tests.test_cli",
+    "PYTHONPATH=src python3 -m driverx run-policy-fixture --policy mock --run-id task13-policy",
+    "PYTHONPATH=src python3 -m driverx run-policy-fixture --policy mock --with-memory --run-id task13-policy-memory",
+    "PYTHONPATH=src python3 -m driverx run-policy-fixture --policy alpamayo --run-id task13-policy-alpamayo-blocked"
+  ],
+  "artifacts": [
+    "artifacts/runs/task13-policy/policy_decision.json",
+    "artifacts/runs/task13-policy-memory/policy_decision.json",
+    "artifacts/runs/task13-policy-alpamayo-blocked/policy_setup_blocker.json"
+  ],
+  "blockers": [
+    "Live VLM/API adapter requires provider routing and credentials.",
+    "Live SimLingo/CarLLaVA adapter requires runtime/checkpoints.",
+    "Live Alpamayo adapter requires checkpoint/runtime access on Linux NVIDIA."
+  ]
+}

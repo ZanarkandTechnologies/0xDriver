@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: review
+- state: building
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-011
@@ -21,13 +21,13 @@ the harness can be tested before real model access.
 
 ## Acceptance Criteria
 
-- [ ] `PolicyAdapter` interface returns structured intent/action, latency, and
+- [x] `PolicyAdapter` interface returns structured intent/action, latency, and
   reason summary.
-- [ ] Mock adapter supports no-memory and memory-aware behavior.
-- [ ] Local hybrid planner adapter can act as fallback.
-- [ ] VLM/API, SimLingo, and Alpamayo adapters exist as setup-checked stubs with
+- [x] Mock adapter supports no-memory and memory-aware behavior.
+- [x] Local hybrid planner adapter can act as fallback.
+- [x] VLM/API, SimLingo, and Alpamayo adapters exist as setup-checked stubs with
   clear blockers.
-- [ ] Tests cover adapter selection, memory injection, and missing dependency
+- [x] Tests cover adapter selection, memory injection, and missing dependency
   guidance.
 
 ## Verification
@@ -38,3 +38,16 @@ the harness can be tested before real model access.
 ## Blockers
 
 - Real model checkpoints/API keys are not required for the adapter contract.
+
+## Evidence
+
+- Local tests: `PYTHONPATH=src python3 -m unittest tests.test_policies tests.test_cli` passed with 23 tests.
+- No-memory proof: `PYTHONPATH=src python3 -m driverx run-policy-fixture --policy mock --run-id task13-policy`.
+- Memory-aware proof: `PYTHONPATH=src python3 -m driverx run-policy-fixture --policy mock --with-memory --run-id task13-policy-memory`.
+- Stub blocker proof: `PYTHONPATH=src python3 -m driverx run-policy-fixture --policy alpamayo --run-id task13-policy-alpamayo-blocked`.
+- Decision artifacts:
+  - `artifacts/runs/task13-policy/policy_decision.json`
+  - `artifacts/runs/task13-policy-memory/policy_decision.json`
+  - `artifacts/runs/task13-policy-alpamayo-blocked/policy_setup_blocker.json`
+- External blockers retained: live VLM/SimLingo/Alpamayo require credentials,
+  checkpoints, and/or Linux NVIDIA runtime setup.

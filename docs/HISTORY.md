@@ -28,3 +28,4 @@
 2026-05-04 19:02 +0800 | SHIP | TASK-010 added deterministic regional OOD behavior traces for no-signal cut-ins, sudden braking, motorcycle filtering, wrong-way creep, informal right-of-way pushes, and fast low-profile two-wheelers
 2026-05-04 19:04 +0800 | SHIP | TASK-011 compiled scenario recipes and behavior traces into validated CARLA actor, sensor, tick, output, and cleanup script plans
 2026-05-04 19:22 +0800 | SHIP | TASK-012 added generated OOD asset requests, dry-run manifests, Meshy setup blocking, manifest validation, and recipe asset references
+2026-05-04 19:27 +0800 | SHIP | TASK-013 added policy adapter contracts, mock and memory-aware decisions, local hybrid fallback, and setup-checked VLM/SimLingo/Alpamayo stubs

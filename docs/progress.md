@@ -26,10 +26,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-010 regional driving behavior library
 - [x] TASK-011 scenario-to-CARLA script compiler
 - [x] TASK-012 generated asset pipeline
+- [x] TASK-013 policy adapter interface
 
 ## Active Roadmap
 
-- [ ] TASK-013 policy adapter interface
 - [ ] TASK-014 retrieval-augmented VLA comparison harness
 
 ## Latest Evidence
@@ -49,6 +49,8 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - TASK-012 planned three generated OOD assets in dry-run mode, validated scale,
   collision, placement, license metadata, and emitted Meshy setup blockers when
   no API key is present.
+- TASK-013 added mock, memory-aware mock, local hybrid fallback, and
+  setup-checked VLM/API, SimLingo/CarLLaVA, and Alpamayo policy adapters.
 - Full local gate after TASK-008: `bash scripts/pre_push_check.sh` passed with
   61 tests.
 

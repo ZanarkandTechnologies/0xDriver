@@ -129,6 +129,12 @@ PYTHONPATH=src python3 -m driverx compile-carla-script \
 PYTHONPATH=src python3 -m driverx plan-assets \
   --recipe artifacts/runs/scenario-forge/scenario_recipes.json \
   --run-id task12-assets
+
+# Run a fixture through the policy adapter surface
+PYTHONPATH=src python3 -m driverx run-policy-fixture \
+  --policy mock \
+  --with-memory \
+  --run-id task13-policy-memory
 ```
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored

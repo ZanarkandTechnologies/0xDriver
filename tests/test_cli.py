@@ -515,6 +515,48 @@ class CliTest(unittest.TestCase):
             self.assertEqual(result["validation_errors"], {})
             self.assertIn("generated_asset_ids", recipe_payload[0]["environment"])
 
+    def test_run_policy_fixture_cli_writes_decision(self) -> None:
+        with TemporaryDirectory() as tmp:
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "run-policy-fixture",
+                        "--policy",
+                        "mock",
+                        "--with-memory",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "policy",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(result["adapter_kind"], "mock_memory")
+            self.assertTrue(Path(result["json_path"]).exists())
+
+    def test_run_policy_fixture_cli_reports_stub_blocker(self) -> None:
+        with TemporaryDirectory() as tmp:
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "run-policy-fixture",
+                        "--policy",
+                        "alpamayo",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "policy",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+
+            self.assertEqual(exit_code, 0)
+            self.assertIn("Alpamayo", result["setup_blocker"])
+
 
 if __name__ == "__main__":
     unittest.main()
