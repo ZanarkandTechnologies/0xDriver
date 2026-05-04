@@ -1,0 +1,13 @@
+{
+  "connected": false,
+  "host": "127.0.0.1",
+  "port": 2000,
+  "plan_path": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-021/artifacts/qa/2026-05-04T220000Z/overlay-injection/overlay_injection_plan.json",
+  "route_count": 2,
+  "route_results": [],
+  "spawned_actor_ids": [],
+  "destroyed_actor_ids": [],
+  "tracks_path": null,
+  "track_count": 0,
+  "error": "CARLA Python package is unavailable: No module named 'carla'. Run through scripts/run_carla_client_docker.sh or install carla==0.9.16."
+}

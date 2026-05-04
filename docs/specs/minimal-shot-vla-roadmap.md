@@ -138,6 +138,13 @@ plans. This produces the actor, sensor, tick, memory-query, and cleanup
 schedule that a future live injector will run beside stock SimLingo, while
 remaining honest that current artifacts do not yet alter SimLingo behavior.
 
+### TASK-022: Live Companion CARLA Actor Injector
+
+Consume a TASK-021 overlay injection plan and run only `companion_actor_*`
+actors beside a stock CARLA/Bench2Drive route. The injector should spawn
+route-specific overlay actors, apply planned ticks, log entity tracks, and
+clean up actors without taking over ego control from SimLingo.
+
 ## Mesh / Asset API Readiness
 
 A Meshy API key is useful for TASK-012, but it is not needed for TASK-008

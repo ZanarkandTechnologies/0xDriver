@@ -40,3 +40,6 @@
 2026-05-05 04:36 +0800 | TASK | started TASK-021 overlay injection planning to compile DriverX sidecars into dry-run CARLA actor scripts
 2026-05-05 04:48 +0800 | SHIP | TASK-021 compiled DriverX route-pack sidecar overlays into dry-run companion CARLA actor scripts with route-specific blueprints and runtime contracts
 2026-05-05 04:48 +0800 | QA | TASK-021 passed focused overlay/CLI tests and the 130-test pre-push gate after splitting oversized CLI test coverage and adding contract-drift coverage
+2026-05-05 05:15 +0800 | TASK | started TASK-022 live companion CARLA actor injector for TASK-021 overlay plans
+2026-05-05 05:15 +0800 | SHIP | TASK-022 added a companion-only CARLA overlay runner with fake-CARLA spawn, tick, track, and cleanup coverage
+2026-05-05 05:15 +0800 | QA | TASK-022 passed fake-CARLA focused tests and the 135-test pre-push gate; live CARLA proof remains optional Docker execution

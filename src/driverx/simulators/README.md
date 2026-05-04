@@ -43,6 +43,10 @@ PYTHONPATH=src python3 -m driverx export-bench2drive-suite \
   --behavior-id motorcycle_filtering
 PYTHONPATH=src python3 -m driverx plan-overlay-injection \
   --route-pack artifacts/runs/bench2drive-route-pack/bench2drive_route_pack.json
+bash scripts/run_carla_client_docker.sh python -m driverx run-overlay-injection \
+  --config configs/carla_local.sample.yaml \
+  --plan artifacts/runs/overlay-injection/overlay_injection_plan.json \
+  --route-limit 1
 PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
   --result tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/seed_1_res.json \
   --compatibility tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/torch_cuda_compatibility.json \
@@ -55,5 +59,6 @@ PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
 PYTHONPATH=src python3 -m unittest tests.test_simulator_adapters
 PYTHONPATH=src python3 -m unittest tests.test_bench2drive_route_export
 PYTHONPATH=src python3 -m unittest tests.test_overlay_injection
+PYTHONPATH=src python3 -m unittest tests.test_carla_injection
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_result_ingestion
 ```

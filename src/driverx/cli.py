@@ -298,6 +298,35 @@ def _command_plan_overlay_injection(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_run_overlay_injection(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        CarlaOverlayInjectionConfig,
+        load_carla_run_config,
+        run_overlay_injection_plan,
+        write_overlay_injection_run,
+    )
+
+    config = load_carla_run_config(args.config)
+    injection_config = CarlaOverlayInjectionConfig(
+        host=args.host if args.host is not None else config.host,
+        port=args.port if args.port is not None else config.port,
+        timeout_s=args.timeout_s if args.timeout_s is not None else config.timeout_s,
+        route_limit=args.route_limit,
+        tick_limit=args.tick_limit,
+        wait_for_tick=not args.no_wait_for_tick,
+    )
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    result = run_overlay_injection_plan(
+        injection_config,
+        args.plan,
+        run_dir,
+    )
+    summary = write_overlay_injection_run(run_dir, result)
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_smoke_carla(args: argparse.Namespace) -> int:
     from driverx.simulators import load_carla_run_config, smoke_carla_server
 
@@ -650,6 +679,26 @@ def build_parser() -> argparse.ArgumentParser:
     overlay_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     overlay_parser.add_argument("--run-id", default="overlay-injection")
     overlay_parser.set_defaults(func=_command_plan_overlay_injection)
+
+    overlay_run_parser = subparsers.add_parser(
+        "run-overlay-injection",
+        help="Run companion CARLA overlay actors from a TASK-021 plan.",
+    )
+    overlay_run_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/carla_local.sample.yaml"),
+    )
+    overlay_run_parser.add_argument("--plan", type=Path, required=True)
+    overlay_run_parser.add_argument("--host")
+    overlay_run_parser.add_argument("--port", type=int)
+    overlay_run_parser.add_argument("--timeout-s", type=float)
+    overlay_run_parser.add_argument("--route-limit", type=int)
+    overlay_run_parser.add_argument("--tick-limit", type=int)
+    overlay_run_parser.add_argument("--no-wait-for-tick", action="store_true")
+    overlay_run_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    overlay_run_parser.add_argument("--run-id", default="overlay-injection-run")
+    overlay_run_parser.set_defaults(func=_command_run_overlay_injection)
 
     smoke_parser = subparsers.add_parser(
         "smoke-carla",

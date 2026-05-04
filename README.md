@@ -145,6 +145,11 @@ PYTHONPATH=src python3 -m driverx export-bench2drive-suite \
 PYTHONPATH=src python3 -m driverx plan-overlay-injection \
   --route-pack artifacts/runs/task18-route-pack/bench2drive_route_pack.json \
   --run-id task21-overlay-injection
+bash scripts/run_carla_client_docker.sh python -m driverx run-overlay-injection \
+  --config configs/carla_local.sample.yaml \
+  --plan artifacts/runs/task21-overlay-injection/overlay_injection_plan.json \
+  --route-limit 1 \
+  --run-id task22-overlay-injection-run
 
 # Plan generated OOD assets and attach asset ids to scenario recipes
 PYTHONPATH=src python3 -m driverx plan-assets \

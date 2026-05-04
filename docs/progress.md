@@ -34,11 +34,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-019 SimLingo result ingestion
 - [x] TASK-018 generated Bench2Drive route pack export
 - [x] TASK-021 overlay injection dry-run plan
+- [x] TASK-022 live companion actor injector interface
 
 ## Active Roadmap
 
 - [ ] TASK-020 H100/H200 stock SimLingo rerun
-- [ ] TASK-022 live companion CARLA actor injector for DriverX overlays
+- [ ] TASK-023 SimLingo sidecar orchestration wrapper
 
 ## Latest Evidence
 
@@ -83,6 +84,15 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   (`static.prop.streetbarrier`, `static.prop.trafficwarning`), preserved
   runtime contracts, `25` behavior samples plus `1` companion spawn tick per
   route (`26` ticks total), and zero validation errors.
+- TASK-022 consumes a TASK-021 plan, spawns only `companion_actor_*` overlays,
+  applies their planned ticks, writes entity tracks, and cleans up the spawned
+  actors. Local native evidence records the expected missing-`carla` package
+  setup blocker; fake-CARLA tests prove spawn/tick/track/cleanup behavior.
+- Focused local tests during TASK-022:
+  `PYTHONPATH=src python3 -m unittest tests.test_carla_injection tests.test_cli_carla_injection`
+  passed with 5 tests.
+- Full local gate during TASK-022: `bash scripts/pre_push_check.sh` passed with
+  135 tests.
 - Full local gate during TASK-021: `bash scripts/pre_push_check.sh` passed with
   130 tests.
 - Full local gate during TASK-018: `bash scripts/pre_push_check.sh` passed with
