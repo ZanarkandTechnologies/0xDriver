@@ -33,3 +33,5 @@
 2026-05-04 23:05 +0800 | SHIP | TASK-015 added SimLingo checkout readiness and Bench2Drive dry-run command planning against external RenzKa/simlingo
 2026-05-05 02:35 +0800 | TASK | started TASK-016 local CARLA 0.9.16 Docker proof while GPU provisioning was blocked
 2026-05-05 02:42 +0800 | SHIP | TASK-016 added reusable CARLA 0.9.16 Docker client image, proof script, and timeout evidence path for local simulator reachability
+2026-05-05 03:06 +0800 | TASK | started TASK-017 remote GPU SimLingo one-route proof on Prime Intellect RTX PRO 6000 host
+2026-05-05 03:47 +0800 | BLOCKER | TASK-017 proved stock SimLingo reaches CARLA route execution on RTX PRO 6000 Blackwell but crashes at the first model tick because upstream torch 2.2.0 lacks sm_120 kernels

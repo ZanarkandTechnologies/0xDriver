@@ -29,11 +29,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-013 policy adapter interface
 - [x] TASK-014 retrieval-augmented VLA comparison harness
 - [x] TASK-015 SimLingo backend readiness and run planner
+- [x] TASK-016 local CARLA 0.9.16 Docker client proof
 
 ## Active Roadmap
 
-- [ ] TASK-016 live GPU SimLingo execution
-- [ ] TASK-017 generated route/scenario injection into Bench2Drive/SimLingo
+- [ ] TASK-017 remote GPU SimLingo one-route proof
+- [ ] TASK-018 generated route/scenario injection into Bench2Drive/SimLingo
 
 ## Latest Evidence
 
@@ -61,8 +62,14 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   `743b243afd6cf5ff51b9fa1f8cac86f22d569684`, confirmed CARLA `0.9.15`,
   Python `3.8`, CUDA-required live inference, and generated a Bench2Drive
   dry-run command plan.
-- Full local gate after TASK-008: `bash scripts/pre_push_check.sh` passed with
-  61 tests.
+- TASK-016 built the Linux amd64 CARLA 0.9.16 Docker client bridge and local
+  proof script for the Apple Silicon CARLA wrapper.
+- TASK-017 synced the repo to a Prime Intellect RTX PRO 6000 host, installed
+  CARLA 0.9.15 plus AdditionalMaps, installed SimLingo, downloaded the pinned
+  checkpoint, reached CARLA route execution, and recorded the first-tick
+  Blackwell `sm_120` / torch `sm_90` kernel blocker.
+- Full local gate during TASK-017: `bash scripts/pre_push_check.sh` passed with
+  114 tests.
 
 ## Operator Inputs
 
@@ -71,7 +78,8 @@ Useful soon:
 - keep CARLA open for live TASK-009 proof
 - Meshy or equivalent API key for real TASK-012 asset generation
 - SimLingo checkpoint path or Hugging Face access
-- Linux NVIDIA GPU instance with CARLA 0.9.15 for reproducible SimLingo runs
+- H100/H200-class Linux NVIDIA GPU instance with CARLA 0.9.15 for the next
+  stock SimLingo run; Blackwell needs a separate PyTorch/CARLA rebuild lane
 
 Missing inputs should be logged as blockers on the relevant ticket while local
 mock/dry-run work continues.

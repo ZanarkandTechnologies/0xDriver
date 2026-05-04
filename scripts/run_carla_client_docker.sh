@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(git rev-parse --show-toplevel)"
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 CARLA_PYTHON_VERSION="${CARLA_PYTHON_VERSION:-0.9.16}"
 DEFAULT_IMAGE="driverx-carla-client:${CARLA_PYTHON_VERSION}"
 IMAGE="${CARLA_CLIENT_DOCKER_IMAGE:-${DEFAULT_IMAGE}}"

@@ -1,0 +1,28 @@
+{
+  "qa_id": "2026-05-04T194700Z",
+  "remote_snapshot_path": "tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/remote_snapshot.txt",
+  "simlingo_commit": "743b243afd6cf5ff51b9fa1f8cac86f22d569684",
+  "model_revision": "26c7c89e797d4e25bbf640013317af8da26a5454",
+  "checkpoint_sha256": "ec8943723d266ee9f5f56f45d153a163b22616960bfccb741965ea5daa700d28",
+  "torch_cuda_compatible": false,
+  "required_arch": "sm_120",
+  "compiled_arches": [
+    "sm_50",
+    "sm_60",
+    "sm_70",
+    "sm_75",
+    "sm_80",
+    "sm_86",
+    "sm_90"
+  ],
+  "route_id": "RouteScenario_1711_rep0",
+  "scenario_name": "ParkingCutIn_1",
+  "town_name": "Town12",
+  "status": "Failed - Agent crashed",
+  "score_route": 0,
+  "score_composed": 0.0,
+  "duration_game": 0.05,
+  "duration_system": 3.004,
+  "blocker": "PyTorch 2.2.0+cu121 does not include sm_120 kernels for RTX PRO 6000 Blackwell; first SimLingo tick crashes with CUDA no kernel image available.",
+  "ptx_retry": "CUDA_FORCE_PTX_JIT=1 reproduced the same CUDA no-kernel-image crash."
+}

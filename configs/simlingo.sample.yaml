@@ -1,6 +1,6 @@
 simlingo:
   root: ../external/simlingo
-  checkpoint_path: outputs/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt
+  checkpoint_path: /workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt
   route_path: leaderboard/data/bench2drive_split/bench2drive_00.xml
   output_dir: artifacts/simlingo
   seed: 1

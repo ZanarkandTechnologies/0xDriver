@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import platform
+import shutil
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
@@ -108,7 +110,7 @@ def load_simlingo_run_config(path: Path) -> SimLingoRunConfig:
     carla_root = _path(carla.get("root"), "~/software/carla0915")
     checkpoint_path = _path(
         simlingo.get("checkpoint_path"),
-        "outputs/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt",
+        "/workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt",
     )
     route_path = _path(
         simlingo.get("route_path"),
@@ -239,12 +241,23 @@ def _resolve_under(root: Path, path: Path) -> Path:
 
 
 def _pythonpath(root: Path, carla_root: Path) -> str:
+    candidate_eggs = [
+        *sorted((carla_root / "PythonAPI" / "carla" / "dist").glob("carla-0.9.15*py3*linux-x86_64.egg")),
+        *sorted((carla_root / "carla" / "dist").glob("carla-0.9.15*py3*linux-x86_64.egg")),
+    ]
+    if not candidate_eggs:
+        candidate_eggs = [
+            carla_root / "PythonAPI" / "carla" / "dist" / "carla-0.9.15-py3.8-linux-x86_64.egg",
+            carla_root / "PythonAPI" / "carla" / "dist" / "carla-0.9.15-py3.7-linux-x86_64.egg",
+            carla_root / "carla" / "dist" / "carla-0.9.15-py3.7-linux-x86_64.egg",
+        ]
     return ":".join(
         [
             str(root),
             str(carla_root / "PythonAPI"),
             str(carla_root / "PythonAPI" / "carla"),
-            str(carla_root / "PythonAPI" / "carla" / "dist" / "carla-0.9.15-py3.8-linux-x86_64.egg"),
+            str(carla_root / "carla"),
+            *(str(path) for path in candidate_eggs),
             str(root / "Bench2Drive" / "scenario_runner"),
             str(root / "Bench2Drive" / "leaderboard"),
         ]
@@ -270,13 +283,27 @@ def _live_blockers(
     route_path: Path,
 ) -> list[str]:
     blockers = list(readiness.blockers)
+    blockers.extend(_runtime_requirement_blockers())
     if not carla_root.exists():
         blockers.append(f"CARLA 0.9.15 root not found: {carla_root}")
     if not checkpoint_path.exists():
         blockers.append(f"SimLingo checkpoint not found: {checkpoint_path}")
     if not route_path.exists():
         blockers.append(f"Bench2Drive route not found: {route_path}")
-    blockers.append("Live SimLingo inference requires Linux NVIDIA CUDA; Apple Silicon is planning/smoke only.")
+    return blockers
+
+
+def _runtime_requirement_blockers() -> list[str]:
+    blockers: list[str] = []
+    system = platform.system()
+    if system != "Linux":
+        blockers.append(
+            f"SimLingo live execution requires Linux NVIDIA; current platform is {system}."
+        )
+    elif shutil.which("nvidia-smi") is None:
+        blockers.append(
+            "SimLingo live execution requires an NVIDIA GPU with nvidia-smi available."
+        )
     return blockers
 
 

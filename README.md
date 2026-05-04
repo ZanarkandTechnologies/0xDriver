@@ -155,7 +155,19 @@ PYTHONPATH=src python3 -m driverx inspect-simlingo \
 PYTHONPATH=src python3 -m driverx plan-simlingo-run \
   --config configs/simlingo.sample.yaml \
   --run-id task15-simlingo-plan
+
+# On a Linux NVIDIA GPU host, sync this repo and launch the SimLingo bootstrap
+# in tmux. `HF_TOKEN` is read from the local environment or ignored `.env`,
+# copied through a temporary remote file, then that temporary file is removed
+# after the tmux job starts. Existing host Hugging Face login state is preserved.
+bash scripts/sync_remote_gpu.sh root@31.22.104.74 /workspace/0xDriver
+bash scripts/run_remote_simlingo_bootstrap.sh root@31.22.104.74 /workspace/0xDriver
 ```
+
+Stock SimLingo currently targets Python 3.8 and `torch==2.2.0+cu121`. That
+works best on CUDA architectures already compiled into that wheel, especially
+H100/H200-class `sm_90` hosts. RTX PRO 6000 Blackwell requires `sm_120`, so it
+needs a separate PyTorch/CARLA rebuild lane before it can run the stock route.
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored
 by git.

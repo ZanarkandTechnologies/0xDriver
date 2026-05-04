@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from driverx.simulators import inspect_simlingo_checkout, load_simlingo_run_config
 from driverx.simulators import plan_simlingo_run, write_simlingo_plan
@@ -51,6 +52,12 @@ class SimLingoAdapterTest(unittest.TestCase):
         with TemporaryDirectory() as tmp:
             root = Path(tmp) / "simlingo"
             _make_fake_simlingo_root(root)
+            carla_root = Path(tmp) / "carla0915"
+            (carla_root / "carla" / "dist").mkdir(parents=True, exist_ok=True)
+            (carla_root / "carla" / "dist" / "carla-0.9.15-py3.7-linux-x86_64.egg").write_text(
+                "",
+                encoding="utf-8",
+            )
             config_path = Path(tmp) / "simlingo.yaml"
             config_path.write_text(
                 "\n".join(
@@ -64,7 +71,7 @@ class SimLingoAdapterTest(unittest.TestCase):
                         "  world_port: 21000",
                         "  traffic_manager_port: 11000",
                         "carla:",
-                        f"  root: {Path(tmp) / 'carla0915'}",
+                        f"  root: {carla_root}",
                     ]
                 ),
                 encoding="utf-8",
@@ -77,6 +84,87 @@ class SimLingoAdapterTest(unittest.TestCase):
         self.assertIn("--traffic-manager-seed=3", plan.command)
         self.assertTrue(any(item.endswith("agent_simlingo.py") for item in plan.command))
         self.assertEqual(plan.env["SCENARIO_RUNNER_ROOT"], str(root.resolve() / "Bench2Drive" / "scenario_runner"))
+        self.assertIn("carla-0.9.15-py3.7-linux-x86_64.egg", plan.env["PYTHONPATH"])
+
+    def test_plan_simlingo_run_reports_non_linux_runtime_blocker(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp) / "simlingo"
+            _make_fake_simlingo_root(root)
+            config_path = Path(tmp) / "simlingo.yaml"
+            config_path.write_text(
+                "\n".join(
+                    [
+                        "simlingo:",
+                        f"  root: {root}",
+                        f"  output_dir: {Path(tmp) / 'out'}",
+                        "carla:",
+                        f"  root: {Path(tmp) / 'carla0915'}",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            with patch("driverx.simulators.simlingo.platform.system", return_value="Darwin"):
+                plan = plan_simlingo_run(load_simlingo_run_config(config_path))
+
+        self.assertTrue(
+            any("Linux NVIDIA" in blocker for blocker in plan.live_blockers),
+            msg=plan.live_blockers,
+        )
+
+    def test_plan_simlingo_run_reports_missing_nvidia_runtime_blocker(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp) / "simlingo"
+            _make_fake_simlingo_root(root)
+            config_path = Path(tmp) / "simlingo.yaml"
+            config_path.write_text(
+                "\n".join(
+                    [
+                        "simlingo:",
+                        f"  root: {root}",
+                        f"  output_dir: {Path(tmp) / 'out'}",
+                        "carla:",
+                        f"  root: {Path(tmp) / 'carla0915'}",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            with patch("driverx.simulators.simlingo.platform.system", return_value="Linux"):
+                with patch("driverx.simulators.simlingo.shutil.which", return_value=None):
+                    plan = plan_simlingo_run(load_simlingo_run_config(config_path))
+
+        self.assertTrue(
+            any("NVIDIA GPU" in blocker for blocker in plan.live_blockers),
+            msg=plan.live_blockers,
+        )
+
+    def test_default_checkpoint_path_matches_remote_model_layout(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp) / "simlingo"
+            _make_fake_simlingo_root(root)
+            config_path = Path(tmp) / "simlingo.yaml"
+            config_path.write_text(
+                "\n".join(
+                    [
+                        "simlingo:",
+                        f"  root: {root}",
+                        f"  output_dir: {Path(tmp) / 'out'}",
+                        "carla:",
+                        f"  root: {Path(tmp) / 'carla0915'}",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            config = load_simlingo_run_config(config_path)
+            plan = plan_simlingo_run(config)
+
+        self.assertEqual(
+            config.checkpoint_path,
+            Path("/workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt"),
+        )
+        self.assertIn(
+            "--agent-config=/workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt",
+            plan.command,
+        )
 
     def test_write_simlingo_plan_artifacts(self) -> None:
         with TemporaryDirectory() as tmp:

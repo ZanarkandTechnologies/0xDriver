@@ -1,0 +1,24 @@
+HOST=sceptical-cormorant-of-pizza
+USER=root
+KERNEL=Linux 5.15.0-170-generic x86_64 GNU/Linux
+---GPU---
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 97887 MiB, 580.126.09
+---DISK---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda3       194G   85G   91G  49% /
+---MEM---
+               total        used        free      shared  buff/cache   available
+Mem:            88Gi       811Mi        14Gi       1.0Mi        72Gi        86Gi
+Swap:             0B          0B          0B
+---TOOLS---
+python3=/usr/bin/python3
+git=/usr/bin/git
+wget=/usr/bin/wget
+curl=/usr/bin/curl
+rsync=/usr/bin/rsync
+docker=/usr/bin/docker
+conda=
+mamba=
+vulkaninfo=/usr/bin/vulkaninfo
+tmux=/usr/bin/tmux
+screen=/usr/bin/screen

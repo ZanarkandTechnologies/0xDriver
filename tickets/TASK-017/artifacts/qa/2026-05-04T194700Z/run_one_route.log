@@ -1,0 +1,154 @@
+/workspace/software/carla0915/CarlaUE4.sh -RenderOffScreen -nosound -carla-rpc-port=20000 -graphicsadapter=0 None
+4.26.2-0+++UE4+Release-4.26 522 0
+Disabling core dumps.
+load_world success , attempts=0
+traffic_manager init success, try_time=0
+
+[1m========= Preparing RouteScenario_1711 (repetition 0) =========[0m
+[1m> Loading the world[0m
+[1m> Setting up the agent[0m
+path to conf file: /workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt+RouteScenario_1711_rep0_Town12_ParkingCutIn_1_15_05_04_19_37_37
+Config path: /workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt
+Save path root: RouteScenario_1711_rep0_Town12_ParkingCutIn_1_15_05_04_19_37_37
+A new version of the following files was downloaded from https://huggingface.co/OpenGVLab/InternVL2-1B:
+- configuration_intern_vit.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+A new version of the following files was downloaded from https://huggingface.co/OpenGVLab/InternVL2-1B:
+- configuration_internvl_chat.py
+- configuration_intern_vit.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+A new version of the following files was downloaded from https://huggingface.co/OpenGVLab/InternVL2-1B:
+- modeling_intern_vit.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+A new version of the following files was downloaded from https://huggingface.co/OpenGVLab/InternVL2-1B:
+- conversation.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+A new version of the following files was downloaded from https://huggingface.co/OpenGVLab/InternVL2-1B:
+- modeling_internvl_chat.py
+- modeling_intern_vit.py
+- conversation.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+[91mUsing OpenGVLab/InternVL2-1B as the image encoder.[0m
+Using PEFT model
+trainable params: 17,596,416 || all params: 647,260,288 || trainable%: 2.7186
+/opt/conda/envs/simlingo/lib/python3.8/site-packages/torch/cuda/__init__.py:218: UserWarning: 
+NVIDIA RTX PRO 6000 Blackwell Server Edition with CUDA capability sm_120 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_50 sm_60 sm_70 sm_75 sm_80 sm_86 sm_90.
+If you want to use the NVIDIA RTX PRO 6000 Blackwell Server Edition GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(
+[1m> Running the route[0m
+=== [Agent] -- Wallclock = 2026-05-04 19:38:53.174 -- System time = 0.000 -- Game time = 0.050 -- Ratio = 0.000x
+/opt/conda/envs/simlingo/lib/python3.8/site-packages/scipy/optimize/_minpack_py.py:178: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last ten iterations.
+  warnings.warn(msg, RuntimeWarning)
+Fetching 19 files:   0%|          | 0/19 [00:00<?, ?it/s]Fetching 19 files:   5%|▌         | 1/19 [00:00<00:09,  1.99it/s]Fetching 19 files:  47%|████▋     | 9/19 [00:00<00:00, 13.32it/s]Fetching 19 files:  58%|█████▊    | 11/19 [00:01<00:00, 11.48it/s]Fetching 19 files:  68%|██████▊   | 13/19 [00:01<00:00, 12.41it/s]Fetching 19 files: 100%|██████████| 19/19 [00:01<00:00, 16.16it/s]
+
+[91mStopping the route, the agent has crashed:
+
+Traceback (most recent call last):
+  File "/workspace/external/simlingo/Bench2Drive/leaderboard/leaderboard/scenarios/scenario_manager.py", line 188, in _tick_scenario
+    ego_action = self._agent_wrapper()
+  File "/workspace/external/simlingo/Bench2Drive/leaderboard/leaderboard/autoagents/agent_wrapper.py", line 147, in __call__
+    return self._agent()
+  File "/workspace/external/simlingo/Bench2Drive/leaderboard/leaderboard/autoagents/autonomous_agent.py", line 119, in __call__
+    control = self.run_step(input_data, timestamp)
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/workspace/external/simlingo/team_code/agent_simlingo.py", line 676, in run_step
+    tick_data = self.tick(input_data)
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/workspace/external/simlingo/team_code/agent_simlingo.py", line 657, in tick
+    self.DrivingInput["camera_images"] = processed_image.to(self.device).bfloat16()
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/external/simlingo/Bench2Drive/leaderboard/leaderboard/leaderboard_evaluator.py", line 418, in _load_and_run_scenario
+    self.manager.run_scenario()
+  File "/workspace/external/simlingo/Bench2Drive/leaderboard/leaderboard/scenarios/scenario_manager.py", line 161, in run_scenario
+    self._tick_scenario()
+  File "/workspace/external/simlingo/Bench2Drive/leaderboard/leaderboard/scenarios/scenario_manager.py", line 196, in _tick_scenario
+    raise AgentError(e)
+leaderboard.autoagents.agent_wrapper.AgentError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+[0m
+[1m> Stopping the route[0m
+
+[1m========= Results of RouteScenario_1711 (repetition 0) ------ [91mFAILURE[0m [1m=========[0m
+
+╒═══════════════════════╤═════════════════════╕
+│ Start Time            │ 2026-05-04 19:38:53 │
+├───────────────────────┼─────────────────────┤
+│ End Time              │ 2026-05-04 19:38:56 │
+├───────────────────────┼─────────────────────┤
+│ System Time           │ 3.0s                │
+├───────────────────────┼─────────────────────┤
+│ Game Time             │ 0.05s               │
+├───────────────────────┼─────────────────────┤
+│ Ratio (Game / System) │ 0.017               │
+╘═══════════════════════╧═════════════════════╛
+
+╒═══════════════════════╤═════════╤═════════╕
+│ Criterion             │ Result  │ Value   │
+├───────────────────────┼─────────┼─────────┤
+│ RouteCompletionTest   │ [91mFAILURE[0m │ 0 %     │
+├───────────────────────┼─────────┼─────────┤
+│ OutsideRouteLanesTest │ [92mSUCCESS[0m │ 0 %     │
+├───────────────────────┼─────────┼─────────┤
+│ CollisionTest         │ [92mSUCCESS[0m │ 0 times │
+├───────────────────────┼─────────┼─────────┤
+│ RunningRedLightTest   │ [92mSUCCESS[0m │ 0 times │
+├───────────────────────┼─────────┼─────────┤
+│ RunningStopTest       │ [92mSUCCESS[0m │ 0 times │
+├───────────────────────┼─────────┼─────────┤
+│ MinSpeedTest          │ [92mSUCCESS[0m │ 100 %   │
+├───────────────────────┼─────────┼─────────┤
+│ InRouteTest           │ [92mSUCCESS[0m │         │
+├───────────────────────┼─────────┼─────────┤
+│ AgentBlockedTest      │ [92mSUCCESS[0m │         │
+├───────────────────────┼─────────┼─────────┤
+│ Timeout               │ [92mSUCCESS[0m │         │
+╘═══════════════════════╧═════════╧═════════╛
+
+[1m> Registering the route statistics[0m
+
+[91mFailed to stop the agent:
+
+Traceback (most recent call last):
+  File "/workspace/external/simlingo/Bench2Drive/leaderboard/leaderboard/leaderboard_evaluator.py", line 181, in _cleanup
+    self.agent_instance.destroy()
+  File "/workspace/external/simlingo/team_code/agent_simlingo.py", line 867, in destroy
+    if self.cfg.data_module.encoder == 'llavanext':
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/omegaconf/dictconfig.py", line 355, in __getattr__
+    self._format_and_raise(
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+  File "/opt/conda/envs/simlingo/lib/python3.8/site-packages/omegaconf/dictconfig.py", line 480, in _get_node
+    raise ConfigKeyError(f"Missing key {key!s}")
+omegaconf.errors.ConfigAttributeError: Missing key encoder
+    full_key: data_module.encoder
+    object_type=dict
+[0m
+False
+cost time=80.62317419052124
+[1m> Registering the global statistics[0m
