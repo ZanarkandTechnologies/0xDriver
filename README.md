@@ -133,6 +133,16 @@ PYTHONPATH=src python3 -m driverx compile-carla-script \
   --behavior-id motorcycle_filtering \
   --run-id task11-carla-script
 
+# Export generated recipes as stock-compatible Bench2Drive route XML plus
+# DriverX sidecar overlays for OOD actors/assets/behavior intent
+PYTHONPATH=src python3 -m driverx export-bench2drive-suite \
+  --recipe artifacts/runs/scenario-forge/scenario_recipes.json \
+  --recipe-id generated-base-animals-0076-visual-noise-000 \
+  --route-root ../external/fail2drive \
+  --behavior-id motorcycle_filtering \
+  --config configs/simlingo.sample.yaml \
+  --run-id task18-route-pack
+
 # Plan generated OOD assets and attach asset ids to scenario recipes
 PYTHONPATH=src python3 -m driverx plan-assets \
   --recipe artifacts/runs/scenario-forge/scenario_recipes.json \
@@ -173,6 +183,9 @@ Stock SimLingo currently targets Python 3.8 and `torch==2.2.0+cu121`. That
 works best on CUDA architectures already compiled into that wheel, especially
 H100/H200-class `sm_90` hosts. RTX PRO 6000 Blackwell requires `sm_120`, so it
 needs a separate PyTorch/CARLA rebuild lane before it can run the stock route.
+Generated Bench2Drive route packs keep route XML stock-compatible and store OOD
+object/behavior intent in DriverX sidecar overlays until a companion CARLA
+actor injector is running.
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored
 by git.

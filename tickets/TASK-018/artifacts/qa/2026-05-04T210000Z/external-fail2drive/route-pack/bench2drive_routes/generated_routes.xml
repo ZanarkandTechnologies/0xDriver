@@ -1,0 +1,42 @@
+<routes>
+  <!-- driverx_recipe_id=generated-base-animals-0075-regional-driving-behavior-000 overlay=000_generated-base-animals-0075-regional-driving-behavior-000.json -->
+  <route id="75" town="Town13">
+    <weathers>
+      <weather route_percentage="0" cloudiness="10.0" precipitation="0.0" precipitation_deposits="0.0" wetness="0.0" wind_intensity="5.0" sun_azimuth_angle="220.0" sun_altitude_angle="45.0" fog_density="2.0" fog_distance="0.75" fog_falloff="0.25" scattering_intensity="1.0" mie_scattering_scale="0.0" />
+      <weather route_percentage="100" cloudiness="10.0" precipitation="0.0" precipitation_deposits="0.0" wetness="0.0" wind_intensity="5.0" sun_azimuth_angle="220.0" sun_altitude_angle="45.0" fog_density="2.0" fog_distance="0.75" fog_falloff="0.25" scattering_intensity="1.0" mie_scattering_scale="0.0" />
+    </weathers>
+    <waypoints>
+      <position x="-4132.9" y="3471.1" z="186.4" />
+      <position x="-3968.0" y="3473.0" z="185.9" />
+    </waypoints>
+    <scenarios>
+      <scenario name="DynamicObjectCrossing_0" type="DynamicObjectCrossing">
+        <walker value="walker.pedestrian.0014" />
+        <blocker_model value="static.prop.haybale" />
+        <blocker_z value="0.5" />
+        <direction value="right" />
+        <trigger_point x="-4092.8" y="3471.6" z="186.4" yaw="0.6" />
+      </scenario>
+    </scenarios>
+  </route>
+  <!-- driverx_recipe_id=generated-base-animals-0076-regional-driving-behavior-001 overlay=001_generated-base-animals-0076-regional-driving-behavior-001.json -->
+  <route id="76" town="Town13">
+    <weathers>
+      <weather route_percentage="0" cloudiness="10.0" precipitation="0.0" precipitation_deposits="0.0" wetness="0.0" wind_intensity="5.0" sun_azimuth_angle="220.0" sun_altitude_angle="45.0" fog_density="2.0" fog_distance="0.75" fog_falloff="0.25" scattering_intensity="1.0" mie_scattering_scale="0.0" />
+      <weather route_percentage="100" cloudiness="10.0" precipitation="0.0" precipitation_deposits="0.0" wetness="0.0" wind_intensity="5.0" sun_azimuth_angle="220.0" sun_altitude_angle="45.0" fog_density="2.0" fog_distance="0.75" fog_falloff="0.25" scattering_intensity="1.0" mie_scattering_scale="0.0" />
+    </weathers>
+    <waypoints>
+      <position x="6097.6" y="3421.9" z="159.4" />
+      <position x="6025.3" y="3328.3" z="158.2" />
+    </waypoints>
+    <scenarios>
+      <scenario name="VehicleTurningRoutePedestrian_0" type="VehicleTurningRoutePedestrian">
+        <walker value="walker.pedestrian.0030" />
+        <trigger_point x="6098.0" y="3360.5" z="159.2" yaw="270.4" />
+      </scenario>
+      <scenario name="PriorityAtJunction_0" type="PriorityAtJunction">
+        <trigger_point x="6098.0" y="3360.5" z="159.2" yaw="270.4" />
+      </scenario>
+    </scenarios>
+  </route>
+</routes>

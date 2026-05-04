@@ -1,0 +1,2611 @@
+{
+  "num_seeds": 200,
+  "num_recipes": 2,
+  "scenario_classes": [
+    "Animals",
+    "BadParking",
+    "ConstructionPedestrian",
+    "ConstructionPermutations",
+    "CustomObstacles",
+    "FullyBlocked",
+    "HardBrake",
+    "ImageOnObject",
+    "ObscuredStop",
+    "OppositeConstruction",
+    "PassableObstacles",
+    "PedestrianCrowd",
+    "PedestrianOtherBlocker",
+    "PedestriansOnRoad",
+    "RightConstruction",
+    "RightOfWay",
+    "Wall"
+  ],
+  "mutation_counts": {
+    "regional_driving_behavior": 2
+  },
+  "seeds": [
+    {
+      "seed_id": "Base_Animals_0075",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0075",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0075.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0076",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0076",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0076.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0077",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0077",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0077.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0078",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0078",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0078.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0079",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0079",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0079.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0080",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0080",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0080.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0081",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0081",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0081.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0082",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0082",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0082.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0083",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0083",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0083.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_Animals_0084",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Animals",
+      "route_id": "0084",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Animals_0084.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0000",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0000",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0000.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0001",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0001",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0001.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0002",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0002",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0002.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0003",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0003",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0003.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0004",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0004",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0004.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0005",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0005",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0005.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0006",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0006",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0006.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0007",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0007",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0007.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0008",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0008",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0008.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_BadParking_0009",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "BadParking",
+      "route_id": "0009",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_BadParking_0009.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPedestrian_0010",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "0010",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPedestrian_0010.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPedestrian_0011",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "0011",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPedestrian_0011.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPedestrian_0012",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "0012",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPedestrian_0012.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPedestrian_0013",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "0013",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPedestrian_0013.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPedestrian_0014",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "0014",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPedestrian_0014.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPermutations_0015",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "0015",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPermutations_0015.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPermutations_0016",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "0016",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPermutations_0016.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPermutations_0017",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "0017",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPermutations_0017.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPermutations_0018",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "0018",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPermutations_0018.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Base_ConstructionPermutations_0019",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "0019",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ConstructionPermutations_0019.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0020",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0020",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0020.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0021",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0021",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0021.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0022",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0022",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0022.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0023",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0023",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0023.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0024",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0024",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0024.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0025",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0025",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0025.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0026",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0026",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0026.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0027",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0027",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0027.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0028",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0028",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0028.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_CustomObstacles_0029",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "CustomObstacles",
+      "route_id": "0029",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_CustomObstacles_0029.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_FullyBlocked_0030",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "FullyBlocked",
+      "route_id": "0030",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_FullyBlocked_0030.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Base_FullyBlocked_0031",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "FullyBlocked",
+      "route_id": "0031",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_FullyBlocked_0031.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Base_FullyBlocked_0032",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "FullyBlocked",
+      "route_id": "0032",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_FullyBlocked_0032.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Base_FullyBlocked_0033",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "FullyBlocked",
+      "route_id": "0033",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_FullyBlocked_0033.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Base_FullyBlocked_0034",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "FullyBlocked",
+      "route_id": "0034",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_FullyBlocked_0034.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Base_HardBrake_0035",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "HardBrake",
+      "route_id": "0035",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_HardBrake_0035.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Base_HardBrake_0036",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "HardBrake",
+      "route_id": "0036",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_HardBrake_0036.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Base_HardBrake_0037",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "HardBrake",
+      "route_id": "0037",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_HardBrake_0037.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Base_HardBrake_0038",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "HardBrake",
+      "route_id": "0038",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_HardBrake_0038.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Base_HardBrake_0039",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "HardBrake",
+      "route_id": "0039",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_HardBrake_0039.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Base_ImageOnObject_0040",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ImageOnObject",
+      "route_id": "0040",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ImageOnObject_0040.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Base_ImageOnObject_0041",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ImageOnObject",
+      "route_id": "0041",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ImageOnObject_0041.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Base_ImageOnObject_0042",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ImageOnObject",
+      "route_id": "0042",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ImageOnObject_0042.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Base_ImageOnObject_0043",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ImageOnObject",
+      "route_id": "0043",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ImageOnObject_0043.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Base_ImageOnObject_0044",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ImageOnObject",
+      "route_id": "0044",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ImageOnObject_0044.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Base_ObscuredStop_0045",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ObscuredStop",
+      "route_id": "0045",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ObscuredStop_0045.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Base_ObscuredStop_0046",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ObscuredStop",
+      "route_id": "0046",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ObscuredStop_0046.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Base_ObscuredStop_0047",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ObscuredStop",
+      "route_id": "0047",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ObscuredStop_0047.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Base_ObscuredStop_0048",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ObscuredStop",
+      "route_id": "0048",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ObscuredStop_0048.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Base_ObscuredStop_0049",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "ObscuredStop",
+      "route_id": "0049",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_ObscuredStop_0049.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Base_OppositeConstruction_0050",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "0050",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_OppositeConstruction_0050.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_OppositeConstruction_0051",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "0051",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_OppositeConstruction_0051.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_OppositeConstruction_0052",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "0052",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_OppositeConstruction_0052.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_OppositeConstruction_0053",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "0053",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_OppositeConstruction_0053.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_OppositeConstruction_0054",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "0054",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_OppositeConstruction_0054.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_PassableObstacles_0060",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PassableObstacles",
+      "route_id": "0060",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PassableObstacles_0060.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_PassableObstacles_0061",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PassableObstacles",
+      "route_id": "0061",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PassableObstacles_0061.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_PassableObstacles_0062",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PassableObstacles",
+      "route_id": "0062",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PassableObstacles_0062.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_PassableObstacles_0063",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PassableObstacles",
+      "route_id": "0063",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PassableObstacles_0063.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_PassableObstacles_0064",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PassableObstacles",
+      "route_id": "0064",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PassableObstacles_0064.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianCrowd_0065",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "0065",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianCrowd_0065.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianCrowd_0066",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "0066",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianCrowd_0066.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianCrowd_0067",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "0067",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianCrowd_0067.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianCrowd_0068",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "0068",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianCrowd_0068.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianCrowd_0069",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "0069",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianCrowd_0069.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianOtherBlocker_0070",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "0070",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianOtherBlocker_0070.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianOtherBlocker_0071",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "0071",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianOtherBlocker_0071.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianOtherBlocker_0072",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "0072",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianOtherBlocker_0072.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianOtherBlocker_0073",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "0073",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianOtherBlocker_0073.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestrianOtherBlocker_0074",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "0074",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestrianOtherBlocker_0074.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestriansOnRoad_0085",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "0085",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestriansOnRoad_0085.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestriansOnRoad_0086",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "0086",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestriansOnRoad_0086.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestriansOnRoad_0087",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "0087",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestriansOnRoad_0087.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestriansOnRoad_0088",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "0088",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestriansOnRoad_0088.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Base_PedestriansOnRoad_0089",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "0089",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_PedestriansOnRoad_0089.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Base_RightConstruction_0090",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightConstruction",
+      "route_id": "0090",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightConstruction_0090.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_RightConstruction_0091",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightConstruction",
+      "route_id": "0091",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightConstruction_0091.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_RightConstruction_0092",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightConstruction",
+      "route_id": "0092",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightConstruction_0092.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_RightConstruction_0093",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightConstruction",
+      "route_id": "0093",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightConstruction_0093.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_RightConstruction_0094",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightConstruction",
+      "route_id": "0094",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightConstruction_0094.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Base_RightOfWay_0055",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightOfWay",
+      "route_id": "0055",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightOfWay_0055.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Base_RightOfWay_0056",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightOfWay",
+      "route_id": "0056",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightOfWay_0056.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Base_RightOfWay_0057",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightOfWay",
+      "route_id": "0057",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightOfWay_0057.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Base_RightOfWay_0058",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightOfWay",
+      "route_id": "0058",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightOfWay_0058.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Base_RightOfWay_0059",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "RightOfWay",
+      "route_id": "0059",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_RightOfWay_0059.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Base_Wall_0095",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Wall",
+      "route_id": "0095",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Wall_0095.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Base_Wall_0096",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Wall",
+      "route_id": "0096",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Wall_0096.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Base_Wall_0097",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Wall",
+      "route_id": "0097",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Wall_0097.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Base_Wall_0098",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Wall",
+      "route_id": "0098",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Wall_0098.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Base_Wall_0099",
+      "source": "fail2drive",
+      "split": "Base",
+      "scenario_class": "Wall",
+      "route_id": "0099",
+      "route_path": "../external/fail2drive/fail2drive_split/Base_Wall_0099.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1075",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1075",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1075.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1076",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1076",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1076.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1077",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1077",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1077.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1078",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1078",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1078.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1079",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1079",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1079.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1080",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1080",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1080.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1081",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1081",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1081.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1082",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1082",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1082.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1083",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1083",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1083.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Animals_1084",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Animals",
+      "route_id": "1084",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Animals_1084.xml",
+      "ood_tags": [
+        "animals"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1000",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1000",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1000.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1001",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1001",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1001.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1002",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1002",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1002.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1003",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1003",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1003.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1004",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1004",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1004.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1005",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1005",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1005.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1006",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1006",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1006.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1007",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1007",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1007.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1008",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1008",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1008.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_BadParking_1009",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "BadParking",
+      "route_id": "1009",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_BadParking_1009.xml",
+      "ood_tags": [
+        "bad",
+        "badparking",
+        "parking"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPedestrian_1010",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "1010",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPedestrian_1010.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPedestrian_1011",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "1011",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPedestrian_1011.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPedestrian_1012",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "1012",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPedestrian_1012.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPedestrian_1013",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "1013",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPedestrian_1013.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPedestrian_1014",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPedestrian",
+      "route_id": "1014",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPedestrian_1014.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpedestrian",
+        "pedestrian"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPermutations_1015",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "1015",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPermutations_1015.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPermutations_1016",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "1016",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPermutations_1016.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPermutations_1017",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "1017",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPermutations_1017.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPermutations_1018",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "1018",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPermutations_1018.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ConstructionPermutations_1019",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ConstructionPermutations",
+      "route_id": "1019",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ConstructionPermutations_1019.xml",
+      "ood_tags": [
+        "construction",
+        "constructionpermutations",
+        "permutations"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1020",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1020",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1020.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1021",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1021",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1021.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1022",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1022",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1022.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1023",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1023",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1023.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1024",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1024",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1024.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1025",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1025",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1025.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1026",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1026",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1026.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1027",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1027",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1027.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1028",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1028",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1028.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_CustomObstacles_1029",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "CustomObstacles",
+      "route_id": "1029",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_CustomObstacles_1029.xml",
+      "ood_tags": [
+        "custom",
+        "customobstacles",
+        "obstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_FullyBlocked_1030",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "FullyBlocked",
+      "route_id": "1030",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_FullyBlocked_1030.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Generalization_FullyBlocked_1031",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "FullyBlocked",
+      "route_id": "1031",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_FullyBlocked_1031.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Generalization_FullyBlocked_1032",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "FullyBlocked",
+      "route_id": "1032",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_FullyBlocked_1032.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Generalization_FullyBlocked_1033",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "FullyBlocked",
+      "route_id": "1033",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_FullyBlocked_1033.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Generalization_FullyBlocked_1034",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "FullyBlocked",
+      "route_id": "1034",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_FullyBlocked_1034.xml",
+      "ood_tags": [
+        "blocked",
+        "fully",
+        "fullyblocked"
+      ]
+    },
+    {
+      "seed_id": "Generalization_HardBrake_1035",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "HardBrake",
+      "route_id": "1035",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_HardBrake_1035.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Generalization_HardBrake_1036",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "HardBrake",
+      "route_id": "1036",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_HardBrake_1036.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Generalization_HardBrake_1037",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "HardBrake",
+      "route_id": "1037",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_HardBrake_1037.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Generalization_HardBrake_1038",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "HardBrake",
+      "route_id": "1038",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_HardBrake_1038.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Generalization_HardBrake_1039",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "HardBrake",
+      "route_id": "1039",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_HardBrake_1039.xml",
+      "ood_tags": [
+        "brake",
+        "hard",
+        "hardbrake"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ImageOnObject_1040",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ImageOnObject",
+      "route_id": "1040",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ImageOnObject_1040.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ImageOnObject_1041",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ImageOnObject",
+      "route_id": "1041",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ImageOnObject_1041.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ImageOnObject_1042",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ImageOnObject",
+      "route_id": "1042",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ImageOnObject_1042.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ImageOnObject_1043",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ImageOnObject",
+      "route_id": "1043",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ImageOnObject_1043.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ImageOnObject_1044",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ImageOnObject",
+      "route_id": "1044",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ImageOnObject_1044.xml",
+      "ood_tags": [
+        "image",
+        "imageonobject",
+        "object",
+        "on"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ObscuredStop_1045",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ObscuredStop",
+      "route_id": "1045",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ObscuredStop_1045.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ObscuredStop_1046",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ObscuredStop",
+      "route_id": "1046",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ObscuredStop_1046.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ObscuredStop_1047",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ObscuredStop",
+      "route_id": "1047",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ObscuredStop_1047.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ObscuredStop_1048",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ObscuredStop",
+      "route_id": "1048",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ObscuredStop_1048.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Generalization_ObscuredStop_1049",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "ObscuredStop",
+      "route_id": "1049",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_ObscuredStop_1049.xml",
+      "ood_tags": [
+        "obscured",
+        "obscuredstop",
+        "stop"
+      ]
+    },
+    {
+      "seed_id": "Generalization_OppositeConstruction_1050",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "1050",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_OppositeConstruction_1050.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_OppositeConstruction_1051",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "1051",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_OppositeConstruction_1051.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_OppositeConstruction_1052",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "1052",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_OppositeConstruction_1052.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_OppositeConstruction_1053",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "1053",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_OppositeConstruction_1053.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_OppositeConstruction_1054",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "OppositeConstruction",
+      "route_id": "1054",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_OppositeConstruction_1054.xml",
+      "ood_tags": [
+        "construction",
+        "opposite",
+        "oppositeconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PassableObstacles_1060",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PassableObstacles",
+      "route_id": "1060",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PassableObstacles_1060.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PassableObstacles_1061",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PassableObstacles",
+      "route_id": "1061",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PassableObstacles_1061.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PassableObstacles_1062",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PassableObstacles",
+      "route_id": "1062",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PassableObstacles_1062.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PassableObstacles_1063",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PassableObstacles",
+      "route_id": "1063",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PassableObstacles_1063.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PassableObstacles_1064",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PassableObstacles",
+      "route_id": "1064",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PassableObstacles_1064.xml",
+      "ood_tags": [
+        "obstacles",
+        "passable",
+        "passableobstacles"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianCrowd_1065",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "1065",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianCrowd_1065.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianCrowd_1066",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "1066",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianCrowd_1066.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianCrowd_1067",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "1067",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianCrowd_1067.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianCrowd_1068",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "1068",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianCrowd_1068.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianCrowd_1069",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianCrowd",
+      "route_id": "1069",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianCrowd_1069.xml",
+      "ood_tags": [
+        "crowd",
+        "pedestrian",
+        "pedestriancrowd"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianOtherBlocker_1070",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "1070",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianOtherBlocker_1070.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianOtherBlocker_1071",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "1071",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianOtherBlocker_1071.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianOtherBlocker_1072",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "1072",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianOtherBlocker_1072.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianOtherBlocker_1073",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "1073",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianOtherBlocker_1073.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestrianOtherBlocker_1074",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestrianOtherBlocker",
+      "route_id": "1074",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestrianOtherBlocker_1074.xml",
+      "ood_tags": [
+        "blocker",
+        "other",
+        "pedestrian",
+        "pedestrianotherblocker"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestriansOnRoad_1085",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "1085",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestriansOnRoad_1085.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestriansOnRoad_1086",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "1086",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestriansOnRoad_1086.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestriansOnRoad_1087",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "1087",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestriansOnRoad_1087.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestriansOnRoad_1088",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "1088",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestriansOnRoad_1088.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Generalization_PedestriansOnRoad_1089",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "PedestriansOnRoad",
+      "route_id": "1089",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_PedestriansOnRoad_1089.xml",
+      "ood_tags": [
+        "on",
+        "pedestrians",
+        "pedestriansonroad",
+        "road"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightConstruction_1090",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightConstruction",
+      "route_id": "1090",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightConstruction_1090.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightConstruction_1091",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightConstruction",
+      "route_id": "1091",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightConstruction_1091.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightConstruction_1092",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightConstruction",
+      "route_id": "1092",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightConstruction_1092.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightConstruction_1093",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightConstruction",
+      "route_id": "1093",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightConstruction_1093.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightConstruction_1094",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightConstruction",
+      "route_id": "1094",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightConstruction_1094.xml",
+      "ood_tags": [
+        "construction",
+        "right",
+        "rightconstruction"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightOfWay_1055",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightOfWay",
+      "route_id": "1055",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightOfWay_1055.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightOfWay_1056",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightOfWay",
+      "route_id": "1056",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightOfWay_1056.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightOfWay_1057",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightOfWay",
+      "route_id": "1057",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightOfWay_1057.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightOfWay_1058",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightOfWay",
+      "route_id": "1058",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightOfWay_1058.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Generalization_RightOfWay_1059",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "RightOfWay",
+      "route_id": "1059",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_RightOfWay_1059.xml",
+      "ood_tags": [
+        "of",
+        "right",
+        "rightofway",
+        "way"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Wall_1095",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Wall",
+      "route_id": "1095",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Wall_1095.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Wall_1096",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Wall",
+      "route_id": "1096",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Wall_1096.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Wall_1097",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Wall",
+      "route_id": "1097",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Wall_1097.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Wall_1098",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Wall",
+      "route_id": "1098",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Wall_1098.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    },
+    {
+      "seed_id": "Generalization_Wall_1099",
+      "source": "fail2drive",
+      "split": "Generalization",
+      "scenario_class": "Wall",
+      "route_id": "1099",
+      "route_path": "../external/fail2drive/fail2drive_split/Generalization_Wall_1099.xml",
+      "ood_tags": [
+        "wall"
+      ]
+    }
+  ],
+  "recipes_path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/external-fail2drive/scenario-forge/scenario_recipes.json",
+  "report_path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/external-fail2drive/scenario-forge/scenario_suite_report.md",
+  "summary_path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/external-fail2drive/scenario-forge/scenario_suite_summary.json"
+}

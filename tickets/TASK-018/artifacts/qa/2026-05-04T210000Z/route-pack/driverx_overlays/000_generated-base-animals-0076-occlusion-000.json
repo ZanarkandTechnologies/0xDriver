@@ -1,0 +1,48 @@
+{
+  "recipe": {
+    "recipe_id": "generated-base-animals-0076-occlusion-000",
+    "parent_seed_id": "Base_Animals_0076",
+    "mutation": "occlusion",
+    "actors": [
+      {
+        "role": "occluder",
+        "asset": "parked_vehicle_or_construction_barrier",
+        "placement": "before crossing point"
+      }
+    ],
+    "environment": {
+      "visibility": "partial",
+      "occlusion": "high"
+    },
+    "expected_failure_mode": "Policy commits before checking hidden cross-traffic or pedestrian emergence.",
+    "memory_query": [
+      "Animals",
+      "animals",
+      "unknown_obstacle",
+      "occupied_space",
+      "occlusion",
+      "hidden_hazard",
+      "creep"
+    ],
+    "solvability_assumption": "Privileged expert can complete route by slowing, yielding, or rerouting locally.",
+    "route_path": "fail2drive_split/Base_Animals_0076.xml"
+  },
+  "behavior_id": "motorcycle_filtering",
+  "source_route_path": "/Users/kenjipcx/SOTA/0xDriver/tests/fixtures/fail2drive_like/fail2drive_split/Base_Animals_0076.xml",
+  "route_path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/bench2drive_routes/000_generated-base-animals-0076-occlusion-000.xml",
+  "route_metadata": {
+    "route_id": "0076",
+    "town_name": "Town12",
+    "scenario_types": [
+      "Animals"
+    ]
+  },
+  "injection_strategy": "stock_bench2drive_xml_plus_driverx_sidecar_overlay",
+  "runtime_note": "The route XML stays stock-compatible for SimLingo/Bench2Drive. Generated actors, assets, and regional behaviors are recorded in DriverX sidecar overlays for companion injection or later scenario-runner adapters.",
+  "driverx_runtime_contract": [
+    "Use route_path for single-recipe replay or debugging.",
+    "Use route_suite_path from the route-pack manifest, or the generated SimLingo command plan, for suite execution.",
+    "Use this overlay to choose companion CARLA actor scripts, generated assets, and retrieved memory.",
+    "Do not claim the sidecar overlay changes stock SimLingo behavior until a companion injector is running."
+  ]
+}

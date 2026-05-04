@@ -13,6 +13,8 @@ dry-run command planning.
 - `probe_carla_client(config)`
 - `write_carla_probe(run_dir, result)`
 - `plan_fail2drive_run(config, recipe)`
+- `build_bench2drive_route_suite(run_dir, recipes, route_root, behavior_id)`
+- `write_bench2drive_route_suite(run_dir, suite, simlingo_plan=...)`
 - `parse_simlingo_result(path)`
 - `write_simlingo_result_report(run_dir, record, ...)`
 
@@ -32,6 +34,11 @@ PYTHONPATH=src python3 -m driverx plan-carla-run \
   --config configs/carla_local.sample.yaml \
   --recipe artifacts/runs/scenario-forge/scenario_recipes.json \
   --recipe-id generated-base-animals-0076-visual-noise-000
+PYTHONPATH=src python3 -m driverx export-bench2drive-suite \
+  --recipe artifacts/runs/scenario-forge/scenario_recipes.json \
+  --recipe-id generated-base-animals-0076-visual-noise-000 \
+  --route-root ../external/fail2drive \
+  --behavior-id motorcycle_filtering
 PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
   --result tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/seed_1_res.json \
   --compatibility tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/torch_cuda_compatibility.json \
@@ -42,5 +49,6 @@ PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
 
 ```bash
 PYTHONPATH=src python3 -m unittest tests.test_simulator_adapters
+PYTHONPATH=src python3 -m unittest tests.test_bench2drive_route_export
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_result_ingestion
 ```

@@ -1,0 +1,58 @@
+[
+  {
+    "recipe_id": "generated-base-animals-0076-occlusion-000",
+    "parent_seed_id": "Base_Animals_0076",
+    "mutation": "occlusion",
+    "actors": [
+      {
+        "role": "occluder",
+        "asset": "parked_vehicle_or_construction_barrier",
+        "placement": "before crossing point"
+      }
+    ],
+    "environment": {
+      "visibility": "partial",
+      "occlusion": "high"
+    },
+    "expected_failure_mode": "Policy commits before checking hidden cross-traffic or pedestrian emergence.",
+    "memory_query": [
+      "Animals",
+      "animals",
+      "unknown_obstacle",
+      "occupied_space",
+      "occlusion",
+      "hidden_hazard",
+      "creep"
+    ],
+    "solvability_assumption": "Privileged expert can complete route by slowing, yielding, or rerouting locally.",
+    "route_path": "fail2drive_split/Base_Animals_0076.xml"
+  },
+  {
+    "recipe_id": "generated-generalization-customobstacles-1028-visual-noise-001",
+    "parent_seed_id": "Generalization_CustomObstacles_1028",
+    "mutation": "visual_noise",
+    "actors": [
+      {
+        "role": "distractor",
+        "asset": "high-contrast_image_or_signage",
+        "placement": "visible but outside drivable corridor"
+      }
+    ],
+    "environment": {
+      "texture_shift": "high",
+      "weather": "neutral"
+    },
+    "expected_failure_mode": "Policy overreacts to irrelevant visual artifact and leaves the route.",
+    "memory_query": [
+      "CustomObstacles",
+      "custom",
+      "obstacle",
+      "visual",
+      "visual_noise",
+      "distractor",
+      "route_relevance"
+    ],
+    "solvability_assumption": "Privileged expert can complete route by slowing, yielding, or rerouting locally.",
+    "route_path": "fail2drive_split/Generalization_CustomObstacles_1028.xml"
+  }
+]

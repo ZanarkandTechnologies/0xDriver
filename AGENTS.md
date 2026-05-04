@@ -50,6 +50,9 @@ stack-specific details and commands in `PROJECT_RULES.md`.
 - Treat VLA/VLM output as structured intent, not direct control.
 - Prefer deterministic planners, smoothing, and safety checks around model output.
 - Keep cloud GPU acceleration optional and swappable.
+- Keep generated Bench2Drive route XML stock-compatible; DriverX OOD actor,
+  asset, behavior, and memory intent belongs in sidecar overlays until a real
+  companion injector is running. See `MEM-0018`.
 - For stock SimLingo/CARLA 0.9.15 live runs, prefer H100/H200-class `sm_90`
   hosts; Blackwell `sm_120` requires a separate PyTorch/CARLA rebuild path
   before it can run the upstream Python 3.8 + torch 2.2 stack. See `MEM-0017`.

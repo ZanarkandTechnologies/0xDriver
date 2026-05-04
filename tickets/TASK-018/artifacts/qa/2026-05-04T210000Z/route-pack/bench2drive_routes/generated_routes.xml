@@ -1,0 +1,36 @@
+<routes>
+  <!-- driverx_recipe_id=generated-base-animals-0076-occlusion-000 overlay=000_generated-base-animals-0076-occlusion-000.json -->
+  <route id="0076" town="Town12">
+    <waypoints>
+      <position x="0.0" y="0.0" z="0.2" />
+      <position x="10.0" y="0.0" z="0.2" />
+      <position x="20.0" y="0.0" z="0.2" />
+    </waypoints>
+    <scenarios>
+      <scenario name="Animals_1" type="Animals">
+        <trigger_point x="8.0" y="0.0" yaw="0.0" z="0.2" />
+      </scenario>
+    </scenarios>
+    <weathers>
+      <weather cloudiness="5.0" fog_density="0.0" precipitation="0.0" precipitation_deposits="0.0" route_percentage="0" sun_altitude_angle="45.0" sun_azimuth_angle="-1.0" wetness="0.0" wind_intensity="0.0" />
+      <weather cloudiness="5.0" fog_density="0.0" precipitation="0.0" precipitation_deposits="0.0" route_percentage="100" sun_altitude_angle="45.0" sun_azimuth_angle="-1.0" wetness="0.0" wind_intensity="0.0" />
+    </weathers>
+  </route>
+  <!-- driverx_recipe_id=generated-generalization-customobstacles-1028-visual-noise-001 overlay=001_generated-generalization-customobstacles-1028-visual-noise-001.json -->
+  <route id="1028" town="Town12">
+    <waypoints>
+      <position x="0.0" y="-4.0" z="0.2" />
+      <position x="8.0" y="-4.0" z="0.2" />
+      <position x="16.0" y="-4.0" z="0.2" />
+    </waypoints>
+    <scenarios>
+      <scenario name="CustomObstacles_1" type="CustomObstacles">
+        <trigger_point x="6.0" y="-4.0" yaw="0.0" z="0.2" />
+      </scenario>
+    </scenarios>
+    <weathers>
+      <weather cloudiness="60.0" fog_density="5.0" precipitation="0.0" precipitation_deposits="0.0" route_percentage="0" sun_altitude_angle="20.0" sun_azimuth_angle="-1.0" wetness="0.0" wind_intensity="10.0" />
+      <weather cloudiness="60.0" fog_density="5.0" precipitation="0.0" precipitation_deposits="0.0" route_percentage="100" sun_altitude_angle="20.0" sun_azimuth_angle="-1.0" wetness="0.0" wind_intensity="10.0" />
+    </weathers>
+  </route>
+</routes>

@@ -106,6 +106,31 @@ latency, and behavior deltas. Until a real VLA exists, a deterministic mock
 policy should prove the harness and make clear that the score is a harness
 validation, not a model claim.
 
+### TASK-015: SimLingo Backend Readiness And Run Planner
+
+Inspect the external SimLingo/CarLLaVA checkout, document its CARLA/Python/CUDA
+requirements, and emit a reproducible Bench2Drive evaluation command plan.
+
+### TASK-017: Remote GPU SimLingo One-Route Proof
+
+Run stock SimLingo against one Bench2Drive route on a Linux NVIDIA GPU host or
+capture a precise runtime blocker. The RTX PRO 6000 Blackwell pass reached route
+execution but failed at the first model tick because upstream torch 2.2.0 lacks
+`sm_120` kernels; the next stock run should use H100/H200-class `sm_90`.
+
+### TASK-018: Generated Bench2Drive Route Pack Export
+
+Export generated OOD recipes as stock-compatible Bench2Drive route XML plus
+DriverX sidecar overlays. The route XML is safe to pass to SimLingo now; the
+overlay carries the generated objects, regional behavior id, memory query, and
+expected failure mode until a companion CARLA actor injector exists.
+
+### TASK-019: SimLingo Result Ingestion
+
+Parse SimLingo/Bench2Drive result JSON, route logs, and CUDA compatibility
+snapshots into stable JSON/Markdown reports for comparison and final demo
+evidence.
+
 ## Mesh / Asset API Readiness
 
 A Meshy API key is useful for TASK-012, but it is not needed for TASK-008

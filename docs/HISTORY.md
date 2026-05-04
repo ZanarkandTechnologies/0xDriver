@@ -36,3 +36,4 @@
 2026-05-05 03:06 +0800 | TASK | started TASK-017 remote GPU SimLingo one-route proof on Prime Intellect RTX PRO 6000 host
 2026-05-05 03:47 +0800 | BLOCKER | TASK-017 proved stock SimLingo reaches CARLA route execution on RTX PRO 6000 Blackwell but crashes at the first model tick because upstream torch 2.2.0 lacks sm_120 kernels
 2026-05-05 04:00 +0800 | TASK | started TASK-019 SimLingo result ingestion to convert Bench2Drive route JSON and CUDA blocker logs into stable reports
+2026-05-05 04:18 +0800 | TASK | started TASK-018 generated Bench2Drive route pack export with stock XML plus DriverX sidecar overlays

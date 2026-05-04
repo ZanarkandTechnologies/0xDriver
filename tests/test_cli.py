@@ -334,6 +334,185 @@ class CliTest(unittest.TestCase):
             self.assertIn("two", plan["command"][-1] if plan["command"] else "")
             self.assertTrue(Path(plan["plan_path"]).exists())
 
+    def test_export_bench2drive_suite_cli_writes_route_pack(self) -> None:
+        with TemporaryDirectory() as tmp:
+            recipe_path = Path(tmp) / "recipe.json"
+            recipe_path.write_text(
+                json.dumps(
+                    {
+                        "recipe_id": "generated-base-animals",
+                        "parent_seed_id": "Base_Animals_0076",
+                        "mutation": "regional_driving_behavior",
+                        "actors": [],
+                        "environment": {"traffic_style": "dense_asian_urban"},
+                        "expected_failure_mode": "misses motorcycle filtering",
+                        "memory_query": ["motorcycle_filtering"],
+                        "route_path": "fail2drive_split/Base_Animals_0076.xml",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "export-bench2drive-suite",
+                        "--recipe",
+                        str(recipe_path),
+                        "--route-root",
+                        "tests/fixtures/fail2drive_like",
+                        "--behavior-id",
+                        "motorcycle_filtering",
+                        "--no-simlingo-plan",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "route-pack",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(result["num_routes"], 1)
+            self.assertEqual(result["behavior_id"], "motorcycle_filtering")
+            self.assertTrue(Path(result["route_suite_path"]).exists())
+            self.assertTrue(Path(result["exports"][0]["overlay_path"]).exists())
+            self.assertNotIn("simlingo_command_plan_path", result)
+
+    def test_export_bench2drive_suite_cli_accepts_multi_recipe_list(self) -> None:
+        with TemporaryDirectory() as tmp:
+            recipe_path = Path(tmp) / "recipes.json"
+            recipe_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "recipe_id": "generated-base-animals",
+                            "parent_seed_id": "Base_Animals_0076",
+                            "mutation": "occlusion",
+                            "actors": [],
+                            "environment": {"visibility": "partial"},
+                            "expected_failure_mode": "hidden crossing hazard",
+                            "memory_query": ["occlusion"],
+                            "route_path": "fail2drive_split/Base_Animals_0076.xml",
+                        },
+                        {
+                            "recipe_id": "generated-custom-obstacles",
+                            "parent_seed_id": "Generalization_CustomObstacles_1028",
+                            "mutation": "visual_noise",
+                            "actors": [],
+                            "environment": {"texture_shift": "high"},
+                            "expected_failure_mode": "overreacts to distractor",
+                            "memory_query": ["visual_noise"],
+                            "route_path": "fail2drive_split/Generalization_CustomObstacles_1028.xml",
+                        },
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "export-bench2drive-suite",
+                        "--recipe",
+                        str(recipe_path),
+                        "--route-root",
+                        "tests/fixtures/fail2drive_like",
+                        "--no-simlingo-plan",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "route-pack",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+            route_ids = [export["route_id"] for export in result["exports"]]
+
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(result["num_routes"], 2)
+            self.assertEqual(route_ids, ["0076", "1028"])
+            self.assertEqual(len(list((Path(tmp) / "route-pack" / "driverx_overlays").glob("*.json"))), 2)
+
+    def test_export_bench2drive_suite_cli_uses_absolute_route_in_simlingo_plan(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            simlingo_root = tmp_path / "simlingo"
+            for path in [
+                "team_code",
+                "Bench2Drive/leaderboard/leaderboard",
+                "Bench2Drive/scenario_runner",
+                "simlingo_training",
+            ]:
+                (simlingo_root / path).mkdir(parents=True, exist_ok=True)
+            for path in [
+                "README.md",
+                "environment.yaml",
+                "team_code/agent_simlingo.py",
+                "team_code/config_simlingo.py",
+                "Bench2Drive/leaderboard/leaderboard/leaderboard_evaluator.py",
+            ]:
+                (simlingo_root / path).write_text("# fake\n", encoding="utf-8")
+            checkpoint = tmp_path / "model.pt"
+            checkpoint.write_text("fake", encoding="utf-8")
+            config_path = tmp_path / "simlingo.yaml"
+            config_path.write_text(
+                "\n".join(
+                    [
+                        "simlingo:",
+                        f"  root: {simlingo_root}",
+                        f"  checkpoint_path: {checkpoint}",
+                        f"  output_dir: {tmp_path / 'out'}",
+                        "carla:",
+                        f"  root: {tmp_path / 'carla0915'}",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            recipe_path = tmp_path / "recipe.json"
+            recipe_path.write_text(
+                json.dumps(
+                    {
+                        "recipe_id": "generated-base-animals",
+                        "parent_seed_id": "Base_Animals_0076",
+                        "mutation": "occlusion",
+                        "actors": [],
+                        "environment": {"visibility": "partial"},
+                        "expected_failure_mode": "hidden crossing hazard",
+                        "memory_query": ["occlusion"],
+                        "route_path": "fail2drive_split/Base_Animals_0076.xml",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "export-bench2drive-suite",
+                        "--recipe",
+                        str(recipe_path),
+                        "--route-root",
+                        "tests/fixtures/fail2drive_like",
+                        "--config",
+                        str(config_path),
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "route-pack",
+                    ]
+                )
+            result = json.loads(stream.getvalue())
+            plan = json.loads(
+                Path(result["simlingo_command_plan_path"]).read_text(encoding="utf-8")
+            )
+
+            self.assertEqual(exit_code, 0)
+            self.assertIn("generated_routes.xml", " ".join(plan["command"]))
+            self.assertNotIn(
+                "Bench2Drive route not found",
+                "\n".join(result["simlingo_live_blockers"]),
+            )
+
     def test_smoke_carla_cli_reports_unreachable_without_traceback(self) -> None:
         stream = StringIO()
         with redirect_stdout(stream):

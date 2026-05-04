@@ -31,11 +31,13 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-015 SimLingo backend readiness and run planner
 - [x] TASK-016 local CARLA 0.9.16 Docker client proof
 - [x] TASK-017 remote GPU SimLingo one-route proof with precise runtime blocker
+- [x] TASK-019 SimLingo result ingestion
+- [x] TASK-018 generated Bench2Drive route pack export
 
 ## Active Roadmap
 
-- [ ] TASK-019 SimLingo result ingestion
-- [ ] TASK-018 generated route/scenario injection into Bench2Drive/SimLingo
+- [ ] TASK-020 H100/H200 stock SimLingo rerun
+- [ ] TASK-021 companion CARLA actor injector for DriverX overlays
 
 ## Latest Evidence
 
@@ -71,6 +73,11 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   Blackwell `sm_120` / torch `sm_90` kernel blocker.
 - TASK-019 parses the TASK-017 Bench2Drive result JSON and produces a compact
   SimLingo result report with CUDA compatibility and route-log signals.
+- TASK-018 exports generated OOD recipes to stock-compatible Bench2Drive route
+  XML, DriverX sidecar overlays, and a SimLingo command plan with an absolute
+  `--routes` path.
+- Full local gate during TASK-018: `bash scripts/pre_push_check.sh` passed with
+  125 tests.
 - Full local gate during TASK-019: `bash scripts/pre_push_check.sh` passed with
   118 tests.
 - Full local gate during TASK-017: `bash scripts/pre_push_check.sh` passed with

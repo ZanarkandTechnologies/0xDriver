@@ -6,6 +6,13 @@ from driverx.simulators.carla import (
     load_carla_run_config,
     smoke_carla_server,
 )
+from driverx.simulators.bench2drive_routes import (
+    Bench2DriveRouteExport,
+    Bench2DriveRouteSuite,
+    build_bench2drive_route_suite,
+    resolve_recipe_route_path,
+    write_bench2drive_route_suite,
+)
 from driverx.simulators.carla_probe import (
     CarlaProbeConfig,
     CarlaProbeResult,
@@ -49,6 +56,8 @@ from driverx.simulators.simlingo_results import (
 __all__ = [
     "CarlaCommandPlan",
     "CarlaActorScript",
+    "Bench2DriveRouteExport",
+    "Bench2DriveRouteSuite",
     "CarlaEgoSmokeConfig",
     "CarlaEgoSmokeResult",
     "CarlaProbeConfig",
@@ -63,6 +72,7 @@ __all__ = [
     "SimLingoRouteRecord",
     "SimLingoRunRecord",
     "SimLingoRunConfig",
+    "build_bench2drive_route_suite",
     "compact_simlingo_result_summary",
     "inspect_simlingo_checkout",
     "load_carla_run_config",
@@ -71,11 +81,13 @@ __all__ = [
     "plan_simlingo_run",
     "parse_simlingo_result",
     "probe_carla_client",
+    "resolve_recipe_route_path",
     "run_ego_spawn_smoke",
     "smoke_carla_server",
     "compile_carla_script_plan",
     "validate_carla_script_plan",
     "write_carla_script_plan",
+    "write_bench2drive_route_suite",
     "write_carla_probe",
     "write_ego_smoke",
     "write_simlingo_plan",

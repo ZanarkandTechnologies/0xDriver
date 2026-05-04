@@ -243,6 +243,42 @@ def _command_plan_carla_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_export_bench2drive_suite(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        build_bench2drive_route_suite,
+        load_simlingo_run_config,
+        plan_simlingo_run,
+        write_bench2drive_route_suite,
+        write_simlingo_plan,
+    )
+
+    recipes = [_load_recipe(args.recipe, args.recipe_id)] if args.recipe_id else _load_recipes(args.recipe)
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    suite = build_bench2drive_route_suite(
+        run_dir,
+        recipes,
+        route_root=args.route_root,
+        behavior_id=args.behavior_id,
+    )
+    simlingo_summary = None
+    if not args.no_simlingo_plan:
+        config = load_simlingo_run_config(args.config)
+        config = replace(
+            config,
+            route_path=suite.route_suite_path.resolve(),
+            output_dir=run_dir / "simlingo_outputs",
+        )
+        simlingo_summary = write_simlingo_plan(run_dir, plan_simlingo_run(config))
+    summary = write_bench2drive_route_suite(
+        run_dir,
+        suite,
+        simlingo_plan=simlingo_summary,
+    )
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_smoke_carla(args: argparse.Namespace) -> int:
     from driverx.simulators import load_carla_run_config, smoke_carla_server
 
@@ -560,6 +596,28 @@ def build_parser() -> argparse.ArgumentParser:
     plan_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     plan_parser.add_argument("--run-id", default="carla-plan")
     plan_parser.set_defaults(func=_command_plan_carla_run)
+
+    route_export_parser = subparsers.add_parser(
+        "export-bench2drive-suite",
+        help="Export generated recipes as stock-compatible Bench2Drive route XML plus overlays.",
+    )
+    route_export_parser.add_argument("--recipe", type=Path, required=True)
+    route_export_parser.add_argument("--recipe-id")
+    route_export_parser.add_argument("--route-root", type=Path, default=Path("."))
+    route_export_parser.add_argument("--behavior-id", default="no_signal_cut_in")
+    route_export_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/simlingo.sample.yaml"),
+    )
+    route_export_parser.add_argument(
+        "--no-simlingo-plan",
+        action="store_true",
+        help="Skip writing a SimLingo command plan beside the generated route suite.",
+    )
+    route_export_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    route_export_parser.add_argument("--run-id", default="bench2drive-route-pack")
+    route_export_parser.set_defaults(func=_command_export_bench2drive_suite)
 
     smoke_parser = subparsers.add_parser(
         "smoke-carla",

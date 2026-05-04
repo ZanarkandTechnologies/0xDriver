@@ -1,0 +1,48 @@
+{
+  "recipe": {
+    "recipe_id": "generated-generalization-customobstacles-1028-visual-noise-001",
+    "parent_seed_id": "Generalization_CustomObstacles_1028",
+    "mutation": "visual_noise",
+    "actors": [
+      {
+        "role": "distractor",
+        "asset": "high-contrast_image_or_signage",
+        "placement": "visible but outside drivable corridor"
+      }
+    ],
+    "environment": {
+      "texture_shift": "high",
+      "weather": "neutral"
+    },
+    "expected_failure_mode": "Policy overreacts to irrelevant visual artifact and leaves the route.",
+    "memory_query": [
+      "CustomObstacles",
+      "custom",
+      "obstacle",
+      "visual",
+      "visual_noise",
+      "distractor",
+      "route_relevance"
+    ],
+    "solvability_assumption": "Privileged expert can complete route by slowing, yielding, or rerouting locally.",
+    "route_path": "fail2drive_split/Generalization_CustomObstacles_1028.xml"
+  },
+  "behavior_id": "motorcycle_filtering",
+  "source_route_path": "/Users/kenjipcx/SOTA/0xDriver/tests/fixtures/fail2drive_like/fail2drive_split/Generalization_CustomObstacles_1028.xml",
+  "route_path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/bench2drive_routes/001_generated-generalization-customobstacles-1028-visual-noise-001.xml",
+  "route_metadata": {
+    "route_id": "1028",
+    "town_name": "Town12",
+    "scenario_types": [
+      "CustomObstacles"
+    ]
+  },
+  "injection_strategy": "stock_bench2drive_xml_plus_driverx_sidecar_overlay",
+  "runtime_note": "The route XML stays stock-compatible for SimLingo/Bench2Drive. Generated actors, assets, and regional behaviors are recorded in DriverX sidecar overlays for companion injection or later scenario-runner adapters.",
+  "driverx_runtime_contract": [
+    "Use route_path for single-recipe replay or debugging.",
+    "Use route_suite_path from the route-pack manifest, or the generated SimLingo command plan, for suite execution.",
+    "Use this overlay to choose companion CARLA actor scripts, generated assets, and retrieved memory.",
+    "Do not claim the sidecar overlay changes stock SimLingo behavior until a companion injector is running."
+  ]
+}

@@ -1,0 +1,18 @@
+<routes>
+  <route id="1088" town="Town12">
+    <waypoints>
+      <position x="0.0" y="4.0" z="0.2"/>
+      <position x="8.0" y="4.0" z="0.2"/>
+      <position x="16.0" y="4.0" z="0.2"/>
+    </waypoints>
+    <scenarios>
+      <scenario name="PedestriansOnRoad_1" type="PedestriansOnRoad">
+        <trigger_point x="6.0" y="4.0" yaw="0.0" z="0.2"/>
+      </scenario>
+    </scenarios>
+    <weathers>
+      <weather cloudiness="20.0" fog_density="10.0" precipitation="0.0" precipitation_deposits="0.0" route_percentage="0" sun_altitude_angle="30.0" sun_azimuth_angle="-1.0" wetness="0.0" wind_intensity="5.0"/>
+      <weather cloudiness="20.0" fog_density="10.0" precipitation="0.0" precipitation_deposits="0.0" route_percentage="100" sun_altitude_angle="30.0" sun_azimuth_angle="-1.0" wetness="0.0" wind_intensity="5.0"/>
+    </weathers>
+  </route>
+</routes>
