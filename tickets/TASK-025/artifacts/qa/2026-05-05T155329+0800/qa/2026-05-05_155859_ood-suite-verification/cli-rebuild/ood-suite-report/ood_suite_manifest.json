@@ -1,0 +1,140 @@
+{
+  "component_count": 8,
+  "present_components": [
+    "scenario_summary",
+    "route_pack",
+    "overlay_plan",
+    "sidecar_plan",
+    "sidecar_run",
+    "rag_comparison",
+    "simlingo_result",
+    "blockers"
+  ],
+  "missing_components": [],
+  "readiness": {
+    "scenario_generation_ready": true,
+    "bench2drive_route_pack_ready": true,
+    "overlay_injection_ready": true,
+    "sidecar_launch_ready": false,
+    "sidecar_run_passed": true,
+    "live_policy_result_passed": false,
+    "has_open_blockers": true
+  },
+  "metric_highlights": {
+    "generated_recipe_count": 2,
+    "mutation_count": 2,
+    "bench2drive_route_count": 2,
+    "companion_actor_count": 2,
+    "sidecar_run_success": true,
+    "sidecar_duration_s": 0.112236,
+    "rag_driving_score_delta": 37.0,
+    "simlingo_success": false,
+    "simlingo_driving_score": 0.0
+  },
+  "open_blockers": [
+    "sidecar_plan: SimLingo live execution requires Linux NVIDIA; current platform is Darwin.",
+    "sidecar_plan: CARLA 0.9.15 root not found: /Users/kenjipcx/software/carla0915",
+    "sidecar_plan: SimLingo checkpoint not found: /workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt",
+    "simlingo_result: CUDA no-kernel-image at first model tick; required `sm_120`, compiled arches `['sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86', 'sm_90']`"
+  ],
+  "components": [
+    {
+      "label": "scenario_summary",
+      "status": "ready",
+      "path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/scenario-forge/scenario_suite_summary.json",
+      "metrics": {
+        "seed_count": 3,
+        "recipe_count": 2,
+        "mutations": [
+          "occlusion",
+          "visual_noise"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "label": "route_pack",
+      "status": "ready",
+      "path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/bench2drive_route_pack.json",
+      "metrics": {
+        "route_count": 2,
+        "route_suite_path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/bench2drive_routes/generated_routes.xml",
+        "simlingo_plan_path": "tickets/TASK-018/artifacts/qa/2026-05-04T210000Z/route-pack/simlingo_command_plan.json"
+      },
+      "blockers": []
+    },
+    {
+      "label": "overlay_plan",
+      "status": "ready",
+      "path": "tickets/TASK-021/artifacts/qa/2026-05-04T220000Z/overlay-injection/overlay_injection_plan.json",
+      "metrics": {
+        "route_count": 2,
+        "companion_actor_count": 2,
+        "validation_error_count": 0
+      },
+      "blockers": []
+    },
+    {
+      "label": "sidecar_plan",
+      "status": "blocked",
+      "path": "tickets/TASK-023/artifacts/qa/2026-05-05T053000Z/sidecar-plan/simlingo_sidecar_plan.json",
+      "metrics": {
+        "command_count": 2,
+        "expected_output_count": 4
+      },
+      "blockers": [
+        "SimLingo live execution requires Linux NVIDIA; current platform is Darwin.",
+        "CARLA 0.9.15 root not found: /Users/kenjipcx/software/carla0915",
+        "SimLingo checkpoint not found: /workspace/models/simlingo/simlingo/checkpoints/epoch=013.ckpt/pytorch_model.pt"
+      ]
+    },
+    {
+      "label": "sidecar_run",
+      "status": "passed",
+      "path": "tickets/TASK-024/artifacts/2026-05-05T153000+0800/sample-sidecar-run/simlingo_sidecar_run.json",
+      "metrics": {
+        "success": true,
+        "duration_s": 0.112236,
+        "process_count": 2
+      },
+      "blockers": []
+    },
+    {
+      "label": "rag_comparison",
+      "status": "ready",
+      "path": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/rag-comparison/rag_comparison.json",
+      "metrics": {
+        "policy": "mock",
+        "scenario_id": "construction_merge::motorcycle_filtering",
+        "driving_score_delta": 37.0,
+        "infraction_delta": -2,
+        "live_model_claim": false
+      },
+      "blockers": []
+    },
+    {
+      "label": "simlingo_result",
+      "status": "blocked",
+      "path": "tickets/TASK-019/artifacts/qa/2026-05-04T200000Z/result-ingestion/simlingo_result_record.json",
+      "metrics": {
+        "success": false,
+        "status": "Failed",
+        "driving_score": 0.0,
+        "route_completion": 0.0,
+        "primary_route": "RouteScenario_1711_rep0"
+      },
+      "blockers": [
+        "CUDA no-kernel-image at first model tick; required `sm_120`, compiled arches `['sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86', 'sm_90']`"
+      ]
+    },
+    {
+      "label": "blockers",
+      "status": "ready",
+      "path": "blockers.md",
+      "metrics": {
+        "open_blocker_count": 0
+      },
+      "blockers": []
+    }
+  ]
+}

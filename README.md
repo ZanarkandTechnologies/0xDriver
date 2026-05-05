@@ -160,6 +160,19 @@ PYTHONPATH=src python3 -m driverx run-simlingo-sidecar \
   --timeout-s 900 \
   --run-id task24-sidecar-run
 
+# Combine the generated scenarios, route pack, overlay plan, sidecar run,
+# policy comparison, SimLingo result, and blocker ledger into one report
+PYTHONPATH=src python3 -m driverx build-ood-suite-report \
+  --scenario-summary artifacts/runs/scenario-forge/scenario_suite_summary.json \
+  --route-pack artifacts/runs/task18-route-pack/bench2drive_route_pack.json \
+  --overlay-plan artifacts/runs/task21-overlay-injection/overlay_injection_plan.json \
+  --sidecar-plan artifacts/runs/task23-sidecar-plan/simlingo_sidecar_plan.json \
+  --sidecar-run artifacts/runs/task24-sidecar-run/simlingo_sidecar_run.json \
+  --rag-comparison artifacts/runs/task14-rag/rag_comparison.json \
+  --simlingo-result artifacts/runs/task19-simlingo-result/simlingo_result_record.json \
+  --blockers blockers.md \
+  --run-id task25-ood-suite-report
+
 # Plan generated OOD assets and attach asset ids to scenario recipes
 PYTHONPATH=src python3 -m driverx plan-assets \
   --recipe artifacts/runs/scenario-forge/scenario_recipes.json \

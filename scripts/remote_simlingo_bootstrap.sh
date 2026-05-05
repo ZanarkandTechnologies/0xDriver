@@ -125,18 +125,14 @@ if [ ! -x "${CARLA_ROOT}/CarlaUE4.sh" ] || [ ! -d "${CARLA_ROOT}/Engine/Content"
   wget -c -O "${tmp_tar}" \
     https://carla-releases.s3.us-east-005.backblazeb2.com/Linux/CARLA_0.9.15.tar.gz
   find "${CARLA_ROOT}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-  tar -xzf "${tmp_tar}" -C "${CARLA_ROOT}"
+  tar --no-same-owner -xzf "${tmp_tar}" -C "${CARLA_ROOT}"
   ensure_carla_compat_layout
 fi
 if [ ! -d "${CARLA_ROOT}/Import/AdditionalMaps_0.9.15" ] && [ ! -f "${CARLA_ROOT}/Import/AdditionalMaps_0.9.15.tar.gz.done" ]; then
   mkdir -p "${CARLA_ROOT}/Import"
   wget -c -O "${CARLA_ROOT}/Import/AdditionalMaps_0.9.15.tar.gz" \
     https://carla-releases.s3.us-east-005.backblazeb2.com/Linux/AdditionalMaps_0.9.15.tar.gz
-  if [ -f "${CARLA_ROOT}/ImportAssets.sh" ]; then
-    (cd "${CARLA_ROOT}" && bash ImportAssets.sh)
-  else
-    tar -xzf "${CARLA_ROOT}/Import/AdditionalMaps_0.9.15.tar.gz" -C "${CARLA_ROOT}"
-  fi
+  (cd "${CARLA_ROOT}" && tar --no-same-owner --keep-newer-files -xzf "Import/AdditionalMaps_0.9.15.tar.gz")
   ensure_carla_compat_layout
   touch "${CARLA_ROOT}/Import/AdditionalMaps_0.9.15.tar.gz.done"
 fi

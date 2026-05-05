@@ -467,6 +467,26 @@ def _command_run_rag_comparison(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_build_ood_suite_report(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.pipeline.ood_suite_report import build_ood_suite_report
+
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = build_ood_suite_report(
+        run_dir,
+        scenario_summary_path=args.scenario_summary,
+        route_pack_path=args.route_pack,
+        overlay_plan_path=args.overlay_plan,
+        sidecar_plan_path=args.sidecar_plan,
+        sidecar_run_path=args.sidecar_run,
+        rag_comparison_path=args.rag_comparison,
+        simlingo_result_path=args.simlingo_result,
+        blockers_path=args.blockers,
+    )
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_inspect_simlingo(args: argparse.Namespace) -> int:
     from driverx.core.artifacts import prepare_run_dir
     from driverx.simulators import inspect_simlingo_checkout, write_simlingo_readiness
@@ -847,6 +867,22 @@ def build_parser() -> argparse.ArgumentParser:
     rag_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     rag_parser.add_argument("--run-id", default="rag-comparison")
     rag_parser.set_defaults(func=_command_run_rag_comparison)
+
+    ood_report_parser = subparsers.add_parser(
+        "build-ood-suite-report",
+        help="Build one JSON/Markdown manifest from generated OOD suite evidence artifacts.",
+    )
+    ood_report_parser.add_argument("--scenario-summary", type=Path)
+    ood_report_parser.add_argument("--route-pack", type=Path)
+    ood_report_parser.add_argument("--overlay-plan", type=Path)
+    ood_report_parser.add_argument("--sidecar-plan", type=Path)
+    ood_report_parser.add_argument("--sidecar-run", type=Path)
+    ood_report_parser.add_argument("--rag-comparison", type=Path)
+    ood_report_parser.add_argument("--simlingo-result", type=Path)
+    ood_report_parser.add_argument("--blockers", type=Path)
+    ood_report_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    ood_report_parser.add_argument("--run-id", default="ood-suite-report")
+    ood_report_parser.set_defaults(func=_command_build_ood_suite_report)
 
     simlingo_inspect_parser = subparsers.add_parser(
         "inspect-simlingo",

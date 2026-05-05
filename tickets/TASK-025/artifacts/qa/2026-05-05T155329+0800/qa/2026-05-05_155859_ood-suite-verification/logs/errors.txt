@@ -1,0 +1,5 @@
+QA blockers/evidence gaps
+
+- Requested canonical artifact tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/ood-suite-report/ood_suite_manifest.json is stale on companion_actor_count.
+- Ticket Evidence section points to the stale ood-suite-report artifact, not the corrected sibling ood-suite-report-001.
+- Open runtime blockers remain expected for live SimLingo execution (Darwin host, missing CARLA root, missing checkpoint, CUDA arch mismatch in historical result).

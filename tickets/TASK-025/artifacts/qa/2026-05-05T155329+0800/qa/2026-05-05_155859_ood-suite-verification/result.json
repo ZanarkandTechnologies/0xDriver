@@ -1,0 +1,9 @@
+{
+  "ticket_id": "TASK-025",
+  "phase": "qa",
+  "verdict": "fail",
+  "summary": "focused tests and pre-push passed, but the checked ood-suite-report artifact is stale and underreports companion_actor_count",
+  "artifacts": [
+    "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/qa/2026-05-05_155859_ood-suite-verification/report.md"
+  ]
+}

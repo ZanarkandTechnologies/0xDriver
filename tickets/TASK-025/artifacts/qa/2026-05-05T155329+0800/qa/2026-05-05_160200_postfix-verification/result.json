@@ -1,0 +1,18 @@
+{
+  "ticket_id": "TASK-025",
+  "verdict": "PASS",
+  "canonical_manifest": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/ood-suite-report/ood_suite_manifest.json",
+  "canonical_report": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/ood-suite-report/ood_suite_report.md",
+  "focused_tests_log": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/qa/2026-05-05_160200_postfix-verification/logs/focused-unittest.txt",
+  "pre_push_log": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/qa/2026-05-05_160200_postfix-verification/logs/pre-push-check.txt",
+  "checks": {
+    "companion_actor_count": 2,
+    "generated_recipe_count": 2,
+    "bench2drive_route_count": 2,
+    "sidecar_run_success": true,
+    "rag_driving_score_delta": 37.0,
+    "has_open_blockers": true,
+    "open_blocker_count": 4
+  },
+  "note": "Open blockers are downstream runtime blockers preserved from sidecar/SimLingo inputs, not TASK-025 implementation blockers."
+}

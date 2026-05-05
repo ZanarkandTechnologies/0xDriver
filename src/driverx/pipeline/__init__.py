@@ -2,10 +2,12 @@
 
 from driverx.pipeline.batch_run import run_batch
 from driverx.pipeline.experiment_run import run_experiment
+from driverx.pipeline.ood_suite_report import build_ood_suite_report
 from driverx.pipeline.rag_comparison import run_rag_comparison
 from driverx.pipeline.scene_run import inspect_scene, run_loaded_scene, run_scene
 
 __all__ = [
+    "build_ood_suite_report",
     "inspect_scene",
     "run_batch",
     "run_experiment",

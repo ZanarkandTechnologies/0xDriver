@@ -1,0 +1,12 @@
+QA console summary
+
+Commands run:
+- PYTHONPATH=src python3 -m unittest tests.test_ood_suite_report tests.test_cli_ood_suite_report
+- PYTHONPATH=src python3 -m driverx build-ood-suite-report --scenario-summary ... --route-pack ... --overlay-plan ... --sidecar-plan ... --sidecar-run ... --rag-comparison ... --simlingo-result ... --blockers blockers.md --output-root tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/qa/2026-05-05_155859_ood-suite-verification/cli-rebuild --run-id ood-suite-report
+- bash scripts/pre_push_check.sh
+
+Result:
+- Focused tests: PASS (4 tests)
+- Pre-push gate: PASS (149 tests)
+- Requested artifact path ood-suite-report: stale companion_actor_count=0
+- Fresh rebuild and ood-suite-report-001: companion_actor_count=2

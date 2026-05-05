@@ -1,0 +1,313 @@
+{
+  "scenario_id": "construction_merge::motorcycle_filtering",
+  "policy": "mock",
+  "fixture": "construction_merge",
+  "behavior_id": "motorcycle_filtering",
+  "behavior_metrics": {
+    "lateral_displacement_m": 2.0,
+    "longitudinal_displacement_m": 78.0,
+    "max_lateral_speed_mps": 4.3592,
+    "max_deceleration_mps2": 0.0,
+    "max_heading_abs_deg": 6.0,
+    "wrong_way_distance_m": 0.0
+  },
+  "records": [
+    {
+      "mode": "policy",
+      "policy_id": "mock",
+      "success_proxy": false,
+      "route_completion": 0.74,
+      "driving_score": 58.0,
+      "infractions": [
+        "too_fast_near_lateral_ood_actor",
+        "no_memory_for_regional_lateral_behavior"
+      ],
+      "retrieved_memory_ids": [],
+      "behavior_metrics": {
+        "lateral_displacement_m": 2.0,
+        "longitudinal_displacement_m": 78.0,
+        "max_lateral_speed_mps": 4.3592,
+        "max_deceleration_mps2": 0.0,
+        "max_heading_abs_deg": 6.0,
+        "wrong_way_distance_m": 0.0
+      },
+      "latency_ms": 0.0204,
+      "decision": {
+        "policy_id": "mock",
+        "adapter_kind": "mock",
+        "intent": {
+          "scene_type": "construction_merge",
+          "hazards": [
+            "construction cones narrowing the lane",
+            "stopped service vehicle near lane center",
+            "pedestrian occlusion near the right shoulder"
+          ],
+          "ego_intent": "continue unless direct conflict is obvious",
+          "target_behavior": "probe_then_continue",
+          "speed_profile": "steady",
+          "lateral_bias": "center",
+          "uncertainty": 0.62
+        },
+        "action": {
+          "mode": "trajectory_chunk",
+          "trajectory": {
+            "points_xy": [
+              [
+                0.9,
+                0.0
+              ],
+              [
+                1.8,
+                0.0
+              ],
+              [
+                2.7,
+                0.0
+              ],
+              [
+                3.6,
+                0.0
+              ],
+              [
+                4.5,
+                0.0
+              ],
+              [
+                5.4,
+                0.0
+              ],
+              [
+                6.3,
+                0.0
+              ],
+              [
+                7.2,
+                0.0
+              ],
+              [
+                8.1,
+                0.0
+              ],
+              [
+                9.0,
+                0.0
+              ],
+              [
+                9.9,
+                0.0
+              ],
+              [
+                10.8,
+                0.0
+              ],
+              [
+                11.7,
+                0.0
+              ],
+              [
+                12.6,
+                0.0
+              ],
+              [
+                13.5,
+                0.0
+              ],
+              [
+                14.4,
+                0.0
+              ],
+              [
+                15.3,
+                0.0
+              ],
+              [
+                16.2,
+                0.0
+              ],
+              [
+                17.1,
+                0.0
+              ],
+              [
+                18.0,
+                0.0
+              ]
+            ],
+            "source": "policy_mock",
+            "score": 0.62,
+            "metadata": {
+              "policy_id": "mock",
+              "speed_scale": 0.9
+            }
+          },
+          "control": {
+            "target_speed_mps": 7.5,
+            "yield": false,
+            "memory_guided": false
+          },
+          "safety_notes": [
+            "No retrieved memory supplied; using generic caution."
+          ]
+        },
+        "latency_ms": 0.0204,
+        "reason_summary": "No memory supplied, so mock policy uses a generic steady probe.",
+        "retrieved_memory_ids": [],
+        "setup_blocker": null
+      },
+      "setup_blocker": null
+    },
+    {
+      "mode": "policy+memory",
+      "policy_id": "mock",
+      "success_proxy": true,
+      "route_completion": 0.95,
+      "driving_score": 95.0,
+      "infractions": [],
+      "retrieved_memory_ids": [
+        "mem-sample-motorcycle-filtering"
+      ],
+      "behavior_metrics": {
+        "lateral_displacement_m": 2.0,
+        "longitudinal_displacement_m": 78.0,
+        "max_lateral_speed_mps": 4.3592,
+        "max_deceleration_mps2": 0.0,
+        "max_heading_abs_deg": 6.0,
+        "wrong_way_distance_m": 0.0
+      },
+      "latency_ms": 0.0153,
+      "decision": {
+        "policy_id": "mock",
+        "adapter_kind": "mock_memory",
+        "intent": {
+          "scene_type": "construction_merge",
+          "hazards": [
+            "construction cones narrowing the lane",
+            "stopped service vehicle near lane center",
+            "pedestrian occlusion near the right shoulder"
+          ],
+          "ego_intent": "preserve controllability before progress",
+          "target_behavior": "yield_then_proceed",
+          "speed_profile": "decelerate_then_creep",
+          "lateral_bias": "left",
+          "uncertainty": 0.24
+        },
+        "action": {
+          "mode": "trajectory_chunk",
+          "trajectory": {
+            "points_xy": [
+              [
+                0.45,
+                0.04
+              ],
+              [
+                0.9,
+                0.0768
+              ],
+              [
+                1.35,
+                0.1107
+              ],
+              [
+                1.8,
+                0.1418
+              ],
+              [
+                2.25,
+                0.1705
+              ],
+              [
+                2.7,
+                0.1968
+              ],
+              [
+                3.15,
+                0.2211
+              ],
+              [
+                3.6,
+                0.2434
+              ],
+              [
+                4.05,
+                0.2639
+              ],
+              [
+                4.5,
+                0.2828
+              ],
+              [
+                4.95,
+                0.3002
+              ],
+              [
+                5.4,
+                0.3162
+              ],
+              [
+                5.85,
+                0.3309
+              ],
+              [
+                6.3,
+                0.3444
+              ],
+              [
+                6.75,
+                0.3569
+              ],
+              [
+                7.2,
+                0.3683
+              ],
+              [
+                7.65,
+                0.3788
+              ],
+              [
+                8.1,
+                0.3885
+              ],
+              [
+                8.55,
+                0.3974
+              ],
+              [
+                9.0,
+                0.4057
+              ]
+            ],
+            "source": "policy_mock_memory",
+            "score": 0.24,
+            "metadata": {
+              "policy_id": "mock",
+              "speed_scale": 0.45
+            }
+          },
+          "control": {
+            "target_speed_mps": 3.0,
+            "yield": true,
+            "memory_guided": true
+          },
+          "safety_notes": [
+            "Slow early, yield, and keep extra side clearance before committing."
+          ]
+        },
+        "latency_ms": 0.0153,
+        "reason_summary": "Retrieved memory changed the decision toward slower yielding behavior.",
+        "retrieved_memory_ids": [
+          "mem-sample-motorcycle-filtering"
+        ],
+        "setup_blocker": null
+      },
+      "setup_blocker": null
+    }
+  ],
+  "improvement": {
+    "success_proxy_delta": 1,
+    "driving_score_delta": 37.0,
+    "route_completion_delta": 0.21,
+    "infraction_delta": -2
+  },
+  "notes": "memory improved the mock policy outcome",
+  "live_model_claim": false
+}

@@ -1,0 +1,16 @@
+{
+  "ticket_id": "TASK-025",
+  "checked_artifact_root": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/ood-suite-report",
+  "focused_tests_log": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/qa/2026-05-05_155859_ood-suite-verification/logs/focused-unittest.txt",
+  "pre_push_log": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/qa/2026-05-05_155859_ood-suite-verification/logs/pre-push-check.txt",
+  "cli_rebuild_json": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/qa/2026-05-05_155859_ood-suite-verification/cli-rebuild/ood-suite-report/ood_suite_manifest.json",
+  "cli_rebuild_report": "tickets/TASK-025/artifacts/qa/2026-05-05T155329+0800/qa/2026-05-05_155859_ood-suite-verification/cli-rebuild/ood-suite-report/ood_suite_report.md",
+  "key_findings": {
+    "focused_tests_passed": true,
+    "pre_push_passed": true,
+    "stale_manifest_companion_actor_count": 0,
+    "rebuilt_manifest_companion_actor_count": 2,
+    "overlay_plan_companion_actor_count": 2,
+    "has_open_blockers": true
+  }
+}

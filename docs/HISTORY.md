@@ -48,3 +48,4 @@
 2026-05-05 05:30 +0800 | QA | TASK-023 passed sidecar planner focused tests and the 139-test pre-push gate
 2026-05-05 15:19 +0800 | TASK | started TASK-020 H100 stock SimLingo rerun on RunPod after direct TCP SSH was fixed
 2026-05-05 15:30 +0800 | SHIP | TASK-024 added a timed sidecar process runner that executes TASK-023 plans with per-process logs, timings, and exit-code reporting
+2026-05-05 15:53 +0800 | SHIP | TASK-025 added an OOD suite evidence manifest that combines scenario, route, overlay, sidecar, RAG, SimLingo, and blocker artifacts

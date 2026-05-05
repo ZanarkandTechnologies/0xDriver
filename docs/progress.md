@@ -37,11 +37,13 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-022 live companion actor injector interface
 - [x] TASK-023 SimLingo sidecar orchestration plan
 - [x] TASK-024 local timed sidecar process runner
+- [x] TASK-025 OOD suite evidence report
 
 ## Active Roadmap
 
 - [ ] TASK-020 H100/H200 stock SimLingo rerun
 - [ ] TASK-024 live timed sidecar execution on H100/H200 after TASK-020
+- [ ] live H100-generated suite execution after TASK-020
 
 ## Latest Evidence
 
@@ -101,6 +103,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.
+- TASK-025 adds `build-ood-suite-report`, a single manifest/report over the
+  generated scenario summary, Bench2Drive route pack, overlay plan, sidecar
+  plan/run evidence, RAG comparison, SimLingo result, and blocker ledger.
+  Current evidence reports `2` generated recipes, `2` route-pack routes, `2`
+  companion actors, sidecar runner success, mock RAG score delta `37.0`, and
+  the prior RTX PRO 6000 SimLingo CUDA blocker while TASK-020 reruns on H100.
 - Focused local tests during TASK-024:
   `PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar_runner tests.test_cli_simlingo_sidecar_runner`
   passed with 4 tests.

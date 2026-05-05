@@ -202,6 +202,11 @@ base policy proves it can run on the selected GPU.
 - Remote 0xDriver test gate passed with 139 tests before SimLingo bootstrap.
 - Remote tmux session `task20` is running
   `/workspace/0xDriver/scripts/remote_simlingo_bootstrap.sh`.
+- Patched CARLA and AdditionalMaps extraction to use `tar --no-same-owner`
+  after the RunPod `/workspace` network volume rejected upstream uid/gid
+  restoration. The `task20` bootstrap was restarted without re-downloading the
+  CARLA tarball; CARLA 0.9.15 base files extracted and AdditionalMaps download
+  is in progress.
 
 ## Blockers
 
