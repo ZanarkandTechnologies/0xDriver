@@ -42,6 +42,7 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-027 OOD suite remote evidence ingestion
 - [x] TASK-028 GPU host suitability report
 - [x] TASK-029 remote GPU probe script
+- [x] TASK-030 SimLingo CLI extraction
 
 ## Active Roadmap
 
@@ -140,6 +141,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   artifacts back for `assess-gpu-host`. A live H100 probe ran successfully and
   reproduced the same split verdict: CUDA/model support is ready, but CARLA
   graphics are blocked by llvmpipe/NVIDIA ICD `ERROR_INCOMPATIBLE_DRIVER`.
+- TASK-030 extracted SimLingo readiness, run planning, result ingestion,
+  evidence, and sidecar CLI handlers into `driverx.simulators.simlingo_cli`,
+  reducing the central `src/driverx/cli.py` from the size-gate edge to `823`
+  lines while preserving command help and focused CLI tests.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.

@@ -58,3 +58,4 @@
 2026-05-05 17:31 +0800 | SHIP | TASK-028 added a GPU host suitability report that turns CUDA compatibility, CARLA graphics diagnostics, and remote SimLingo evidence into a next-host recommendation
 2026-05-05 17:28 +0800 | SHIP | TASK-029 added a compact remote GPU probe script for collecting host snapshot, torch CUDA compatibility, and CARLA graphics diagnostics before route runs
 2026-05-05 17:30 +0800 | QA | TASK-029 live H100 probe successfully pulled host snapshot, torch CUDA compatibility, and CARLA graphics diagnostics, then reproduced the CUDA-ready/CARLA-graphics-blocked suitability verdict
+2026-05-05 17:39 +0800 | SHIP | TASK-030 extracted SimLingo and sidecar command registration into a simulator-owned CLI module, reducing the central CLI to 823 lines
