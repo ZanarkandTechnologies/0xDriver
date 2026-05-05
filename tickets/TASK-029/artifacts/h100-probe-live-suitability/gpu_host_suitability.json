@@ -1,0 +1,58 @@
+{
+  "overall_state": "blocked",
+  "blockers": [
+    "CARLA graphics runtime is blocked: Vulkan/graphics diagnostics or route logs show the server did not become reachable."
+  ],
+  "warnings": [
+    "Root disk is only 20GB; keep conda, CARLA, models, cache, and artifacts on a persistent workspace volume."
+  ],
+  "recommendation": "Use a graphics-capable NVIDIA host with working Vulkan/OpenGL exposure for CARLA; avoid compute-only H100/H200 containers for closed-loop CARLA route proof.",
+  "inputs": {
+    "gpu_snapshot_path": "tickets/TASK-029/artifacts/h100-probe-live/gpu_snapshot.txt",
+    "torch_compatibility_path": "tickets/TASK-029/artifacts/h100-probe-live/torch_cuda_compatibility.json",
+    "carla_diagnostics_path": "tickets/TASK-029/artifacts/h100-probe-live/carla_runtime_diagnostics.md",
+    "simlingo_evidence_path": null
+  },
+  "checks": [
+    {
+      "name": "cuda_model",
+      "status": "ready",
+      "summary": "SimLingo torch stack supports sm_90 on NVIDIA H100 80GB HBM3.",
+      "details": {
+        "device_name": "NVIDIA H100 80GB HBM3",
+        "required_arch": "sm_90",
+        "compiled_arches": [
+          "sm_50",
+          "sm_60",
+          "sm_70",
+          "sm_75",
+          "sm_80",
+          "sm_86",
+          "sm_90"
+        ],
+        "torch_version": "2.4.1+cu124",
+        "torch_cuda": "12.4"
+      }
+    },
+    {
+      "name": "carla_graphics",
+      "status": "blocked",
+      "summary": "CARLA graphics runtime is blocked: Vulkan/graphics diagnostics or route logs show the server did not become reachable.",
+      "details": {
+        "evidence_state": null,
+        "evidence_blockers": [],
+        "llvmpipe_detected": true,
+        "nvidia_icd_error": true,
+        "carla_port_timeout": false
+      }
+    },
+    {
+      "name": "host_storage",
+      "status": "warning",
+      "summary": "Root disk is only 20GB; keep conda, CARLA, models, cache, and artifacts on a persistent workspace volume.",
+      "details": {
+        "root_disk_gb": 20.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+HOST=$(hostname)
+USER=$(whoami)
+KERNEL=$(uname -srmo)
+---GPU---
+NVIDIA H100 80GB HBM3, 81559 MiB, 580.126.09
+---DISK---
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          20G  526M   20G   3% /
+---MEM---
+               total        used        free      shared  buff/cache   available
+Mem:           2.0Ti       137Gi        67Gi       269Mi       1.8Ti       1.8Ti
+Swap:             0B          0B          0B
+---TOOLS---
+python3=/usr/bin/python3
+git=/usr/bin/git
+wget=/usr/bin/wget
+curl=/usr/bin/curl
+rsync=/usr/bin/rsync
+docker=
+conda=
+mamba=
+vulkaninfo=/usr/bin/vulkaninfo
+tmux=/usr/bin/tmux
+screen=/usr/bin/screen

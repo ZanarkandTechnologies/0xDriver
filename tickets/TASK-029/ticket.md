@@ -37,6 +37,17 @@ Vulkan/CARLA graphics diagnostics.
 ## Evidence
 
 - Script: `scripts/run_remote_gpu_probe.sh`
+- Live H100 probe artifacts:
+  `tickets/TASK-029/artifacts/h100-probe-live/gpu_snapshot.txt`,
+  `tickets/TASK-029/artifacts/h100-probe-live/torch_cuda_compatibility.json`,
+  and
+  `tickets/TASK-029/artifacts/h100-probe-live/carla_runtime_diagnostics.md`
+- Live H100 probe suitability report:
+  `tickets/TASK-029/artifacts/h100-probe-live-suitability/gpu_host_suitability.json`
+  and
+  `tickets/TASK-029/artifacts/h100-probe-live-suitability/gpu_host_suitability.md`
+- Live H100 probe verdict: `cuda_model=ready`, `carla_graphics=blocked`, and
+  `host_storage=warning`.
 - Focused tests:
   `PYTHONPATH=src python3 -m unittest tests.test_carla_docker_scripts` passed
   with `14` tests.
@@ -44,6 +55,9 @@ Vulkan/CARLA graphics diagnostics.
 - Local gate: `bash scripts/pre_push_check.sh` passed with `166` tests.
 - Review:
   `tickets/TASK-029/artifacts/review/2026-05-05_172900_review.md`
+  passed with overall score `4.0`.
+- Live probe evidence review:
+  `tickets/TASK-029/artifacts/review/2026-05-05_173100_live_probe_review.md`
   passed with overall score `4.0`.
 
 ## Blockers

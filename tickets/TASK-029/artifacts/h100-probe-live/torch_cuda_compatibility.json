@@ -1,0 +1,23 @@
+{
+  "torch_imported": true,
+  "cuda_available": true,
+  "device_name": "NVIDIA H100 80GB HBM3",
+  "device_capability": [
+    9,
+    0
+  ],
+  "required_arch": "sm_90",
+  "compiled_arches": [
+    "sm_50",
+    "sm_60",
+    "sm_70",
+    "sm_75",
+    "sm_80",
+    "sm_86",
+    "sm_90"
+  ],
+  "compatible": true,
+  "error": null,
+  "torch_version": "2.4.1+cu124",
+  "torch_cuda": "12.4"
+}

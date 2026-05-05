@@ -137,7 +137,9 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - TASK-029 adds `scripts/run_remote_gpu_probe.sh`, a compact SSH preflight that
   writes `gpu_snapshot.txt`, `torch_cuda_compatibility.json`, and
   `carla_runtime_diagnostics.md` remotely, then pulls only those small probe
-  artifacts back for `assess-gpu-host`.
+  artifacts back for `assess-gpu-host`. A live H100 probe ran successfully and
+  reproduced the same split verdict: CUDA/model support is ready, but CARLA
+  graphics are blocked by llvmpipe/NVIDIA ICD `ERROR_INCOMPATIBLE_DRIVER`.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.
