@@ -1,0 +1,99 @@
+{
+  "work_type": ["backend", "cli", "evidence", "orchestration"],
+  "search_scope": {
+    "changed_files": [
+      "src/driverx/pipeline/generated_ood_suite.py",
+      "src/driverx/pipeline/generated_ood_suite_cli.py",
+      "src/driverx/pipeline/__init__.py",
+      "src/driverx/cli.py",
+      "tests/test_generated_ood_suite_runner.py",
+      "tickets/TASK-036/ticket.md",
+      "docs/progress.md",
+      "docs/HISTORY.md"
+    ],
+    "related_files": [
+      "src/driverx/scenarios/generator.py",
+      "src/driverx/simulators/bench2drive_routes.py",
+      "src/driverx/simulators/overlay_injection.py",
+      "src/driverx/simulators/fail2drive_video.py",
+      "src/driverx/pipeline/route_evidence.py",
+      "src/driverx/simulators/carla_overlay_evidence.py",
+      "artifacts/runs/task36-suite-1b/generated_ood_suite.json"
+    ],
+    "rubric_references": [
+      "review-rubric-index.md",
+      "code-quality.md",
+      "evidence-quality.md",
+      "integration-readiness.md",
+      "desloppify.md"
+    ]
+  },
+  "rubrics_used": ["code-quality", "evidence-quality", "integration-readiness"],
+  "summary": "TASK-036 is pass-worthy: one command now generates OOD recipes, route packs, per-recipe video smoke plans, route evidence bundles, overlay evidence, and aggregate readiness with a working --limit ramp.",
+  "overall_score": 4.0,
+  "overall_threshold": 4.0,
+  "verdict": "pass",
+  "rerun_required": false,
+  "evidence_quality": "pass",
+  "integration_readiness": "pass",
+  "traceability": "pass",
+  "freshness": "pass",
+  "hard_gate_failures": [],
+  "finding_log": [],
+  "rubric_sections": [
+    {
+      "name": "code-quality",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "modularity-reusability": 4.0,
+        "bloatability": 4.0,
+        "readability": 4.0,
+        "boundary-clarity": 4.0,
+        "error-handling": 4.0,
+        "maintainability": 4.0
+      },
+      "findings": [],
+      "next_action": "Use this runner as the backbone for policy runtime comparisons."
+    },
+    {
+      "name": "evidence-quality",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "sufficiency": 4.0,
+        "reproducibility": 4.0,
+        "traceability": 4.0,
+        "consistency": 4.0,
+        "inspectability": 4.0,
+        "autonomy-readiness": 4.0
+      },
+      "findings": [],
+      "next_action": "Run again with --limit 10 once live CARLA output is available."
+    },
+    {
+      "name": "integration-readiness",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "integration-safety": 4.0,
+        "contract-correctness": 4.0,
+        "dependency-readiness": 4.0,
+        "coupling-risk": 4.0,
+        "merge-readiness": 4.0
+      },
+      "findings": [],
+      "next_action": "Archive TASK-036 and continue to TASK-037."
+    }
+  ],
+  "blocking_findings": [],
+  "verification": [
+    "PYTHONPATH=src python3 -m unittest tests.test_generated_ood_suite_runner",
+    "PYTHONPATH=src python3 -m driverx run-generated-ood-suite --scenario-config configs/scenario_forge.sample.yaml --carla-config configs/carla_local.sample.yaml --route-root ../external/fail2drive --limit 1 --run-id task36-suite-1b",
+    "bash scripts/pre_push_check.sh"
+  ],
+  "next_action": "Archive TASK-036 and implement TASK-037."
+}

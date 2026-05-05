@@ -64,3 +64,4 @@
 2026-05-05 18:58 +0800 | SHIP | TASK-033 added a Fail2Drive route-video smoke planner that writes evaluator/video commands, expected outputs, and live blockers without launching CARLA
 2026-05-05 19:04 +0800 | SHIP | TASK-034 added a route evidence pipeline that bundles result JSON, entity tracks, video metadata, screenshots, logs, and missing-artifact blockers
 2026-05-05 19:09 +0800 | SHIP | TASK-035 added overlay evidence that links route recipes, behavior assertions, actor tracks, cleanup state, and live-CARLA blockers
+2026-05-05 19:13 +0800 | SHIP | TASK-036 added a generated OOD suite runner with per-recipe route/video plans, route evidence bundles, overlay evidence, aggregate blockers, and --limit ramping
