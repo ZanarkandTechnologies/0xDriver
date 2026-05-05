@@ -226,6 +226,14 @@ GPU_SSH_HOST=root@38.80.152.148 \
 GPU_SSH_OPTS="-p 31257 -i ~/.ssh/id_ed25519_runpod" \
 REMOTE_RUN_ID=task20 \
 bash scripts/pull_remote_simlingo_artifacts.sh
+
+# After the bootstrap emits run_one_route_with_carla_as_user.sh, launch the
+# stock route, keep the remote route log, and pull compact evidence back even
+# when the route fails with a runtime blocker.
+GPU_SSH_HOST=root@38.80.152.148 \
+GPU_SSH_OPTS="-p 31257 -i ~/.ssh/id_ed25519_runpod" \
+REMOTE_RUN_ID=task20 \
+bash scripts/run_remote_simlingo_route.sh
 ```
 
 Stock SimLingo currently targets Python 3.8 and `torch==2.2.0+cu121`. That

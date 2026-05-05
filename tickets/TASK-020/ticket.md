@@ -70,6 +70,7 @@ After:
 - `scripts/run_remote_simlingo_bootstrap.sh`
 - `scripts/remote_gpu_snapshot.sh`
 - `scripts/pull_remote_simlingo_artifacts.sh`
+- `scripts/run_remote_simlingo_route.sh`
 - `docs/progress.md`
 - `docs/HISTORY.md`
 
@@ -216,13 +217,21 @@ base policy proves it can run on the selected GPU.
   pullback helper that preserves logs, JSON, Markdown, checksums, and generated
   run scripts while excluding model weights, simulator archives, media, caches,
   and CARLA files.
+- Added `scripts/run_remote_simlingo_route.sh`, a post-bootstrap route wrapper
+  that runs the generated remote `run_one_route_with_carla_as_user.sh`, writes
+  `run_one_route_with_carla.log`, then pulls compact artifacts back even when
+  the route exits non-zero with a runtime blocker.
 - Focused script test:
   `PYTHONPATH=src python3 -m unittest tests.test_carla_docker_scripts` passed
-  with `11` tests, including a local execution fixture that proves `carla/`,
+  with `13` tests, including a local execution fixture that proves `carla/`,
   `models/`, `software/`, `viz/`, `.cache/`, weights, and media are excluded
-  even when compact-looking filenames appear inside those trees.
+  even when compact-looking filenames appear inside those trees, plus a fake
+  SSH route-wrapper test that proves non-zero route exits still trigger
+  artifact pullback and remain the primary exit code even if pullback also
+  fails.
 - Local gate after pullback helper:
-  `bash scripts/pre_push_check.sh` passed with `151` tests.
+  `bash scripts/pre_push_check.sh` passed with `154` tests after the route
+  wrapper was added.
 
 ## Blockers
 

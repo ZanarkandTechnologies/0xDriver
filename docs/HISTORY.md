@@ -50,3 +50,4 @@
 2026-05-05 15:30 +0800 | SHIP | TASK-024 added a timed sidecar process runner that executes TASK-023 plans with per-process logs, timings, and exit-code reporting
 2026-05-05 15:53 +0800 | SHIP | TASK-025 added an OOD suite evidence manifest that combines scenario, route, overlay, sidecar, RAG, SimLingo, and blocker artifacts
 2026-05-05 16:33 +0800 | SHIP | TASK-020 added a compact remote SimLingo artifact pullback helper that excludes model weights, CARLA files, caches, archives, and media
+2026-05-05 16:41 +0800 | SHIP | TASK-020 added a remote stock-route wrapper that logs the H100 SimLingo run and pulls compact artifacts back after success or failure

@@ -162,6 +162,106 @@ class CarlaDockerScriptsTest(unittest.TestCase):
         self.assertIn("remote_simlingo_bootstrap.sh", script)
         self.assertNotIn("/root/.cache/huggingface/token", script)
 
+    def test_remote_simlingo_route_runner_logs_and_pulls_artifacts(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            log_path = tmp_path / "calls.log"
+            fake_ssh = tmp_path / "ssh"
+            fake_ssh.write_text(
+                "\n".join(
+                    [
+                        "#!/usr/bin/env bash",
+                        "set -euo pipefail",
+                        'printf "SSH:%s\\n" "$*" >> "${CALL_LOG}"',
+                        "exit 23",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            fake_ssh.chmod(0o755)
+            fake_pull = tmp_path / "pull.sh"
+            fake_pull.write_text(
+                "\n".join(
+                    [
+                        "#!/usr/bin/env bash",
+                        "set -euo pipefail",
+                        'printf "PULL:%s:%s:%s\\n" "${REMOTE_RUN_ID}" "${REMOTE_ARTIFACT_DIR}" "${LOCAL_ARTIFACT_DIR}" >> "${CALL_LOG}"',
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            fake_pull.chmod(0o755)
+            env = os.environ.copy()
+            env["PATH"] = f"{tmp_path}:{env['PATH']}"
+            env["CALL_LOG"] = str(log_path)
+            env["GPU_SSH_OPTS"] = "-p 31257 -i /tmp/fake-key"
+            env["REMOTE_RUN_ID"] = "task20"
+            env["PULL_REMOTE_ARTIFACTS_SCRIPT"] = str(fake_pull)
+
+            result = subprocess.run(
+                ["bash", "scripts/run_remote_simlingo_route.sh", "root@example"],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 23)
+            log = log_path.read_text(encoding="utf-8")
+
+        self.assertIn("SSH:-p 31257 -i /tmp/fake-key", log)
+        self.assertIn("run_one_route_with_carla_as_user.sh", log)
+        self.assertIn("run_one_route_with_carla.log", log)
+        self.assertIn("tee", log)
+        self.assertIn("PULL:task20:/workspace/artifacts/task20:", log)
+
+    def test_remote_simlingo_route_runner_preserves_route_status_when_pull_fails(
+        self,
+    ) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            fake_ssh = tmp_path / "ssh"
+            fake_ssh.write_text(
+                "\n".join(
+                    [
+                        "#!/usr/bin/env bash",
+                        "exit 23",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            fake_ssh.chmod(0o755)
+            fake_pull = tmp_path / "pull.sh"
+            fake_pull.write_text(
+                "\n".join(
+                    [
+                        "#!/usr/bin/env bash",
+                        "exit 7",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            fake_pull.chmod(0o755)
+            env = os.environ.copy()
+            env["PATH"] = f"{tmp_path}:{env['PATH']}"
+            env["PULL_REMOTE_ARTIFACTS_SCRIPT"] = str(fake_pull)
+
+            result = subprocess.run(
+                ["bash", "scripts/run_remote_simlingo_route.sh", "root@example"],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+
+        self.assertEqual(result.returncode, 23)
+        self.assertIn("Artifact pullback failed with status 7", result.stderr)
+        self.assertIn("preserving route status 23", result.stderr)
+
     def test_remote_simlingo_artifact_pull_keeps_only_compact_evidence(self) -> None:
         script = (ROOT / "scripts" / "pull_remote_simlingo_artifacts.sh").read_text(
             encoding="utf-8"
