@@ -60,3 +60,4 @@
 2026-05-05 17:30 +0800 | QA | TASK-029 live H100 probe successfully pulled host snapshot, torch CUDA compatibility, and CARLA graphics diagnostics, then reproduced the CUDA-ready/CARLA-graphics-blocked suitability verdict
 2026-05-05 17:39 +0800 | SHIP | TASK-030 extracted SimLingo and sidecar command registration into a simulator-owned CLI module, reducing the central CLI to 823 lines
 2026-05-05 17:47 +0800 | SHIP | TASK-031 added a submission dossier builder that summarizes OOD readiness, GPU host status, blockers, and demo outline from current evidence
+2026-05-05 21:10 +0800 | TASK | started route-video-first phase by archiving completed setup tickets and creating TASK-033 through TASK-040 for Fail2Drive video evidence, generated OOD suite execution, policy matrix, Alpamayo probe, and submission demo packaging

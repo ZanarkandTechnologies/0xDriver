@@ -5,13 +5,14 @@ Active work lives under `tickets/TASK-*/ticket.md`. Completed tickets move to
 
 ## Active
 
-- `TASK-008`: Live CARLA probe and Docker bridge.
-- `TASK-009`: Ego spawn, camera capture, and entity track logging.
-- `TASK-010`: Regional driving behavior library.
-- `TASK-011`: Scenario-to-CARLA script compiler.
-- `TASK-012`: Generated asset pipeline.
-- `TASK-013`: Policy adapter interface.
-- `TASK-014`: Retrieval-augmented VLA comparison harness.
+- `TASK-033`: Fail2Drive route video smoke.
+- `TASK-034`: Video and telemetry evidence pipeline.
+- `TASK-035`: Live OOD overlay injection evidence.
+- `TASK-036`: Generated OOD suite runner.
+- `TASK-037`: Policy runtime matrix.
+- `TASK-038`: Alpamayo offline probe.
+- `TASK-039`: Alpamayo CARLA adapter.
+- `TASK-040`: Submission demo pack.
 
 ## Archived Evidence
 
@@ -19,3 +20,6 @@ Active work lives under `tickets/TASK-*/ticket.md`. Completed tickets move to
   implementation history.
 - `TASK-007` preserves local scenario forge, failure memory, CARLA smoke, and
   route-faithful Fail2Drive dry-run planning.
+- `TASK-008` through `TASK-031` preserve CARLA probing, behavior generation,
+  route-pack export, policy adapter, sidecar, remote GPU, and submission dossier
+  setup work. The active board now starts at route-video evidence.

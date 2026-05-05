@@ -44,13 +44,18 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-029 remote GPU probe script
 - [x] TASK-030 SimLingo CLI extraction
 - [x] TASK-031 submission dossier builder
+- [x] TASK-032 board normalized for route-video-first execution
 
 ## Active Roadmap
 
-- [x] TASK-020 H100/H200 stock SimLingo rerun reached artifact-backed CARLA
-  graphics/Vulkan blocker
-- [ ] TASK-024 live timed sidecar execution on H100/H200 after TASK-020
-- [ ] live H100-generated suite execution after TASK-020
+- [ ] TASK-033 Fail2Drive route video smoke
+- [ ] TASK-034 video and telemetry evidence pipeline
+- [ ] TASK-035 live OOD overlay injection evidence
+- [ ] TASK-036 generated OOD suite runner
+- [ ] TASK-037 policy runtime matrix
+- [ ] TASK-038 Alpamayo offline probe
+- [ ] TASK-039 Alpamayo CARLA adapter
+- [ ] TASK-040 submission demo pack
 
 ## Latest Evidence
 
@@ -150,6 +155,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   from the OOD suite manifest, GPU host suitability report, progress ledger,
   and blocker ledger. The current dossier is a submission-facing summary of the
   minimal-shot OOD harness, evidence metrics, live GPU blocker, and demo outline.
+- TASK-032 archives completed setup tickets and creates the route-video-first
+  phase from TASK-033 through TASK-040. The project should now prove
+  Fail2Drive/CARLA video evidence before spending more time on any one VLA
+  backend.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.
@@ -195,11 +204,11 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 
 Useful soon:
 
-- keep CARLA open for live TASK-009 proof
 - Meshy or equivalent API key for real TASK-012 asset generation
 - SimLingo checkpoint path or Hugging Face access
-- H100/H200-class Linux NVIDIA GPU instance with CARLA 0.9.15 for the next
-  stock SimLingo run; Blackwell needs a separate PyTorch/CARLA rebuild lane
+- graphics-capable CARLA host for live route video proof
+- RTX 6000 Ada or equivalent GPU SSH plus Hugging Face access for Alpamayo
+  offline probe
 
 Missing inputs should be logged as blockers on the relevant ticket while local
 mock/dry-run work continues.
