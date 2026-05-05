@@ -943,6 +943,10 @@ def build_parser() -> argparse.ArgumentParser:
     simlingo_evidence_parser.add_argument("--run-id", default="remote-simlingo-evidence")
     simlingo_evidence_parser.set_defaults(func=_command_summarize_simlingo_evidence)
 
+    from driverx.simulators.gpu_host_cli import register_gpu_host_parser
+
+    register_gpu_host_parser(subparsers)
+
     sidecar_parser = subparsers.add_parser(
         "plan-simlingo-sidecar",
         help="Plan a two-process SimLingo plus DriverX overlay-injector run.",

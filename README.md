@@ -243,6 +243,14 @@ PYTHONPATH=src python3 -m driverx summarize-simlingo-evidence \
   --artifact-root tickets/TASK-020/artifacts/task20-remote \
   --output-root tickets/TASK-020/artifacts \
   --run-id task20-evidence
+
+# Convert CUDA, CARLA graphics, and remote evidence into a host recommendation.
+PYTHONPATH=src python3 -m driverx assess-gpu-host \
+  --gpu-snapshot tickets/TASK-020/artifacts/2026-05-05T151900+0800/remote_gpu_snapshot.txt \
+  --torch-compatibility tickets/TASK-020/artifacts/task20-remote/torch_cuda_compatibility.json \
+  --carla-diagnostics tickets/TASK-020/artifacts/task20-remote/carla_runtime_diagnostics.md \
+  --simlingo-evidence tickets/TASK-020/artifacts/task20-evidence-final/remote_simlingo_evidence.json \
+  --run-id h100-host-suitability
 ```
 
 Stock SimLingo currently targets Python 3.8 and `torch==2.2.0+cu121`. That

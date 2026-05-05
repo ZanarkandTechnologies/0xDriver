@@ -73,6 +73,12 @@ from driverx.simulators.simlingo_evidence import (
     scan_simlingo_evidence,
     write_simlingo_evidence_report,
 )
+from driverx.simulators.gpu_host_suitability import (
+    GpuHostSuitability,
+    HostSuitabilityCheck,
+    assess_gpu_host_suitability,
+    write_gpu_host_suitability_report,
+)
 from driverx.simulators.simlingo_sidecar import (
     SidecarCommandEntry,
     SimLingoSidecarPlan,
@@ -101,6 +107,8 @@ __all__ = [
     "CarlaSensorScript",
     "CarlaSmokeResult",
     "EntityTrack",
+    "GpuHostSuitability",
+    "HostSuitabilityCheck",
     "OverlayActorTrack",
     "OverlayInjectionPlan",
     "OverlayInjectionRoute",
@@ -149,4 +157,6 @@ __all__ = [
     "write_simlingo_result_report",
     "write_simlingo_sidecar_plan",
     "write_simlingo_sidecar_run",
+    "assess_gpu_host_suitability",
+    "write_gpu_host_suitability_report",
 ]

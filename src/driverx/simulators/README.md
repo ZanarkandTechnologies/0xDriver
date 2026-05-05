@@ -68,6 +68,10 @@ PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
 PYTHONPATH=src python3 -m driverx summarize-simlingo-evidence \
   --artifact-root tickets/TASK-020/artifacts/task20-remote \
   --output-root tickets/TASK-020/artifacts
+PYTHONPATH=src python3 -m driverx assess-gpu-host \
+  --torch-compatibility tickets/TASK-020/artifacts/task20-remote/torch_cuda_compatibility.json \
+  --carla-diagnostics tickets/TASK-020/artifacts/task20-remote/carla_runtime_diagnostics.md \
+  --simlingo-evidence tickets/TASK-020/artifacts/task20-evidence-final/remote_simlingo_evidence.json
 ```
 
 The OOD suite report accepts either the older
@@ -85,4 +89,5 @@ PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar_runner
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_result_ingestion
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_evidence
+PYTHONPATH=src python3 -m unittest tests.test_gpu_host_suitability
 ```
