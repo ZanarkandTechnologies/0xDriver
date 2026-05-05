@@ -1,0 +1,182 @@
+import json
+from contextlib import redirect_stdout
+from io import StringIO
+from pathlib import Path
+from tempfile import TemporaryDirectory
+import unittest
+
+from driverx.cli import main
+from driverx.pipeline import RouteEvidenceInputs, build_route_evidence
+
+
+def _write_result(path: Path) -> None:
+    path.write_text(
+        json.dumps(
+            {
+                "_checkpoint": {
+                    "global_record": {
+                        "status": "Completed",
+                        "scores_mean": {
+                            "score_composed": 71.5,
+                            "score_route": 88.0,
+                            "score_penalty": 0.81,
+                        },
+                        "meta": {"duration_game": 12.0, "duration_system": 16.5},
+                        "infractions": {"collisions_vehicle": [], "red_light": ["red"]},
+                    },
+                    "progress": [1, 1],
+                    "records": [
+                        {
+                            "route_id": "1088",
+                            "scenario_name": "PedestriansOnRoad",
+                            "town_name": "Town10HD",
+                            "status": "Completed",
+                            "scores": {
+                                "score_composed": 71.5,
+                                "score_route": 88.0,
+                                "score_penalty": 0.81,
+                            },
+                            "meta": {"duration_game": 12.0, "duration_system": 16.5},
+                            "infractions": {
+                                "collisions_vehicle": [],
+                                "red_light": ["ran red light"],
+                            },
+                        }
+                    ],
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+
+def _write_tracks(path: Path) -> None:
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "actor_ref": "companion_actor_0",
+                    "samples": [
+                        {"t_s": 0.0, "x": 1.0, "y": 2.0},
+                        {"t_s": 0.1, "x": 1.5, "y": 2.0},
+                    ],
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+
+def _write_plan(path: Path, *, result: Path, tracks: Path, video: Path) -> None:
+    path.write_text(
+        json.dumps(
+            {
+                "run_command": ["python", "leaderboard_evaluator_local.py"],
+                "video_command": ["python", "tools/generate_video.py", "-f", "rgb"],
+                "expected_outputs": {
+                    "result": str(result),
+                    "entity_tracks": str(tracks),
+                    "video": str(video),
+                },
+                "live_blockers": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+
+class RouteEvidenceTest(unittest.TestCase):
+    def test_build_route_evidence_summarizes_result_tracks_and_video(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            result = tmp_path / "result.json"
+            tracks = tmp_path / "entity_tracks.json"
+            video = tmp_path / "route.mp4"
+            screenshot = tmp_path / "screen.png"
+            log = tmp_path / "route.log"
+            plan = tmp_path / "plan.json"
+            _write_result(result)
+            _write_tracks(tracks)
+            video.write_bytes(b"fake mp4")
+            screenshot.write_bytes(b"png")
+            log.write_text("line 1\nline 2\n", encoding="utf-8")
+            _write_plan(plan, result=result, tracks=tracks, video=video)
+
+            summary = build_route_evidence(
+                tmp_path / "run",
+                RouteEvidenceInputs(
+                    plan_path=plan,
+                    screenshot_paths=(screenshot,),
+                    log_paths=(log,),
+                    video_duration_s=3.5,
+                ),
+            )
+            report = Path(summary["report_path"]).read_text(encoding="utf-8")
+
+        self.assertEqual(summary["status"], "ready")
+        self.assertEqual(summary["metrics"]["driving_score"], 71.5)
+        self.assertEqual(summary["metrics"]["route_completion"], 88.0)
+        self.assertEqual(summary["metrics"]["track_count"], 1)
+        self.assertEqual(summary["metrics"]["actor_refs"], ["companion_actor_0"])
+        self.assertEqual(summary["video"]["duration_s"], 3.5)
+        self.assertEqual(summary["blockers"], [])
+        self.assertIn("Route Evidence", report)
+
+    def test_build_route_evidence_surfaces_missing_expected_artifacts(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            plan = tmp_path / "plan.json"
+            _write_plan(
+                plan,
+                result=tmp_path / "missing_result.json",
+                tracks=tmp_path / "missing_tracks.json",
+                video=tmp_path / "missing_video.mp4",
+            )
+
+            summary = build_route_evidence(tmp_path / "run", RouteEvidenceInputs(plan_path=plan))
+
+        blockers = "\n".join(summary["blockers"])
+        self.assertEqual(summary["status"], "blocked")
+        self.assertIn("Missing route result", blockers)
+        self.assertIn("Missing entity tracks", blockers)
+        self.assertIn("Missing route video", blockers)
+
+    def test_build_route_evidence_cli_writes_json_and_markdown(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            result = tmp_path / "result.json"
+            tracks = tmp_path / "entity_tracks.json"
+            video = tmp_path / "route.mp4"
+            plan = tmp_path / "plan.json"
+            _write_result(result)
+            _write_tracks(tracks)
+            video.write_bytes(b"fake mp4")
+            _write_plan(plan, result=result, tracks=tracks, video=video)
+            stream = StringIO()
+            with redirect_stdout(stream):
+                exit_code = main(
+                    [
+                        "build-route-evidence",
+                        "--plan",
+                        str(plan),
+                        "--video-duration-s",
+                        "4.25",
+                        "--output-root",
+                        tmp,
+                        "--run-id",
+                        "route-evidence",
+                    ]
+                )
+            summary = json.loads(stream.getvalue())
+            json_exists = Path(summary["json_path"]).exists()
+            report_exists = Path(summary["report_path"]).exists()
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(summary["status"], "ready")
+        self.assertTrue(json_exists)
+        self.assertTrue(report_exists)
+        self.assertEqual(summary["video"]["duration_s"], 4.25)
+
+
+if __name__ == "__main__":
+    unittest.main()

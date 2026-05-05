@@ -46,10 +46,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-031 submission dossier builder
 - [x] TASK-032 board normalized for route-video-first execution
 - [x] TASK-033 Fail2Drive route video smoke
+- [x] TASK-034 video and telemetry evidence pipeline
 
 ## Active Roadmap
 
-- [ ] TASK-034 video and telemetry evidence pipeline
 - [ ] TASK-035 live OOD overlay injection evidence
 - [ ] TASK-036 generated OOD suite runner
 - [ ] TASK-037 policy runtime matrix
@@ -165,6 +165,11 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   local evidence also records that the external Fail2Drive checkout lacks
   `tools/generate_video.py`, so TASK-034 should accept external videos or add a
   DriverX-owned assembler.
+- TASK-034 adds `build-route-evidence`, a route evidence bundle that reads
+  planned or explicit result JSON, entity tracks, videos, screenshots, and logs.
+  It writes `run_evidence.json` plus `run_evidence.md`, extracts score/route
+  completion/track/video metadata when present, and turns missing live artifacts
+  into blockers instead of crashes.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.
