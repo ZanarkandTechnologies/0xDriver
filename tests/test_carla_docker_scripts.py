@@ -297,6 +297,26 @@ class CarlaDockerScriptsTest(unittest.TestCase):
         ]:
             self.assertIn(f"--exclude='{excluded}'", script)
 
+    def test_remote_gpu_probe_collects_compact_host_suitability_inputs(self) -> None:
+        script = (ROOT / "scripts" / "run_remote_gpu_probe.sh").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("REMOTE_PROBE_DIR", script)
+        self.assertIn("gpu_snapshot.txt", script)
+        self.assertIn("torch_cuda_compatibility.json", script)
+        self.assertIn("carla_runtime_diagnostics.md", script)
+        self.assertIn("torch.cuda.get_arch_list()", script)
+        self.assertIn("torch.cuda.get_device_capability(0)", script)
+        self.assertIn("vulkaninfo --summary", script)
+        self.assertIn("VK_ICD_FILENAMES=/etc/vulkan/icd.d/nvidia_icd.json", script)
+        self.assertIn("--include='gpu_snapshot.txt'", script)
+        self.assertIn("--include='torch_cuda_compatibility.json'", script)
+        self.assertIn("--include='carla_runtime_diagnostics.md'", script)
+        self.assertIn("--exclude='*.pt'", script)
+        self.assertIn("--exclude='*.safetensors'", script)
+        self.assertIn("--exclude='*.mp4'", script)
+
     def test_remote_simlingo_artifact_pull_executes_compact_filter_contract(self) -> None:
         if shutil.which("rsync") is None:
             self.skipTest("rsync is required to exercise the pullback helper")

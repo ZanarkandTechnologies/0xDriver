@@ -41,6 +41,7 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-026 remote SimLingo evidence classifier
 - [x] TASK-027 OOD suite remote evidence ingestion
 - [x] TASK-028 GPU host suitability report
+- [x] TASK-029 remote GPU probe script
 
 ## Active Roadmap
 
@@ -133,6 +134,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   `blocked`: SimLingo CUDA support is ready for `sm_90`, but CARLA graphics are
   blocked by the Vulkan/port failure; the report recommends a graphics-capable
   NVIDIA host instead of another compute-only H100/H200 container.
+- TASK-029 adds `scripts/run_remote_gpu_probe.sh`, a compact SSH preflight that
+  writes `gpu_snapshot.txt`, `torch_cuda_compatibility.json`, and
+  `carla_runtime_diagnostics.md` remotely, then pulls only those small probe
+  artifacts back for `assess-gpu-host`.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.

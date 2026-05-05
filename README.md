@@ -244,6 +244,13 @@ PYTHONPATH=src python3 -m driverx summarize-simlingo-evidence \
   --output-root tickets/TASK-020/artifacts \
   --run-id task20-evidence
 
+# On a fresh GPU host, collect the small preflight artifacts used by
+# assess-gpu-host before launching an expensive route job.
+GPU_SSH_HOST=root@38.80.152.148 \
+GPU_SSH_OPTS="-p 31257 -i ~/.ssh/id_ed25519_runpod" \
+LOCAL_PROBE_DIR=tickets/TASK-029/artifacts/gpu-host-probe \
+bash scripts/run_remote_gpu_probe.sh
+
 # Convert CUDA, CARLA graphics, and remote evidence into a host recommendation.
 PYTHONPATH=src python3 -m driverx assess-gpu-host \
   --gpu-snapshot tickets/TASK-020/artifacts/2026-05-05T151900+0800/remote_gpu_snapshot.txt \

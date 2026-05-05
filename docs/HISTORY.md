@@ -56,3 +56,4 @@
 2026-05-05 17:07 +0800 | BLOCKER | TASK-020 H100 stock SimLingo route reached CARLA launch but CARLA exited before opening port 20000 because the container lacks a working NVIDIA graphics/Vulkan runtime
 2026-05-05 17:17 +0800 | SHIP | TASK-027 taught the OOD suite report to ingest remote SimLingo evidence and surface the H100 CARLA/Vulkan blocker as top-level submission evidence
 2026-05-05 17:31 +0800 | SHIP | TASK-028 added a GPU host suitability report that turns CUDA compatibility, CARLA graphics diagnostics, and remote SimLingo evidence into a next-host recommendation
+2026-05-05 17:28 +0800 | SHIP | TASK-029 added a compact remote GPU probe script for collecting host snapshot, torch CUDA compatibility, and CARLA graphics diagnostics before route runs
