@@ -1,0 +1,19 @@
+{
+  "root": "/workspace/external/simlingo",
+  "exists": true,
+  "commit": "743b243afd6cf5ff51b9fa1f8cac86f22d569684",
+  "required_files": {
+    "readme": true,
+    "environment": true,
+    "agent": true,
+    "team_config": true,
+    "bench2drive_evaluator": true,
+    "bench2drive_scenario_runner": true,
+    "training_package": true
+  },
+  "carla_version": "0.9.15",
+  "python_version": "3.8",
+  "requires_cuda": true,
+  "apple_silicon_live_supported": false,
+  "blockers": []
+}

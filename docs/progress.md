@@ -38,10 +38,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-023 SimLingo sidecar orchestration plan
 - [x] TASK-024 local timed sidecar process runner
 - [x] TASK-025 OOD suite evidence report
+- [x] TASK-026 remote SimLingo evidence classifier
 
 ## Active Roadmap
 
-- [ ] TASK-020 H100/H200 stock SimLingo rerun
+- [x] TASK-020 H100/H200 stock SimLingo rerun reached artifact-backed CARLA
+  graphics/Vulkan blocker
 - [ ] TASK-024 live timed sidecar execution on H100/H200 after TASK-020
 - [ ] live H100-generated suite execution after TASK-020
 
@@ -106,6 +108,17 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - TASK-020 now has `scripts/run_remote_simlingo_route.sh` so the generated
   remote stock-route script can be launched, logged, and followed by compact
   artifact pullback whether it succeeds or hits a precise runtime blocker.
+- TASK-026 adds `summarize-simlingo-evidence`, a local classifier for pulled
+  H100 SimLingo artifacts. It detects missing roots, incomplete/completed
+  bootstraps, route logs, CUDA compatibility JSON, `*_res.json` route results,
+  and writes a compact JSON/Markdown verdict without requiring CARLA,
+  SimLingo, TensorFlow, or a GPU.
+- TASK-020 H100 route wrapper pulled compact live evidence. CUDA compatibility
+  is good for SimLingo on H100 (`sm_90`), but CARLA 0.9.15 exits before
+  opening port `20000`; diagnostics show default Vulkan only exposes
+  `llvmpipe` and the NVIDIA Vulkan ICD fails with
+  `ERROR_INCOMPATIBLE_DRIVER`. This blocks closed-loop route proof on the
+  current H100 container before model inference begins.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.

@@ -51,3 +51,6 @@
 2026-05-05 15:53 +0800 | SHIP | TASK-025 added an OOD suite evidence manifest that combines scenario, route, overlay, sidecar, RAG, SimLingo, and blocker artifacts
 2026-05-05 16:33 +0800 | SHIP | TASK-020 added a compact remote SimLingo artifact pullback helper that excludes model weights, CARLA files, caches, archives, and media
 2026-05-05 16:41 +0800 | SHIP | TASK-020 added a remote stock-route wrapper that logs the H100 SimLingo run and pulls compact artifacts back after success or failure
+2026-05-05 16:54 +0800 | TASK | started TASK-026 remote SimLingo evidence classifier while H100 bootstrap continued installing dependencies
+2026-05-05 17:07 +0800 | SHIP | TASK-026 added a remote SimLingo evidence classifier for pulled bootstrap, route, CUDA, and diagnostics artifacts
+2026-05-05 17:07 +0800 | BLOCKER | TASK-020 H100 stock SimLingo route reached CARLA launch but CARLA exited before opening port 20000 because the container lacks a working NVIDIA graphics/Vulkan runtime

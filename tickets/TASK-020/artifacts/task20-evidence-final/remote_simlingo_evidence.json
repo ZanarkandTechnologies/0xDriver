@@ -1,0 +1,18 @@
+{
+  "artifact_root": "tickets/TASK-020/artifacts/task20-remote",
+  "state": "route_infrastructure_blocked",
+  "blockers": [
+    "CARLA server did not open port before route execution; route log: tickets/TASK-020/artifacts/task20-remote/run_one_route_with_carla.log"
+  ],
+  "bootstrap_log_path": null,
+  "bootstrap_complete": false,
+  "bootstrap_markers": {},
+  "bootstrap_tail": null,
+  "route_result_paths": [],
+  "selected_result_path": null,
+  "route_log_path": "tickets/TASK-020/artifacts/task20-remote/run_one_route_with_carla.log",
+  "compatibility_path": "tickets/TASK-020/artifacts/task20-remote/torch_cuda_compatibility.json",
+  "diagnostics_path": "tickets/TASK-020/artifacts/task20-remote/carla_runtime_diagnostics.md",
+  "result_summary": null,
+  "result_report": null
+}

@@ -67,6 +67,12 @@ from driverx.simulators.simlingo_results import (
     parse_simlingo_result,
     write_simlingo_result_report,
 )
+from driverx.simulators.simlingo_evidence import (
+    SimLingoEvidenceScan,
+    compact_simlingo_evidence_summary,
+    scan_simlingo_evidence,
+    write_simlingo_evidence_report,
+)
 from driverx.simulators.simlingo_sidecar import (
     SidecarCommandEntry,
     SimLingoSidecarPlan,
@@ -101,6 +107,7 @@ __all__ = [
     "OverlayInjectionRunResult",
     "OverlayRouteInjectionResult",
     "SimLingoCommandPlan",
+    "SimLingoEvidenceScan",
     "SimLingoReadiness",
     "SimLingoRouteRecord",
     "SimLingoRunRecord",
@@ -113,6 +120,7 @@ __all__ = [
     "build_simlingo_sidecar_plan",
     "compact_overlay_injection_summary",
     "compact_simlingo_result_summary",
+    "compact_simlingo_evidence_summary",
     "inspect_simlingo_checkout",
     "load_carla_run_config",
     "load_simlingo_run_config",
@@ -124,6 +132,7 @@ __all__ = [
     "run_ego_spawn_smoke",
     "run_overlay_injection_plan",
     "run_simlingo_sidecar_processes",
+    "scan_simlingo_evidence",
     "smoke_carla_server",
     "compile_carla_script_plan",
     "compile_overlay_injection_plan",
@@ -134,6 +143,7 @@ __all__ = [
     "write_ego_smoke",
     "write_overlay_injection_plan",
     "write_overlay_injection_run",
+    "write_simlingo_evidence_report",
     "write_simlingo_plan",
     "write_simlingo_readiness",
     "write_simlingo_result_report",

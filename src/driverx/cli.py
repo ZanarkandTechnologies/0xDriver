@@ -536,6 +536,21 @@ def _command_ingest_simlingo_result(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_summarize_simlingo_evidence(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        compact_simlingo_evidence_summary,
+        scan_simlingo_evidence,
+        write_simlingo_evidence_report,
+    )
+
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    scan = scan_simlingo_evidence(args.artifact_root)
+    summary = write_simlingo_evidence_report(run_dir, scan)
+    print(json.dumps(compact_simlingo_evidence_summary(summary), indent=2))
+    return 0
+
+
 def _command_plan_simlingo_sidecar(args: argparse.Namespace) -> int:
     from driverx.core.artifacts import prepare_run_dir
     from driverx.simulators import (
@@ -918,6 +933,15 @@ def build_parser() -> argparse.ArgumentParser:
     simlingo_ingest_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     simlingo_ingest_parser.add_argument("--run-id", default="simlingo-result")
     simlingo_ingest_parser.set_defaults(func=_command_ingest_simlingo_result)
+
+    simlingo_evidence_parser = subparsers.add_parser(
+        "summarize-simlingo-evidence",
+        help="Classify compact pulled remote SimLingo artifacts.",
+    )
+    simlingo_evidence_parser.add_argument("--artifact-root", type=Path, required=True)
+    simlingo_evidence_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    simlingo_evidence_parser.add_argument("--run-id", default="remote-simlingo-evidence")
+    simlingo_evidence_parser.set_defaults(func=_command_summarize_simlingo_evidence)
 
     sidecar_parser = subparsers.add_parser(
         "plan-simlingo-sidecar",

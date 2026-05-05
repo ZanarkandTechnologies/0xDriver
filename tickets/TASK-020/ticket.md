@@ -12,7 +12,9 @@
 - enter when: x86_64 H100/H200-class GPU host is reachable over SSH
 - leave when: stock SimLingo produces one Bench2Drive route result on H100 or a
   precise H100-specific runtime blocker is captured with artifacts
-- blockers: none; RunPod H100 direct TCP SSH works and `/workspace` is mounted
+- blockers: H100 CUDA is compatible, but CARLA 0.9.15 exits before opening
+  port `20000` because the container lacks a working NVIDIA Vulkan/graphics
+  runtime
 - spawned follow-ups: TASK-024 live timed sidecar execution on H100/H200
 - complexity: L
 
@@ -169,11 +171,11 @@ base policy proves it can run on the selected GPU.
 
 - [x] AC-1: RunPod H100 snapshot is captured and linked.
 - [x] AC-2: Remote scripts work with `GPU_SSH_OPTS` and still pass local checks.
-- [ ] AC-3: Stock SimLingo route run succeeds or fails with a precise
+- [x] AC-3: Stock SimLingo route run succeeds or fails with a precise
   artifact-backed blocker.
-- [ ] AC-4: Compact TASK-020 evidence is pulled back; large model/simulator
+- [x] AC-4: Compact TASK-020 evidence is pulled back; large model/simulator
   assets are not committed.
-- [ ] AC-5: `blockers.md`, `docs/progress.md`, and `docs/HISTORY.md` reflect
+- [x] AC-5: `blockers.md`, `docs/progress.md`, and `docs/HISTORY.md` reflect
   the final state.
 
 ## Verification
@@ -232,7 +234,32 @@ base policy proves it can run on the selected GPU.
 - Local gate after pullback helper:
   `bash scripts/pre_push_check.sh` passed with `154` tests after the route
   wrapper was added.
+- H100 bootstrap completed enough to produce SimLingo readiness, command-plan,
+  checkpoint checksum, CUDA compatibility, and live route scripts under
+  `/workspace/artifacts/task20`.
+- H100 route wrapper executed
+  `/workspace/artifacts/task20/run_one_route_with_carla_as_user.sh` and pulled
+  compact evidence back to
+  `tickets/TASK-020/artifacts/task20-remote`.
+- H100 route result:
+  `tickets/TASK-020/artifacts/task20-evidence-final/remote_simlingo_evidence.md`
+  classifies the run as `route_infrastructure_blocked`: CARLA did not open
+  port `20000` within `120s`, no SimLingo `*_res.json` exists, and policy
+  inference did not begin.
+- CARLA diagnostics:
+  `tickets/TASK-020/artifacts/task20-remote/carla_runtime_diagnostics.md`
+  shows CUDA compatibility on H100 but no working NVIDIA Vulkan device inside
+  the container. Default `vulkaninfo` only exposes `llvmpipe`; forcing
+  `/etc/vulkan/icd.d/nvidia_icd.json` fails with `ERROR_INCOMPATIBLE_DRIVER`.
+- Review:
+  `tickets/TASK-026/artifacts/review/2026-05-05_171339_review.md`
+  covers the TASK-020 evidence classifier and H100 blocker handoff with overall
+  score `4.0`.
 
 ## Blockers
 
-- None currently.
+- H100 is not sufficient for the current stock closed-loop CARLA proof because
+  the RunPod container exposes CUDA but not a working NVIDIA graphics/Vulkan
+  runtime for CARLA 0.9.15. Use a graphics-capable Ampere GPU host
+  (`sm_86`, e.g. RTX 3090 / RTX A6000 / A40 / A10) or rebuild the SimLingo
+  torch stack for the earlier RTX PRO 6000 Blackwell host where CARLA launched.

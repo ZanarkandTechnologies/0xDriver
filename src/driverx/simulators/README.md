@@ -25,6 +25,8 @@ dry-run command planning.
 - `write_simlingo_sidecar_run(run_dir, result)`
 - `parse_simlingo_result(path)`
 - `write_simlingo_result_report(run_dir, record, ...)`
+- `scan_simlingo_evidence(artifact_root)`
+- `write_simlingo_evidence_report(run_dir, scan)`
 
 ## Example
 
@@ -63,6 +65,9 @@ PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
   --result tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/seed_1_res.json \
   --compatibility tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/torch_cuda_compatibility.json \
   --route-log tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/run_one_route.log
+PYTHONPATH=src python3 -m driverx summarize-simlingo-evidence \
+  --artifact-root tickets/TASK-020/artifacts/task20-remote \
+  --output-root tickets/TASK-020/artifacts
 ```
 
 ## Test
@@ -75,4 +80,5 @@ PYTHONPATH=src python3 -m unittest tests.test_carla_injection
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar_runner
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_result_ingestion
+PYTHONPATH=src python3 -m unittest tests.test_simlingo_evidence
 ```

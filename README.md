@@ -234,6 +234,12 @@ GPU_SSH_HOST=root@38.80.152.148 \
 GPU_SSH_OPTS="-p 31257 -i ~/.ssh/id_ed25519_runpod" \
 REMOTE_RUN_ID=task20 \
 bash scripts/run_remote_simlingo_route.sh
+
+# Classify whatever compact evidence came back into a small verdict report.
+PYTHONPATH=src python3 -m driverx summarize-simlingo-evidence \
+  --artifact-root tickets/TASK-020/artifacts/task20-remote \
+  --output-root tickets/TASK-020/artifacts \
+  --run-id task20-evidence
 ```
 
 Stock SimLingo currently targets Python 3.8 and `torch==2.2.0+cu121`. That
