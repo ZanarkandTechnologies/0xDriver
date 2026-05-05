@@ -218,6 +218,14 @@ GPU_SSH_OPTS="-p 31257 -i ~/.ssh/id_ed25519_runpod" \
 SESSION_NAME=task20 \
 REMOTE_RUN_ID=task20 \
 bash scripts/run_remote_simlingo_bootstrap.sh
+
+# Pull only compact logs, JSON, Markdown, checksums, and generated run scripts
+# back from the remote artifact directory. This deliberately excludes model
+# weights, simulator archives, videos, images, caches, and CARLA files.
+GPU_SSH_HOST=root@38.80.152.148 \
+GPU_SSH_OPTS="-p 31257 -i ~/.ssh/id_ed25519_runpod" \
+REMOTE_RUN_ID=task20 \
+bash scripts/pull_remote_simlingo_artifacts.sh
 ```
 
 Stock SimLingo currently targets Python 3.8 and `torch==2.2.0+cu121`. That

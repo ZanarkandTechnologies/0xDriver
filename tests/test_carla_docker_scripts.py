@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import shutil
 import subprocess
 from tempfile import TemporaryDirectory
 import unittest
@@ -160,6 +161,112 @@ class CarlaDockerScriptsTest(unittest.TestCase):
         self.assertIn("tmux new-session", script)
         self.assertIn("remote_simlingo_bootstrap.sh", script)
         self.assertNotIn("/root/.cache/huggingface/token", script)
+
+    def test_remote_simlingo_artifact_pull_keeps_only_compact_evidence(self) -> None:
+        script = (ROOT / "scripts" / "pull_remote_simlingo_artifacts.sh").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("REMOTE_ARTIFACT_DIR", script)
+        self.assertIn("LOCAL_ARTIFACT_DIR", script)
+        self.assertIn("GPU_SSH_OPTS", script)
+        self.assertIn("--prune-empty-dirs", script)
+        self.assertIn("--no-owner", script)
+        self.assertIn("--no-group", script)
+        for included in [
+            "bootstrap.log",
+            "torch_cuda_compatibility.json",
+            "model_revision.txt",
+            "checkpoint.sha256",
+            "*.json",
+            "*.md",
+            "*.log",
+            "*.sh",
+        ]:
+            self.assertIn(f"--include='{included}'", script)
+        for excluded in [
+            "*.pt",
+            "*.ckpt",
+            "*.safetensors",
+            "*.mp4",
+            "*.png",
+            "viz/***",
+            "models/***",
+            "software/***",
+            ".cache/***",
+        ]:
+            self.assertIn(f"--exclude='{excluded}'", script)
+
+    def test_remote_simlingo_artifact_pull_executes_compact_filter_contract(self) -> None:
+        if shutil.which("rsync") is None:
+            self.skipTest("rsync is required to exercise the pullback helper")
+
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            source = tmp_path / "remote"
+            destination = tmp_path / "local"
+            for path in [
+                "bootstrap.log",
+                "torch_cuda_compatibility.json",
+                "model_revision.txt",
+                "checkpoint.sha256",
+                "run_one_route_with_carla.sh",
+                "res/seed_1_res.json",
+                "readiness/simlingo_readiness.md",
+                "plan/simlingo_command_plan.json",
+                "carla/carla.log",
+                "models/manifest.json",
+                "software/readme.md",
+                "viz/frame.json",
+                "nested/viz/frame.json",
+                ".cache/huggingface/token",
+                "checkpoint.pt",
+                "weights/model.safetensors",
+                "camera.png",
+                "notes.txt",
+            ]:
+                file_path = source / path
+                file_path.parent.mkdir(parents=True, exist_ok=True)
+                file_path.write_text(path, encoding="utf-8")
+
+            env = os.environ.copy()
+            env["LOCAL_SIMLINGO_ARTIFACT_SOURCE"] = str(source)
+            result = subprocess.run(
+                [
+                    "bash",
+                    "scripts/pull_remote_simlingo_artifacts.sh",
+                    "unused-host",
+                    "/unused/remote",
+                    str(destination),
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 0, msg=result.stderr)
+            copied = {
+                str(path.relative_to(destination))
+                for path in destination.rglob("*")
+                if path.is_file()
+            }
+
+        self.assertEqual(
+            copied,
+            {
+                "bootstrap.log",
+                "torch_cuda_compatibility.json",
+                "model_revision.txt",
+                "checkpoint.sha256",
+                "run_one_route_with_carla.sh",
+                "res/seed_1_res.json",
+                "readiness/simlingo_readiness.md",
+                "plan/simlingo_command_plan.json",
+            },
+        )
 
     def test_remote_simlingo_launcher_cleans_token_when_launch_fails(self) -> None:
         with TemporaryDirectory() as tmp:

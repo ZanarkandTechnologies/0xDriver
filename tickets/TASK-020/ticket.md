@@ -69,6 +69,7 @@ After:
 - `scripts/sync_remote_gpu.sh`
 - `scripts/run_remote_simlingo_bootstrap.sh`
 - `scripts/remote_gpu_snapshot.sh`
+- `scripts/pull_remote_simlingo_artifacts.sh`
 - `docs/progress.md`
 - `docs/HISTORY.md`
 
@@ -211,6 +212,17 @@ base policy proves it can run on the selected GPU.
   `stop_carla_server.sh`, and `run_one_route_with_carla_as_user.sh` so future
   bootstraps can launch headless CARLA, wait for port `20000`, run the route,
   and stop the server from one artifact script.
+- Added `scripts/pull_remote_simlingo_artifacts.sh`, a compact artifact
+  pullback helper that preserves logs, JSON, Markdown, checksums, and generated
+  run scripts while excluding model weights, simulator archives, media, caches,
+  and CARLA files.
+- Focused script test:
+  `PYTHONPATH=src python3 -m unittest tests.test_carla_docker_scripts` passed
+  with `11` tests, including a local execution fixture that proves `carla/`,
+  `models/`, `software/`, `viz/`, `.cache/`, weights, and media are excluded
+  even when compact-looking filenames appear inside those trees.
+- Local gate after pullback helper:
+  `bash scripts/pre_push_check.sh` passed with `151` tests.
 
 ## Blockers
 

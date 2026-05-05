@@ -100,6 +100,9 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   80GB HBM3, driver `580.126.09`, and persistent `/workspace`; root disk is
   only `20G`, so conda, cache, models, CARLA, and artifacts must stay under
   `/workspace`.
+- TASK-020 now has `scripts/pull_remote_simlingo_artifacts.sh` so compact H100
+  evidence can be pulled back without copying model weights, CARLA files,
+  archives, media, caches, or generated videos into the repo.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.
@@ -114,6 +117,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   passed with 4 tests.
 - Full local gate during TASK-024: `bash scripts/pre_push_check.sh` passed with
   143 tests.
+- Focused local tests during TASK-020 pullback helper:
+  `PYTHONPATH=src python3 -m unittest tests.test_carla_docker_scripts` passed
+  with 11 tests, including a local execution fixture for the compact pullback
+  allowlist and heavy-directory exclusions.
+- Full local gate during TASK-020 pullback helper:
+  `bash scripts/pre_push_check.sh` passed with 151 tests.
 - Focused local tests during TASK-023:
   `PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar tests.test_cli_simlingo_sidecar`
   passed with 4 tests.
