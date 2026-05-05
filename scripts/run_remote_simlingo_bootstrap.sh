@@ -3,7 +3,7 @@ set -euo pipefail
 
 HOST="${1:-${GPU_SSH_HOST:-root@31.22.104.74}}"
 REMOTE_DIR="${2:-${REMOTE_WORKDIR:-/workspace/0xDriver}}"
-SESSION_NAME="${SESSION_NAME:-task17}"
+SESSION_NAME="${SESSION_NAME:-task20}"
 SSH_OPTIONS="${GPU_SSH_OPTS:-}"
 REMOTE_ROOT="${REMOTE_ROOT:-/workspace}"
 REMOTE_RUN_ID="${REMOTE_RUN_ID:-${SESSION_NAME}}"

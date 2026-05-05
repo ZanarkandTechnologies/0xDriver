@@ -205,9 +205,9 @@ class CarlaDockerScriptsTest(unittest.TestCase):
         self.assertIn("CALL:1:", log)
         self.assertIn("CALL:2:", log)
         self.assertIn("CALL:3:", log)
-        self.assertIn("cat > '/tmp/driverx_hf_token_task17_", log)
+        self.assertIn("cat > '/tmp/driverx_hf_token_task20_", log)
         self.assertIn("tmux new-session", log)
-        self.assertIn("rm -f '/tmp/driverx_hf_token_task17_", log)
+        self.assertIn("rm -f '/tmp/driverx_hf_token_task20_", log)
 
 
 if __name__ == "__main__":

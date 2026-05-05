@@ -87,6 +87,67 @@ class SimLingoSidecarRunnerTest(unittest.TestCase):
         self.assertEqual([record.pid for record in result.process_records], [None, None])
         self.assertEqual([record.exit_code for record in result.process_records], [None, None])
 
+    def test_run_simlingo_sidecar_processes_dry_run_validates_missing_cwd(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            plan_path = root / "simlingo_sidecar_plan.json"
+            plan_path.write_text(
+                json.dumps(
+                    {
+                        "commands": [
+                            {
+                                "label": "missing",
+                                "command": [sys.executable, "-c", "print('never')"],
+                                "cwd": str(root / "missing"),
+                                "env": {},
+                                "start_after_s": 0.0,
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_simlingo_sidecar_processes(
+                plan_path,
+                root / "run",
+                dry_run=True,
+            )
+
+        self.assertFalse(result.success)
+        self.assertIn("does not exist", result.process_records[0].error or "")
+
+    def test_run_simlingo_sidecar_processes_refuses_blocked_plan(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            plan_path = root / "simlingo_sidecar_plan.json"
+            plan_path.write_text(
+                json.dumps(
+                    {
+                        "blockers": ["Missing live GPU"],
+                        "commands": [
+                            {
+                                "label": "blocked",
+                                "command": [sys.executable, "-c", "print('should not run')"],
+                                "cwd": str(root),
+                                "env": {},
+                                "start_after_s": 0.0,
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_simlingo_sidecar_processes(plan_path, root / "run")
+            stdout_path = result.process_records[0].stdout_path
+
+        self.assertFalse(result.success)
+        self.assertEqual(result.plan_blockers, ["Missing live GPU"])
+        self.assertIn("Missing live GPU", result.error or "")
+        self.assertIsNone(result.process_records[0].pid)
+        self.assertFalse(stdout_path.exists())
+
     def test_run_simlingo_sidecar_processes_reports_bad_cwd(self) -> None:
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

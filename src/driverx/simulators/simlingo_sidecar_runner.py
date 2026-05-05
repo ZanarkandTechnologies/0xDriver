@@ -56,6 +56,7 @@ class SimLingoSidecarRunResult:
     started_at_monotonic_s: float
     finished_at_monotonic_s: float
     process_records: list[SidecarProcessRecord]
+    plan_blockers: list[str]
     error: str | None = None
 
     def to_jsonable(self) -> dict[str, Any]:
@@ -69,6 +70,7 @@ class SimLingoSidecarRunResult:
             "finished_at_monotonic_s": self.finished_at_monotonic_s,
             "duration_s": round(self.finished_at_monotonic_s - self.started_at_monotonic_s, 6),
             "process_records": [record.to_jsonable() for record in self.process_records],
+            "plan_blockers": self.plan_blockers,
             "error": self.error,
         }
 
@@ -85,13 +87,14 @@ def run_simlingo_sidecar_processes(
     plan_file = plan_path.expanduser().resolve()
     payload = json.loads(plan_file.read_text(encoding="utf-8"))
     commands = [dict(entry) for entry in list(payload.get("commands", []))]
+    plan_blockers = [str(blocker) for blocker in list(payload.get("blockers", []))]
     run_dir = run_dir.expanduser().resolve()
     log_dir = run_dir / "process-logs"
     log_dir.mkdir(parents=True, exist_ok=True)
     started_at = time.monotonic()
     records: list[SidecarProcessRecord] = []
     running: list[tuple[subprocess.Popen[bytes], SidecarProcessRecord, Any, Any]] = []
-    error: str | None = None
+    error: str | None = _plan_blocker_error(plan_blockers)
 
     for command_index, command_entry in enumerate(commands):
         label = _safe_label(str(command_entry.get("label", f"command-{command_index}")))
@@ -111,14 +114,12 @@ def run_simlingo_sidecar_processes(
             stdout_path=stdout_path,
             stderr_path=stderr_path,
         )
-        if dry_run:
+        validation_error = _validate_command_record(record)
+        if validation_error is not None:
+            records.append(_record_error(record, validation_error))
+            continue
+        if dry_run or error is not None:
             records.append(record)
-            continue
-        if not command:
-            records.append(_record_error(record, "Command entry is empty."))
-            continue
-        if not cwd.exists():
-            records.append(_record_error(record, f"Command cwd does not exist: {cwd}"))
             continue
         stdout_file = stdout_path.open("wb")
         stderr_file = stderr_path.open("wb")
@@ -190,6 +191,8 @@ def run_simlingo_sidecar_processes(
             time.sleep(0.05)
 
     records.sort(key=lambda record: (record.started_at_s is None, record.started_at_s or record.start_after_s))
+    if not commands and error is None:
+        error = "Sidecar plan contains no commands."
     success = bool(commands) and error is None and all(
         record.error is None and (dry_run or record.exit_code == 0)
         for record in records
@@ -203,6 +206,7 @@ def run_simlingo_sidecar_processes(
         started_at_monotonic_s=started_at,
         finished_at_monotonic_s=time.monotonic(),
         process_records=records,
+        plan_blockers=plan_blockers,
         error=error,
     )
 
@@ -232,6 +236,20 @@ def _record_error(record: SidecarProcessRecord, error: str) -> SidecarProcessRec
     )
 
 
+def _validate_command_record(record: SidecarProcessRecord) -> str | None:
+    if not record.command:
+        return "Command entry is empty."
+    if not record.cwd.exists():
+        return f"Command cwd does not exist: {record.cwd}"
+    return None
+
+
+def _plan_blocker_error(plan_blockers: list[str]) -> str | None:
+    if not plan_blockers:
+        return None
+    return "Sidecar plan has blockers: " + "; ".join(plan_blockers)
+
+
 def _safe_label(value: str) -> str:
     cleaned = "".join(char if char.isalnum() or char in {"-", "_"} else "-" for char in value)
     return cleaned.strip("-") or "command"
@@ -254,6 +272,7 @@ def _run_markdown(result: SimLingoSidecarRunResult) -> str:
         f"- timeout_s: `{result.timeout_s}`",
         f"- duration_s: `{round(result.finished_at_monotonic_s - result.started_at_monotonic_s, 6)}`",
         f"- process_count: `{len(result.process_records)}`",
+        f"- plan_blockers: `{len(result.plan_blockers)}`",
         f"- plan_path: `{result.plan_path}`",
         "",
         "## Processes",
@@ -276,6 +295,10 @@ def _run_markdown(result: SimLingoSidecarRunResult) -> str:
         )
     if result.error:
         lines.extend(["## Run Error", "", result.error, ""])
+    if result.plan_blockers:
+        lines.extend(["## Plan Blockers", ""])
+        lines.extend(f"- {blocker}" for blocker in result.plan_blockers)
+        lines.append("")
     return "\n".join(lines)
 
 
