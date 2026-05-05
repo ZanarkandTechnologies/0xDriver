@@ -1,0 +1,96 @@
+{
+  "work_type": ["backend", "cli", "evidence"],
+  "search_scope": {
+    "changed_files": [
+      "src/driverx/simulators/carla_overlay_evidence.py",
+      "src/driverx/simulators/__init__.py",
+      "src/driverx/cli.py",
+      "tests/test_overlay_evidence.py",
+      "tickets/TASK-035/ticket.md",
+      "docs/progress.md",
+      "docs/HISTORY.md"
+    ],
+    "related_files": [
+      "src/driverx/simulators/carla_injection.py",
+      "src/driverx/simulators/overlay_injection.py",
+      "src/driverx/behaviors/library.py",
+      "artifacts/runs/task35-overlay-evidence/overlay_evidence.json",
+      "artifacts/runs/task35-overlay-evidence/overlay_evidence.md"
+    ],
+    "rubric_references": [
+      "review-rubric-index.md",
+      "code-quality.md",
+      "evidence-quality.md",
+      "integration-readiness.md",
+      "desloppify.md"
+    ]
+  },
+  "rubrics_used": ["code-quality", "evidence-quality", "integration-readiness"],
+  "summary": "TASK-035 is pass-worthy: overlay run evidence now links route recipes, behavior assertions, actor tracks, cleanup state, and clean live-CARLA blockers without requiring a live simulator in tests.",
+  "overall_score": 4.0,
+  "overall_threshold": 4.0,
+  "verdict": "pass",
+  "rerun_required": false,
+  "evidence_quality": "pass",
+  "integration_readiness": "pass",
+  "traceability": "pass",
+  "freshness": "pass",
+  "hard_gate_failures": [],
+  "finding_log": [],
+  "rubric_sections": [
+    {
+      "name": "code-quality",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "modularity-reusability": 4.0,
+        "bloatability": 4.0,
+        "readability": 4.0,
+        "boundary-clarity": 4.0,
+        "error-handling": 4.1,
+        "maintainability": 4.0
+      },
+      "findings": [],
+      "next_action": "Use this overlay evidence artifact inside the generated OOD suite runner."
+    },
+    {
+      "name": "evidence-quality",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "sufficiency": 4.0,
+        "reproducibility": 4.0,
+        "traceability": 4.0,
+        "consistency": 4.0,
+        "inspectability": 4.0,
+        "autonomy-readiness": 4.0
+      },
+      "findings": [],
+      "next_action": "Attach live overlay output when CARLA is reachable; current clean-blocker proof is sufficient for this local ticket."
+    },
+    {
+      "name": "integration-readiness",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "integration-safety": 4.0,
+        "contract-correctness": 4.0,
+        "dependency-readiness": 4.0,
+        "coupling-risk": 4.0,
+        "merge-readiness": 4.0
+      },
+      "findings": [],
+      "next_action": "Archive TASK-035 and continue to TASK-036."
+    }
+  ],
+  "blocking_findings": [],
+  "verification": [
+    "PYTHONPATH=src python3 -m unittest tests.test_overlay_evidence tests.test_carla_injection tests.test_route_evidence",
+    "PYTHONPATH=src python3 -m driverx build-overlay-evidence --overlay-plan artifacts/runs/task35-overlay-plan/overlay_injection_plan.json --run-id task35-overlay-evidence",
+    "bash scripts/pre_push_check.sh"
+  ],
+  "next_action": "Archive TASK-035 and implement TASK-036."
+}

@@ -42,6 +42,11 @@ from driverx.simulators.carla_injection import (
     run_overlay_injection_plan,
     write_overlay_injection_run,
 )
+from driverx.simulators.carla_overlay_evidence import (
+    OverlayEvidenceInputs,
+    build_overlay_evidence,
+    write_overlay_evidence,
+)
 from driverx.simulators.fail2drive import CarlaCommandPlan, plan_fail2drive_run
 from driverx.simulators.fail2drive_video import (
     Fail2DriveVideoSmokeConfig,
@@ -118,6 +123,7 @@ __all__ = [
     "GpuHostSuitability",
     "HostSuitabilityCheck",
     "OverlayActorTrack",
+    "OverlayEvidenceInputs",
     "OverlayInjectionPlan",
     "OverlayInjectionRoute",
     "OverlayInjectionRunResult",
@@ -133,6 +139,7 @@ __all__ = [
     "SimLingoSidecarPlan",
     "SimLingoSidecarRunResult",
     "build_bench2drive_route_suite",
+    "build_overlay_evidence",
     "build_simlingo_sidecar_plan",
     "compact_overlay_injection_summary",
     "compact_simlingo_result_summary",
@@ -160,6 +167,7 @@ __all__ = [
     "write_ego_smoke",
     "write_overlay_injection_plan",
     "write_overlay_injection_run",
+    "write_overlay_evidence",
     "write_fail2drive_video_smoke_plan",
     "write_simlingo_evidence_report",
     "write_simlingo_plan",

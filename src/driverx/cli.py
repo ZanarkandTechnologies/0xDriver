@@ -354,6 +354,26 @@ def _command_run_overlay_injection(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_build_overlay_evidence(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        OverlayEvidenceInputs,
+        build_overlay_evidence,
+    )
+
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    summary = build_overlay_evidence(
+        run_dir,
+        OverlayEvidenceInputs(
+            overlay_plan_path=args.overlay_plan,
+            overlay_run_path=args.overlay_run,
+            route_evidence_path=args.route_evidence,
+        ),
+    )
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_smoke_carla(args: argparse.Namespace) -> int:
     from driverx.simulators import load_carla_run_config, smoke_carla_server
 
@@ -714,6 +734,17 @@ def build_parser() -> argparse.ArgumentParser:
     overlay_run_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     overlay_run_parser.add_argument("--run-id", default="overlay-injection-run")
     overlay_run_parser.set_defaults(func=_command_run_overlay_injection)
+
+    overlay_evidence_parser = subparsers.add_parser(
+        "build-overlay-evidence",
+        help="Bundle overlay injection run evidence with recipe and behavior assertions.",
+    )
+    overlay_evidence_parser.add_argument("--overlay-plan", type=Path, required=True)
+    overlay_evidence_parser.add_argument("--overlay-run", type=Path)
+    overlay_evidence_parser.add_argument("--route-evidence", type=Path)
+    overlay_evidence_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    overlay_evidence_parser.add_argument("--run-id", default="overlay-evidence")
+    overlay_evidence_parser.set_defaults(func=_command_build_overlay_evidence)
 
     smoke_parser = subparsers.add_parser(
         "smoke-carla",
