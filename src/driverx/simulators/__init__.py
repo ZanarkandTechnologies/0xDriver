@@ -43,6 +43,12 @@ from driverx.simulators.carla_injection import (
     write_overlay_injection_run,
 )
 from driverx.simulators.fail2drive import CarlaCommandPlan, plan_fail2drive_run
+from driverx.simulators.fail2drive_video import (
+    Fail2DriveVideoSmokeConfig,
+    Fail2DriveVideoSmokePlan,
+    plan_fail2drive_video_smoke,
+    write_fail2drive_video_smoke_plan,
+)
 from driverx.simulators.overlay_injection import (
     OverlayInjectionPlan,
     OverlayInjectionRoute,
@@ -97,6 +103,8 @@ __all__ = [
     "CarlaActorScript",
     "Bench2DriveRouteExport",
     "Bench2DriveRouteSuite",
+    "Fail2DriveVideoSmokeConfig",
+    "Fail2DriveVideoSmokePlan",
     "CarlaEgoSmokeConfig",
     "CarlaEgoSmokeResult",
     "CarlaProbeConfig",
@@ -133,6 +141,7 @@ __all__ = [
     "load_carla_run_config",
     "load_simlingo_run_config",
     "plan_fail2drive_run",
+    "plan_fail2drive_video_smoke",
     "plan_simlingo_run",
     "parse_simlingo_result",
     "probe_carla_client",
@@ -151,6 +160,7 @@ __all__ = [
     "write_ego_smoke",
     "write_overlay_injection_plan",
     "write_overlay_injection_run",
+    "write_fail2drive_video_smoke_plan",
     "write_simlingo_evidence_report",
     "write_simlingo_plan",
     "write_simlingo_readiness",

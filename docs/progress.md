@@ -45,10 +45,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-030 SimLingo CLI extraction
 - [x] TASK-031 submission dossier builder
 - [x] TASK-032 board normalized for route-video-first execution
+- [x] TASK-033 Fail2Drive route video smoke
 
 ## Active Roadmap
 
-- [ ] TASK-033 Fail2Drive route video smoke
 - [ ] TASK-034 video and telemetry evidence pipeline
 - [ ] TASK-035 live OOD overlay injection evidence
 - [ ] TASK-036 generated OOD suite runner
@@ -159,6 +159,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   phase from TASK-033 through TASK-040. The project should now prove
   Fail2Drive/CARLA video evidence before spending more time on any one VLA
   backend.
+- TASK-033 adds `plan-fail2drive-video-smoke`, a dry-run route-video proof
+  command that writes Fail2Drive evaluator command, `LIVE_VISU=1`/`SAVE_PATH`,
+  expected result/debug/RGB/video paths, and actionable live blockers. Current
+  local evidence also records that the external Fail2Drive checkout lacks
+  `tools/generate_video.py`, so TASK-034 should accept external videos or add a
+  DriverX-owned assembler.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.

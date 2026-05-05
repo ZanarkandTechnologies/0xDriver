@@ -243,6 +243,33 @@ def _command_plan_carla_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_plan_fail2drive_video_smoke(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        Fail2DriveVideoSmokeConfig,
+        load_carla_run_config,
+        plan_fail2drive_video_smoke,
+        write_fail2drive_video_smoke_plan,
+    )
+
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    config = load_carla_run_config(args.config)
+    smoke_config = Fail2DriveVideoSmokeConfig.from_carla_config(
+        config,
+        output_dir=run_dir / "fail2drive_outputs",
+        live_visu=not args.no_live_visu,
+        method_name=args.method_name,
+        agent_config=args.agent_config,
+        traffic_manager_port=args.traffic_manager_port,
+    )
+    summary = write_fail2drive_video_smoke_plan(
+        run_dir,
+        plan_fail2drive_video_smoke(smoke_config),
+    )
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def _command_export_bench2drive_suite(args: argparse.Namespace) -> int:
     from driverx.core.artifacts import prepare_run_dir
     from driverx.simulators import (
@@ -615,6 +642,23 @@ def build_parser() -> argparse.ArgumentParser:
     plan_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     plan_parser.add_argument("--run-id", default="carla-plan")
     plan_parser.set_defaults(func=_command_plan_carla_run)
+
+    video_smoke_parser = subparsers.add_parser(
+        "plan-fail2drive-video-smoke",
+        help="Write a dry-run Fail2Drive route and video artifact plan.",
+    )
+    video_smoke_parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/carla_local.sample.yaml"),
+    )
+    video_smoke_parser.add_argument("--agent-config", type=Path)
+    video_smoke_parser.add_argument("--traffic-manager-port", type=int)
+    video_smoke_parser.add_argument("--method-name", default="DriverXRouteSmoke")
+    video_smoke_parser.add_argument("--no-live-visu", action="store_true")
+    video_smoke_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    video_smoke_parser.add_argument("--run-id", default="fail2drive-video-smoke")
+    video_smoke_parser.set_defaults(func=_command_plan_fail2drive_video_smoke)
 
     route_export_parser = subparsers.add_parser(
         "export-bench2drive-suite",

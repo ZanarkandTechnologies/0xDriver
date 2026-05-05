@@ -2,7 +2,7 @@
 
 ## Status
 
-- state: building
+- state: done
 - owner: Codex
 - assignee: generalPurpose
 - dependencies: TASK-032, external Fail2Drive checkout, graphics-capable CARLA
@@ -83,13 +83,13 @@ Fail2DriveVideoSmokePlan = {
 
 ## Acceptance Criteria
 
-- [ ] AC-1: CLI writes JSON/Markdown route-video smoke plan.
-- [ ] AC-2: Plan includes Fail2Drive evaluator command and video-generation
+- [x] AC-1: CLI writes JSON/Markdown route-video smoke plan.
+- [x] AC-2: Plan includes Fail2Drive evaluator command and video-generation
   command.
-- [ ] AC-3: Plan records expected result, RGB folder, and video path.
-- [ ] AC-4: Missing checkout, route, agent, or video tool produces actionable
+- [x] AC-3: Plan records expected result, RGB folder, and video path.
+- [x] AC-4: Missing checkout, route, agent, or video tool produces actionable
   blockers.
-- [ ] AC-5: Tests pass without CARLA, Fail2Drive runtime, or GPU.
+- [x] AC-5: Tests pass without CARLA, Fail2Drive runtime, or GPU.
 
 ## Verification
 
@@ -105,8 +105,23 @@ Fail2DriveVideoSmokePlan = {
 
 ## Evidence
 
-- Pending.
+- `PYTHONPATH=src python3 -m unittest tests.test_fail2drive_video_smoke tests.test_cli_fail2drive_video_smoke`
+  passed with 5 tests.
+- `PYTHONPATH=src python3 -m driverx plan-fail2drive-video-smoke --config configs/carla_local.sample.yaml --run-id task33-video-smoke`
+  wrote `artifacts/runs/task33-video-smoke/fail2drive_video_smoke_plan.json`
+  and `artifacts/runs/task33-video-smoke/fail2drive_video_smoke_plan.md`.
+- `bash scripts/pre_push_check.sh` passed with 173 tests.
+- Review pass:
+  `tickets/TASK-033/artifacts/review/20260505T190014-review.json`
+  scored `4.1` overall with no blocking findings.
+- The local plan includes the Fail2Drive evaluator command, `LIVE_VISU=1`,
+  `SAVE_PATH`, expected result/debug/RGB/video outputs, and two live blockers:
+  missing `tools/generate_video.py` in the external Fail2Drive checkout plus
+  missing RGB frames until a live route run produces them.
 
 ## Blockers
 
 - Live route video capture requires a graphics-capable CARLA runtime.
+- External Fail2Drive does not currently include `tools/generate_video.py`;
+  TASK-034 should normalize evidence and can either consume an independently
+  produced video or add a repo-local video assembler.

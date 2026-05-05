@@ -6,6 +6,14 @@ unblocked ticket when possible.
 
 ## Open
 
+- 2026-05-05 18:58 +0800 | fail2drive,video | TASK-033 route-video
+  smoke planning is implemented, but the external Fail2Drive checkout does not
+  include `tools/generate_video.py`. The plan still writes the expected command
+  and output contract, and live route execution can produce `SAVE_PATH`
+  visualizations first. TASK-034 should accept an externally generated video or
+  add a DriverX-owned video assembler so this does not block evidence
+  normalization.
+
 - 2026-05-05 17:07 +0800 | h100,carla,vulkan | TASK-020 stock
   SimLingo H100 route run cannot reach policy execution because CARLA 0.9.15
   exits before opening port `20000` on the RunPod H100 container. CUDA is

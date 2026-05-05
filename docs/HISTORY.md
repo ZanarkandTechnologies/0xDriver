@@ -61,3 +61,4 @@
 2026-05-05 17:39 +0800 | SHIP | TASK-030 extracted SimLingo and sidecar command registration into a simulator-owned CLI module, reducing the central CLI to 823 lines
 2026-05-05 17:47 +0800 | SHIP | TASK-031 added a submission dossier builder that summarizes OOD readiness, GPU host status, blockers, and demo outline from current evidence
 2026-05-05 21:10 +0800 | TASK | started route-video-first phase by archiving completed setup tickets and creating TASK-033 through TASK-040 for Fail2Drive video evidence, generated OOD suite execution, policy matrix, Alpamayo probe, and submission demo packaging
+2026-05-05 18:58 +0800 | SHIP | TASK-033 added a Fail2Drive route-video smoke planner that writes evaluator/video commands, expected outputs, and live blockers without launching CARLA
