@@ -166,17 +166,48 @@ def _extract_component_signals(label: str, payload: dict[str, Any]) -> tuple[dic
             "live_model_claim": payload.get("live_model_claim"),
         }, [], "ready"
     if label == "simlingo_result":
-        record = _mapping(payload.get("record"))
-        primary = _mapping(record.get("primary_route"))
-        blocker = payload.get("blocker")
-        return {
-            "success": record.get("success"),
-            "status": record.get("status"),
-            "driving_score": record.get("driving_score"),
-            "route_completion": record.get("route_completion"),
-            "primary_route": primary.get("route_id"),
-        }, [str(blocker)] if blocker else [], "passed" if record.get("success") is True else "blocked"
+        return _extract_simlingo_result_signals(payload)
     return {}, [], "ready"
+
+
+def _extract_simlingo_result_signals(payload: dict[str, Any]) -> tuple[dict[str, Any], list[str], str]:
+    if isinstance(payload.get("state"), str) and isinstance(payload.get("blockers"), list):
+        return _extract_remote_simlingo_evidence(payload)
+    record = _mapping(payload.get("record"))
+    primary = _mapping(record.get("primary_route"))
+    blocker = payload.get("blocker")
+    return {
+        "success": record.get("success"),
+        "status": record.get("status"),
+        "driving_score": record.get("driving_score"),
+        "route_completion": record.get("route_completion"),
+        "primary_route": primary.get("route_id"),
+    }, [str(blocker)] if blocker else [], "passed" if record.get("success") is True else "blocked"
+
+
+def _extract_remote_simlingo_evidence(payload: dict[str, Any]) -> tuple[dict[str, Any], list[str], str]:
+    state = str(payload.get("state", "unknown"))
+    result_report = _mapping(payload.get("result_report"))
+    result_record = _mapping(result_report.get("record"))
+    primary = _mapping(result_record.get("primary_route"))
+    metrics = {
+        "success": state == "route_result_success",
+        "state": state,
+        "selected_result_path": payload.get("selected_result_path"),
+        "route_log_path": payload.get("route_log_path"),
+        "compatibility_path": payload.get("compatibility_path"),
+        "diagnostics_path": payload.get("diagnostics_path"),
+        "status": result_record.get("status"),
+        "driving_score": result_record.get("driving_score"),
+        "route_completion": result_record.get("route_completion"),
+        "primary_route": primary.get("route_id"),
+    }
+    blockers = [str(blocker) for blocker in list(payload.get("blockers", []))]
+    result_blocker = result_report.get("blocker")
+    if result_blocker and str(result_blocker) not in blockers:
+        blockers.append(str(result_blocker))
+    status = "passed" if metrics["success"] is True else "blocked" if blockers else "ready"
+    return metrics, blockers, status
 
 
 def _blocker_component(label: str, path: Path) -> dict[str, Any]:
@@ -259,6 +290,7 @@ def _metric_highlights(components: list[dict[str, Any]]) -> dict[str, Any]:
             highlights["rag_driving_score_delta"] = metrics.get("driving_score_delta")
         elif label == "simlingo_result":
             highlights["simlingo_success"] = metrics.get("success")
+            highlights["simlingo_state"] = metrics.get("state")
             highlights["simlingo_driving_score"] = metrics.get("driving_score")
     return highlights
 

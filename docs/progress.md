@@ -39,6 +39,7 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-024 local timed sidecar process runner
 - [x] TASK-025 OOD suite evidence report
 - [x] TASK-026 remote SimLingo evidence classifier
+- [x] TASK-027 OOD suite remote evidence ingestion
 
 ## Active Roadmap
 
@@ -119,6 +120,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   `llvmpipe` and the NVIDIA Vulkan ICD fails with
   `ERROR_INCOMPATIBLE_DRIVER`. This blocks closed-loop route proof on the
   current H100 container before model inference begins.
+- TASK-027 lets the OOD suite report consume both old TASK-019
+  `simlingo_result_record.json` artifacts and new TASK-026
+  `remote_simlingo_evidence.json` artifacts. Current report evidence now
+  surfaces `simlingo_state=route_infrastructure_blocked`, the H100 route log,
+  the CARLA runtime diagnostics path, and the TASK-020 CARLA/Vulkan blocker in
+  one top-level manifest.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.

@@ -31,8 +31,47 @@ class OodSuiteReportTest(unittest.TestCase):
         self.assertEqual(summary["metric_highlights"]["bench2drive_route_count"], 2)
         self.assertEqual(summary["metric_highlights"]["companion_actor_count"], 1)
         self.assertEqual(summary["metric_highlights"]["rag_driving_score_delta"], 37.0)
+        self.assertTrue(summary["metric_highlights"]["simlingo_success"])
+        self.assertEqual(summary["metric_highlights"]["simlingo_driving_score"], 88.0)
         self.assertTrue(summary["readiness"]["sidecar_run_passed"])
         self.assertFalse(summary["readiness"]["has_open_blockers"])
+
+    def test_remote_simlingo_evidence_shape_surfaces_route_blocker(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            scenario_summary = root / "scenario_summary.json"
+            simlingo_evidence = root / "remote_simlingo_evidence.json"
+            scenario_summary.write_text(json.dumps({"num_seeds": 1, "num_recipes": 1}), encoding="utf-8")
+            simlingo_evidence.write_text(
+                json.dumps(
+                    {
+                        "state": "route_infrastructure_blocked",
+                        "blockers": [
+                            "CARLA server did not open port before route execution; route log: run.log"
+                        ],
+                        "selected_result_path": None,
+                        "route_log_path": "run.log",
+                        "compatibility_path": "torch_cuda_compatibility.json",
+                        "diagnostics_path": "carla_runtime_diagnostics.md",
+                        "result_report": None,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            summary = build_ood_suite_report(
+                root / "report",
+                scenario_summary_path=scenario_summary,
+                simlingo_result_path=simlingo_evidence,
+            )
+
+        simlingo_component = summary["components"][1]
+        self.assertEqual(simlingo_component["status"], "blocked")
+        self.assertFalse(simlingo_component["metrics"]["success"])
+        self.assertEqual(summary["metric_highlights"]["simlingo_state"], "route_infrastructure_blocked")
+        self.assertEqual(simlingo_component["metrics"]["route_log_path"], "run.log")
+        self.assertEqual(simlingo_component["metrics"]["diagnostics_path"], "carla_runtime_diagnostics.md")
+        self.assertFalse(summary["readiness"]["live_policy_result_passed"])
+        self.assertIn("simlingo_result: CARLA server did not open port", summary["open_blockers"][0])
 
     def test_missing_optional_input_is_reported_as_blocker(self) -> None:
         with TemporaryDirectory() as tmp:

@@ -70,6 +70,10 @@ PYTHONPATH=src python3 -m driverx summarize-simlingo-evidence \
   --output-root tickets/TASK-020/artifacts
 ```
 
+The OOD suite report accepts either the older
+`ingest-simlingo-result` output or the newer
+`summarize-simlingo-evidence` output as `--simlingo-result`.
+
 ## Test
 
 ```bash

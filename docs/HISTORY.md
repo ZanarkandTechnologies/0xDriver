@@ -54,3 +54,4 @@
 2026-05-05 16:54 +0800 | TASK | started TASK-026 remote SimLingo evidence classifier while H100 bootstrap continued installing dependencies
 2026-05-05 17:07 +0800 | SHIP | TASK-026 added a remote SimLingo evidence classifier for pulled bootstrap, route, CUDA, and diagnostics artifacts
 2026-05-05 17:07 +0800 | BLOCKER | TASK-020 H100 stock SimLingo route reached CARLA launch but CARLA exited before opening port 20000 because the container lacks a working NVIDIA graphics/Vulkan runtime
+2026-05-05 17:17 +0800 | SHIP | TASK-027 taught the OOD suite report to ingest remote SimLingo evidence and surface the H100 CARLA/Vulkan blocker as top-level submission evidence
