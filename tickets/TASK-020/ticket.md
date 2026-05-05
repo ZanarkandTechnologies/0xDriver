@@ -207,6 +207,10 @@ base policy proves it can run on the selected GPU.
   restoration. The `task20` bootstrap was restarted without re-downloading the
   CARLA tarball; CARLA 0.9.15 base files extracted and AdditionalMaps download
   is in progress.
+- Added repo-side bootstrap generation for `start_carla_server.sh`,
+  `stop_carla_server.sh`, and `run_one_route_with_carla_as_user.sh` so future
+  bootstraps can launch headless CARLA, wait for port `20000`, run the route,
+  and stop the server from one artifact script.
 
 ## Blockers
 

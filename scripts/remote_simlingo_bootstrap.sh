@@ -240,6 +240,46 @@ PYTHONPATH=src "${DRIVERX_PYTHON}" -m driverx plan-simlingo-run \
 
 echo "== next manual/live command =="
 CARLA_PYTHON_PATH_VALUE="$(carla_python_path)"
+cat > "${ARTIFACT_ROOT}/start_carla_server.sh" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+mkdir -p "${ARTIFACT_ROOT}/carla"
+if [ -f "${ARTIFACT_ROOT}/carla/carla.pid" ] && kill -0 "\$(cat "${ARTIFACT_ROOT}/carla/carla.pid")" 2>/dev/null; then
+  echo "CARLA already running with pid \$(cat "${ARTIFACT_ROOT}/carla/carla.pid")"
+  exit 0
+fi
+export SDL_VIDEODRIVER=offscreen
+export VK_ICD_FILENAMES="\${VK_ICD_FILENAMES:-}"
+nohup "${CARLA_ROOT}/CarlaUE4.sh" -RenderOffScreen -nosound -quality-level=Low -carla-rpc-port=20000 > "${ARTIFACT_ROOT}/carla/carla.log" 2>&1 &
+echo "\$!" > "${ARTIFACT_ROOT}/carla/carla.pid"
+python - <<'PY'
+import socket
+import time
+
+deadline = time.time() + 120
+last_error = None
+while time.time() < deadline:
+    try:
+        with socket.create_connection(("127.0.0.1", 20000), timeout=2):
+            print("CARLA port 20000 is reachable")
+            raise SystemExit(0)
+    except OSError as exc:
+        last_error = exc
+        time.sleep(1)
+raise SystemExit(f"CARLA did not open port 20000 within 120s: {last_error}")
+PY
+EOF
+chmod +x "${ARTIFACT_ROOT}/start_carla_server.sh"
+cat > "${ARTIFACT_ROOT}/stop_carla_server.sh" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+if [ -f "${ARTIFACT_ROOT}/carla/carla.pid" ]; then
+  pid="\$(cat "${ARTIFACT_ROOT}/carla/carla.pid")"
+  kill "\${pid}" 2>/dev/null || true
+  rm -f "${ARTIFACT_ROOT}/carla/carla.pid"
+fi
+EOF
+chmod +x "${ARTIFACT_ROOT}/stop_carla_server.sh"
 cat > "${ARTIFACT_ROOT}/run_one_route.sh" <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
@@ -265,6 +305,14 @@ python -u "${SIMLINGO_ROOT}/Bench2Drive/leaderboard/leaderboard/leaderboard_eval
   --traffic-manager-port=10000
 EOF
 chmod +x "${ARTIFACT_ROOT}/run_one_route.sh"
+cat > "${ARTIFACT_ROOT}/run_one_route_with_carla.sh" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+bash "${ARTIFACT_ROOT}/start_carla_server.sh"
+trap 'bash "${ARTIFACT_ROOT}/stop_carla_server.sh"' EXIT
+bash "${ARTIFACT_ROOT}/run_one_route.sh"
+EOF
+chmod +x "${ARTIFACT_ROOT}/run_one_route_with_carla.sh"
 cat > "${ARTIFACT_ROOT}/run_one_route_as_user.sh" <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
@@ -274,6 +322,15 @@ fi
 exec bash "${ARTIFACT_ROOT}/run_one_route.sh"
 EOF
 chmod +x "${ARTIFACT_ROOT}/run_one_route_as_user.sh"
+cat > "${ARTIFACT_ROOT}/run_one_route_with_carla_as_user.sh" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+if [ "\$(id -u)" -eq 0 ]; then
+  exec runuser -u "${RUNTIME_USER}" -- env HOME="/home/${RUNTIME_USER}" XDG_CONFIG_HOME="/home/${RUNTIME_USER}/.config" bash -c 'cd "\${HOME}" && exec bash "${ARTIFACT_ROOT}/run_one_route_with_carla.sh"'
+fi
+exec bash "${ARTIFACT_ROOT}/run_one_route_with_carla.sh"
+EOF
+chmod +x "${ARTIFACT_ROOT}/run_one_route_with_carla_as_user.sh"
 prepare_runtime_user
 
 echo "bootstrap complete: ${ARTIFACT_ROOT}"
