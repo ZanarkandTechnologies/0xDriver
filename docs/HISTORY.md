@@ -59,3 +59,4 @@
 2026-05-05 17:28 +0800 | SHIP | TASK-029 added a compact remote GPU probe script for collecting host snapshot, torch CUDA compatibility, and CARLA graphics diagnostics before route runs
 2026-05-05 17:30 +0800 | QA | TASK-029 live H100 probe successfully pulled host snapshot, torch CUDA compatibility, and CARLA graphics diagnostics, then reproduced the CUDA-ready/CARLA-graphics-blocked suitability verdict
 2026-05-05 17:39 +0800 | SHIP | TASK-030 extracted SimLingo and sidecar command registration into a simulator-owned CLI module, reducing the central CLI to 823 lines
+2026-05-05 17:47 +0800 | SHIP | TASK-031 added a submission dossier builder that summarizes OOD readiness, GPU host status, blockers, and demo outline from current evidence

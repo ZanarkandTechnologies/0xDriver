@@ -794,11 +794,13 @@ def build_parser() -> argparse.ArgumentParser:
     ood_report_parser.add_argument("--run-id", default="ood-suite-report")
     ood_report_parser.set_defaults(func=_command_build_ood_suite_report)
 
+    from driverx.pipeline.submission_dossier_cli import register_submission_dossier_parser
     from driverx.simulators.simlingo_cli import register_simlingo_parsers
     from driverx.simulators.gpu_host_cli import register_gpu_host_parser
 
     register_simlingo_parsers(subparsers)
     register_gpu_host_parser(subparsers)
+    register_submission_dossier_parser(subparsers)
 
     config_parser = subparsers.add_parser(
         "show-config",

@@ -1,0 +1,65 @@
+# 0xDriver Minimal-Shot OOD Driving Harness
+
+## Thesis
+
+Use generated long-tail CARLA/Bench2Drive scenarios, retrieved safety memory, and frozen VLA policy adapters to test minimal-shot driving behavior without fine-tuning on the generated cases.
+
+## Readiness
+
+- `scenario_generation_ready`: `True`
+- `bench2drive_route_pack_ready`: `True`
+- `overlay_injection_ready`: `True`
+- `sidecar_launch_ready`: `False`
+- `sidecar_run_passed`: `True`
+- `live_policy_result_passed`: `False`
+- `has_open_blockers`: `True`
+
+## Metric Highlights
+
+- `generated_recipe_count`: `2`
+- `mutation_count`: `2`
+- `bench2drive_route_count`: `2`
+- `companion_actor_count`: `2`
+- `sidecar_run_success`: `True`
+- `sidecar_duration_s`: `0.112236`
+- `rag_driving_score_delta`: `37.0`
+- `simlingo_success`: `False`
+- `simlingo_state`: `route_infrastructure_blocked`
+- `simlingo_driving_score`: `None`
+
+## GPU Host
+
+- overall_state: `blocked`
+- recommendation: Use a graphics-capable NVIDIA host with working Vulkan/OpenGL exposure for CARLA; avoid compute-only H100/H200 containers for closed-loop CARLA route proof.
+
+## Open Blockers
+
+- 2026-05-05 17:07 +0800 | h100,carla,vulkan | TASK-020 stock SimLingo H100 route run cannot reach policy execution because CARLA 0.9.15 exits before opening port `20000` on the RunPod H100 container. CUDA is compatible for SimLingo (`sm_90`), but CARLA needs a working graphics/Vulkan runtime; diagnostics show default Vulkan only exposes `llvmpipe`, forcing the NVIDIA ICD fails with `ERROR_INCOMPATIBLE_DRIVER`, and CARLA exits with status `1`. Evidence: `tickets/TASK-020/artifacts/task20-evidence-final/remote_simlingo_evidence.md` and `tickets/TASK-020/artifacts/task20-remote/carla_runtime_diagnostics.md`. Next unblock path: move the stock route to a graphics-capable Ampere host such as RTX 3090 / RTX A6000 / A40 / A10, or rebuild the SimLingo torch stack for the earlier RTX PRO 6000 Blackwell host where CARLA did launch.
+
+## Demo Outline
+
+1. Show generated OOD recipes and Bench2Drive route pack.
+2. Show overlay/sidecar plan that injects companion actors into CARLA.
+3. Show RAG comparison result (driving score delta: 37.0).
+4. Show live-policy readiness honestly (live_policy_result_passed=False, gpu_host=blocked).
+5. Close with the current blocker and the next graphics-capable NVIDIA host run.
+
+## Recent Progress
+
+> - TASK-008 TCP smoke reached CARLA at `127.0.0.1:2000`.
+> - TASK-008 Docker probe reached CARLA through `host.docker.internal:2000`.
+> - Probe reported map `Carla/Maps/Town10HD_Opt`, actor count `23`, server
+>   version `0.9.16`, and client version `0.9.16`.
+> - TASK-009 live ego smoke spawned ego actor `24`, camera actor `25`, captured
+>   `ego_camera.png`, wrote `entity_tracks.json`, and destroyed actors `[25, 24]`.
+> - TASK-010 generated six OOD behavior traces covering no-signal cut-ins,
+>   sudden brakes, motorcycle filtering, wrong-way shoulder creep, informal
+>   right-of-way pushes, and fast low-profile two-wheeler proxies.
+> - TASK-011 compiled a generated recipe plus `motorcycle_filtering` into a
+>   CARLA script plan with ego actor, OOD actor, RGB sensor, ticks, expected
+>   outputs, and cleanup order.
+> - TASK-012 planned three generated OOD assets in dry-run mode, validated scale,
+>   collision, placement, license metadata, and emitted Meshy setup blockers when
+>   no API key is present.
+> - TASK-013 added mock, memory-aware mock, local hybrid fallback, and
+>   setup-checked VLM/API, SimLingo/CarLLaVA, and Alpamayo policy adapters.

@@ -258,6 +258,13 @@ PYTHONPATH=src python3 -m driverx assess-gpu-host \
   --carla-diagnostics tickets/TASK-020/artifacts/task20-remote/carla_runtime_diagnostics.md \
   --simlingo-evidence tickets/TASK-020/artifacts/task20-evidence-final/remote_simlingo_evidence.json \
   --run-id h100-host-suitability
+
+# Build a submission-facing Markdown/JSON dossier from current evidence.
+PYTHONPATH=src python3 -m driverx build-submission-dossier \
+  --ood-suite-manifest tickets/TASK-027/artifacts/ood-suite-report-task20-blocker/ood_suite_manifest.json \
+  --gpu-host-suitability tickets/TASK-029/artifacts/h100-probe-live-suitability/gpu_host_suitability.json \
+  --output-root tickets/TASK-031/artifacts \
+  --run-id current-submission-dossier
 ```
 
 Stock SimLingo currently targets Python 3.8 and `torch==2.2.0+cu121`. That

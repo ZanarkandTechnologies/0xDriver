@@ -43,6 +43,7 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-028 GPU host suitability report
 - [x] TASK-029 remote GPU probe script
 - [x] TASK-030 SimLingo CLI extraction
+- [x] TASK-031 submission dossier builder
 
 ## Active Roadmap
 
@@ -145,6 +146,10 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   evidence, and sidecar CLI handlers into `driverx.simulators.simlingo_cli`,
   reducing the central `src/driverx/cli.py` from the size-gate edge to `823`
   lines while preserving command help and focused CLI tests.
+- TASK-031 adds `build-submission-dossier`, producing one Markdown/JSON dossier
+  from the OOD suite manifest, GPU host suitability report, progress ledger,
+  and blocker ledger. The current dossier is a submission-facing summary of the
+  minimal-shot OOD harness, evidence metrics, live GPU blocker, and demo outline.
 - TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
   TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
   commands, wrote process logs, timings, exit codes, JSON, and Markdown.
