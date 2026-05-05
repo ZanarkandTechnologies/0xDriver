@@ -12,6 +12,11 @@ from driverx.policies.runner import (
     sample_memory_entries,
     write_policy_decision,
 )
+from driverx.policies.runtime_matrix import (
+    PolicyRuntimeRow,
+    build_policy_runtime_matrix,
+    write_policy_runtime_matrix,
+)
 from driverx.policies.types import (
     PolicyAction,
     PolicyAdapter,
@@ -27,11 +32,14 @@ __all__ = [
     "PolicyAdapter",
     "PolicyContext",
     "PolicyDecision",
+    "PolicyRuntimeRow",
     "PolicySetupError",
     "SetupCheckedStubPolicyAdapter",
     "memory_entries_from_json",
     "run_policy_fixture",
     "sample_memory_entries",
     "select_policy_adapter",
+    "build_policy_runtime_matrix",
+    "write_policy_runtime_matrix",
     "write_policy_decision",
 ]

@@ -1,0 +1,97 @@
+{
+  "work_type": ["backend", "cli", "evidence"],
+  "search_scope": {
+    "changed_files": [
+      "src/driverx/policies/runtime_matrix.py",
+      "src/driverx/policies/runtime_matrix_cli.py",
+      "src/driverx/policies/__init__.py",
+      "src/driverx/cli.py",
+      "tests/test_policy_runtime_matrix.py",
+      "tickets/TASK-037/ticket.md",
+      "docs/progress.md",
+      "docs/HISTORY.md"
+    ],
+    "related_files": [
+      "src/driverx/policies/adapters.py",
+      "src/driverx/simulators/simlingo.py",
+      "configs/carla_local.sample.yaml",
+      "configs/simlingo.sample.yaml",
+      "artifacts/runs/task37-policy-matrix-review/policy_runtime_matrix.json"
+    ],
+    "rubric_references": [
+      "review-rubric-index.md",
+      "code-quality.md",
+      "evidence-quality.md",
+      "integration-readiness.md",
+      "desloppify.md"
+    ]
+  },
+  "rubrics_used": ["code-quality", "evidence-quality", "integration-readiness"],
+  "summary": "TASK-037 is pass-worthy: the runtime matrix separates local/mock/expert readiness from SimLingo and Alpamayo blockers, writes JSON/Markdown, and provides precise commands/config paths.",
+  "overall_score": 4.0,
+  "overall_threshold": 4.0,
+  "verdict": "pass",
+  "rerun_required": false,
+  "evidence_quality": "pass",
+  "integration_readiness": "pass",
+  "traceability": "pass",
+  "freshness": "pass",
+  "hard_gate_failures": [],
+  "finding_log": [],
+  "rubric_sections": [
+    {
+      "name": "code-quality",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "modularity-reusability": 4.0,
+        "bloatability": 4.0,
+        "readability": 4.0,
+        "boundary-clarity": 4.0,
+        "error-handling": 4.0,
+        "maintainability": 4.0
+      },
+      "findings": [],
+      "next_action": "Use matrix rows to decide which policy can be exercised next."
+    },
+    {
+      "name": "evidence-quality",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "sufficiency": 4.0,
+        "reproducibility": 4.0,
+        "traceability": 4.0,
+        "consistency": 4.0,
+        "inspectability": 4.0,
+        "autonomy-readiness": 4.0
+      },
+      "findings": [],
+      "next_action": "Attach updated matrix to submission dossier after Alpamayo probe rows improve."
+    },
+    {
+      "name": "integration-readiness",
+      "score": 4.0,
+      "threshold": 4.0,
+      "pass": true,
+      "dimension_scores": {
+        "integration-safety": 4.0,
+        "contract-correctness": 4.0,
+        "dependency-readiness": 4.0,
+        "coupling-risk": 4.0,
+        "merge-readiness": 4.0
+      },
+      "findings": [],
+      "next_action": "Archive TASK-037 and continue to TASK-038."
+    }
+  ],
+  "blocking_findings": [],
+  "verification": [
+    "PYTHONPATH=src python3 -m unittest tests.test_policy_runtime_matrix",
+    "PYTHONPATH=src python3 -m driverx build-policy-runtime-matrix --carla-config configs/carla_local.sample.yaml --simlingo-config configs/simlingo.sample.yaml --suite artifacts/runs/task36-suite-1b/route-pack/bench2drive_routes/generated_routes.xml --run-id task37-policy-matrix-review",
+    "bash scripts/pre_push_check.sh"
+  ],
+  "next_action": "Archive TASK-037 and implement TASK-038."
+}
