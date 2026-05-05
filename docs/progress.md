@@ -36,11 +36,12 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
 - [x] TASK-021 overlay injection dry-run plan
 - [x] TASK-022 live companion actor injector interface
 - [x] TASK-023 SimLingo sidecar orchestration plan
+- [x] TASK-024 local timed sidecar process runner
 
 ## Active Roadmap
 
 - [ ] TASK-020 H100/H200 stock SimLingo rerun
-- [ ] TASK-024 live timed sidecar execution on H100/H200
+- [ ] TASK-024 live timed sidecar execution on H100/H200 after TASK-020
 
 ## Latest Evidence
 
@@ -93,6 +94,18 @@ Build the CARLA/Fail2Drive-first minimal-shot VLA harness:
   injection plan into a manual two-process sidecar launch plan, preserving
   SimLingo blockers, DriverX overlay validation state, expected outputs, and a
   Docker CARLA-client command for local overlay injection.
+- TASK-020 RunPod H100 direct TCP SSH is reachable with x86_64 Linux, H100
+  80GB HBM3, driver `580.126.09`, and persistent `/workspace`; root disk is
+  only `20G`, so conda, cache, models, CARLA, and artifacts must stay under
+  `/workspace`.
+- TASK-024 adds `run-simlingo-sidecar`, a timed process runner for existing
+  TASK-023 plans. Local evidence executed harmless SimLingo/overlay sample
+  commands, wrote process logs, timings, exit codes, JSON, and Markdown.
+- Focused local tests during TASK-024:
+  `PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar_runner tests.test_cli_simlingo_sidecar_runner`
+  passed with 4 tests.
+- Full local gate during TASK-024: `bash scripts/pre_push_check.sh` passed with
+  143 tests.
 - Focused local tests during TASK-023:
   `PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar tests.test_cli_simlingo_sidecar`
   passed with 4 tests.

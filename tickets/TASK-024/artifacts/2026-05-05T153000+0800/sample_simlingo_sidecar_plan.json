@@ -1,0 +1,26 @@
+{
+  "commands": [
+    {
+      "label": "simlingo_bench2drive",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-c",
+        "print('sample simlingo command ok')"
+      ],
+      "cwd": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800",
+      "env": {},
+      "start_after_s": 0.0
+    },
+    {
+      "label": "driverx_overlay_injector",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-c",
+        "print('sample overlay command ok')"
+      ],
+      "cwd": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800",
+      "env": {},
+      "start_after_s": 0.05
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "plan_path": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800/sample_simlingo_sidecar_plan.json",
+  "run_dir": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800/sample-sidecar-run",
+  "dry_run": false,
+  "timeout_s": 5.0,
+  "success": true,
+  "started_at_monotonic_s": 746243.94028275,
+  "finished_at_monotonic_s": 746244.052518666,
+  "duration_s": 0.112236,
+  "process_records": [
+    {
+      "label": "simlingo_bench2drive",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-c",
+        "print('sample simlingo command ok')"
+      ],
+      "cwd": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800",
+      "start_after_s": 0.0,
+      "stdout_path": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800/sample-sidecar-run/process-logs/00-simlingo_bench2drive.stdout.log",
+      "stderr_path": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800/sample-sidecar-run/process-logs/00-simlingo_bench2drive.stderr.log",
+      "pid": 56391,
+      "started_at_s": 0.001951,
+      "finished_at_s": 0.057067,
+      "duration_s": 0.055116,
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "label": "driverx_overlay_injector",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-c",
+        "print('sample overlay command ok')"
+      ],
+      "cwd": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800",
+      "start_after_s": 0.05,
+      "stdout_path": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800/sample-sidecar-run/process-logs/01-driverx_overlay_injector.stdout.log",
+      "stderr_path": "/Users/kenjipcx/SOTA/0xDriver/tickets/TASK-024/artifacts/2026-05-05T153000+0800/sample-sidecar-run/process-logs/01-driverx_overlay_injector.stderr.log",
+      "pid": 56392,
+      "started_at_s": 0.056914,
+      "finished_at_s": 0.112214,
+      "duration_s": 0.0553,
+      "exit_code": 0,
+      "error": null
+    }
+  ],
+  "error": null
+}

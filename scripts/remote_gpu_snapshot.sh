@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-HOST="${1:-root@31.22.104.74}"
+HOST="${1:-${GPU_SSH_HOST:-root@31.22.104.74}}"
+SSH_OPTIONS="${GPU_SSH_OPTS:-}"
 
-ssh -o StrictHostKeyChecking=accept-new "${HOST}" 'set -euo pipefail
+ssh ${SSH_OPTIONS} -o StrictHostKeyChecking=accept-new "${HOST}" 'set -euo pipefail
 echo "HOST=$(hostname)"
 echo "USER=$(whoami)"
 echo "KERNEL=$(uname -srmo)"

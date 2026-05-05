@@ -21,6 +21,8 @@ dry-run command planning.
 - `write_overlay_injection_run(run_dir, result)`
 - `build_simlingo_sidecar_plan(simlingo_plan_path=..., overlay_plan_path=..., ...)`
 - `write_simlingo_sidecar_plan(run_dir, plan)`
+- `run_simlingo_sidecar_processes(plan_path, run_dir, timeout_s=...)`
+- `write_simlingo_sidecar_run(run_dir, result)`
 - `parse_simlingo_result(path)`
 - `write_simlingo_result_report(run_dir, record, ...)`
 
@@ -54,6 +56,9 @@ bash scripts/run_carla_client_docker.sh python -m driverx run-overlay-injection 
 PYTHONPATH=src python3 -m driverx plan-simlingo-sidecar \
   --simlingo-plan artifacts/runs/bench2drive-route-pack/simlingo_command_plan.json \
   --overlay-plan artifacts/runs/overlay-injection/overlay_injection_plan.json
+PYTHONPATH=src python3 -m driverx run-simlingo-sidecar \
+  --plan artifacts/runs/simlingo-sidecar/simlingo_sidecar_plan.json \
+  --timeout-s 900
 PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
   --result tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/seed_1_res.json \
   --compatibility tickets/TASK-017/artifacts/qa/2026-05-04T194700Z/torch_cuda_compatibility.json \
@@ -68,5 +73,6 @@ PYTHONPATH=src python3 -m unittest tests.test_bench2drive_route_export
 PYTHONPATH=src python3 -m unittest tests.test_overlay_injection
 PYTHONPATH=src python3 -m unittest tests.test_carla_injection
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar
+PYTHONPATH=src python3 -m unittest tests.test_simlingo_sidecar_runner
 PYTHONPATH=src python3 -m unittest tests.test_simlingo_result_ingestion
 ```

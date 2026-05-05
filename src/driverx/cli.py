@@ -538,6 +538,25 @@ def _command_plan_simlingo_sidecar(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_run_simlingo_sidecar(args: argparse.Namespace) -> int:
+    from driverx.core.artifacts import prepare_run_dir
+    from driverx.simulators import (
+        run_simlingo_sidecar_processes,
+        write_simlingo_sidecar_run,
+    )
+
+    run_dir = prepare_run_dir(args.output_root, args.run_id)
+    result = run_simlingo_sidecar_processes(
+        args.plan,
+        run_dir,
+        timeout_s=args.timeout_s,
+        dry_run=args.dry_run,
+    )
+    summary = write_simlingo_sidecar_run(run_dir, result)
+    print(json.dumps(summary, indent=2))
+    return 0 if result.success else 1
+
+
 def _command_show_config(args: argparse.Namespace) -> int:
     config = _load_config_from_args(args)
     print(json.dumps(config.to_jsonable(), indent=2))
@@ -881,6 +900,17 @@ def build_parser() -> argparse.ArgumentParser:
     sidecar_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
     sidecar_parser.add_argument("--run-id", default="simlingo-sidecar")
     sidecar_parser.set_defaults(func=_command_plan_simlingo_sidecar)
+
+    sidecar_run_parser = subparsers.add_parser(
+        "run-simlingo-sidecar",
+        help="Run commands from a SimLingo sidecar plan with timed process supervision.",
+    )
+    sidecar_run_parser.add_argument("--plan", type=Path, required=True)
+    sidecar_run_parser.add_argument("--timeout-s", type=float)
+    sidecar_run_parser.add_argument("--dry-run", action="store_true")
+    sidecar_run_parser.add_argument("--output-root", type=Path, default=Path("artifacts/runs"))
+    sidecar_run_parser.add_argument("--run-id", default="simlingo-sidecar-run")
+    sidecar_run_parser.set_defaults(func=_command_run_simlingo_sidecar)
 
     config_parser = subparsers.add_parser(
         "show-config",

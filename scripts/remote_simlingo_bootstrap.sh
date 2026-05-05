@@ -2,13 +2,14 @@
 set -euo pipefail
 
 REMOTE_ROOT="${REMOTE_ROOT:-/workspace}"
+REMOTE_RUN_ID="${REMOTE_RUN_ID:-task20}"
 DRIVERX_ROOT="${DRIVERX_ROOT:-${REMOTE_ROOT}/0xDriver}"
 EXTERNAL_ROOT="${EXTERNAL_ROOT:-${REMOTE_ROOT}/external}"
 SIMLINGO_ROOT="${SIMLINGO_ROOT:-${EXTERNAL_ROOT}/simlingo}"
 CARLA_ROOT="${CARLA_ROOT:-${REMOTE_ROOT}/software/carla0915}"
 MODEL_ROOT="${MODEL_ROOT:-${REMOTE_ROOT}/models/simlingo}"
-ARTIFACT_ROOT="${ARTIFACT_ROOT:-${REMOTE_ROOT}/artifacts/task17}"
-MINIFORGE_ROOT="${MINIFORGE_ROOT:-/opt/conda}"
+ARTIFACT_ROOT="${ARTIFACT_ROOT:-${REMOTE_ROOT}/artifacts/${REMOTE_RUN_ID}}"
+MINIFORGE_ROOT="${MINIFORGE_ROOT:-${REMOTE_ROOT}/conda}"
 MINIFORGE_URL="${MINIFORGE_URL:-https://github.com/conda-forge/miniforge/releases/download/25.9.1-0/Miniforge3-25.9.1-0-Linux-x86_64.sh}"
 CONDA_ENV="${CONDA_ENV:-simlingo}"
 DRIVERX_PYTHON="${DRIVERX_PYTHON:-/usr/bin/python3}"
@@ -76,8 +77,9 @@ prepare_runtime_user() {
 mkdir -p "${EXTERNAL_ROOT}" "${MODEL_ROOT}" "${ARTIFACT_ROOT}" "${REMOTE_ROOT}/software"
 exec > >(tee -a "${ARTIFACT_ROOT}/bootstrap.log") 2>&1
 
-echo "== TASK-017 remote SimLingo bootstrap =="
+echo "== remote SimLingo bootstrap =="
 date -Is
+echo "run_id=${REMOTE_RUN_ID}"
 echo "driverx=${DRIVERX_ROOT}"
 echo "simlingo=${SIMLINGO_ROOT}"
 echo "carla=${CARLA_ROOT}"

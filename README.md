@@ -155,6 +155,10 @@ PYTHONPATH=src python3 -m driverx plan-simlingo-sidecar \
   --overlay-plan artifacts/runs/task21-overlay-injection/overlay_injection_plan.json \
   --docker-carla-client \
   --run-id task23-sidecar-plan
+PYTHONPATH=src python3 -m driverx run-simlingo-sidecar \
+  --plan artifacts/runs/task23-sidecar-plan/simlingo_sidecar_plan.json \
+  --timeout-s 900 \
+  --run-id task24-sidecar-run
 
 # Plan generated OOD assets and attach asset ids to scenario recipes
 PYTHONPATH=src python3 -m driverx plan-assets \
@@ -190,6 +194,17 @@ PYTHONPATH=src python3 -m driverx ingest-simlingo-result \
 # after the tmux job starts. Existing host Hugging Face login state is preserved.
 bash scripts/sync_remote_gpu.sh root@31.22.104.74 /workspace/0xDriver
 bash scripts/run_remote_simlingo_bootstrap.sh root@31.22.104.74 /workspace/0xDriver
+
+# For RunPod direct TCP SSH, set the target and raw SSH options instead of
+# relying on the default port 22 shape:
+GPU_SSH_HOST=root@38.80.152.148 \
+GPU_SSH_OPTS="-p 31257 -i ~/.ssh/id_ed25519_runpod" \
+bash scripts/sync_remote_gpu.sh
+GPU_SSH_HOST=root@38.80.152.148 \
+GPU_SSH_OPTS="-p 31257 -i ~/.ssh/id_ed25519_runpod" \
+SESSION_NAME=task20 \
+REMOTE_RUN_ID=task20 \
+bash scripts/run_remote_simlingo_bootstrap.sh
 ```
 
 Stock SimLingo currently targets Python 3.8 and `torch==2.2.0+cu121`. That
@@ -199,6 +214,9 @@ needs a separate PyTorch/CARLA rebuild lane before it can run the stock route.
 Generated Bench2Drive route packs keep route XML stock-compatible and store OOD
 object/behavior intent in DriverX sidecar overlays until a companion CARLA
 actor injector is running.
+`run-simlingo-sidecar` executes an existing sidecar plan with per-process logs,
+exit codes, and timings; use it after the stock SimLingo route path is stable
+on the same CARLA host.
 
 Generated run artifacts are written under `artifacts/runs/` and remain ignored
 by git.

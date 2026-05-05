@@ -73,6 +73,12 @@ from driverx.simulators.simlingo_sidecar import (
     build_simlingo_sidecar_plan,
     write_simlingo_sidecar_plan,
 )
+from driverx.simulators.simlingo_sidecar_runner import (
+    SidecarProcessRecord,
+    SimLingoSidecarRunResult,
+    run_simlingo_sidecar_processes,
+    write_simlingo_sidecar_run,
+)
 
 __all__ = [
     "CarlaCommandPlan",
@@ -100,7 +106,9 @@ __all__ = [
     "SimLingoRunRecord",
     "SimLingoRunConfig",
     "SidecarCommandEntry",
+    "SidecarProcessRecord",
     "SimLingoSidecarPlan",
+    "SimLingoSidecarRunResult",
     "build_bench2drive_route_suite",
     "build_simlingo_sidecar_plan",
     "compact_overlay_injection_summary",
@@ -115,6 +123,7 @@ __all__ = [
     "resolve_recipe_route_path",
     "run_ego_spawn_smoke",
     "run_overlay_injection_plan",
+    "run_simlingo_sidecar_processes",
     "smoke_carla_server",
     "compile_carla_script_plan",
     "compile_overlay_injection_plan",
@@ -129,4 +138,5 @@ __all__ = [
     "write_simlingo_readiness",
     "write_simlingo_result_report",
     "write_simlingo_sidecar_plan",
+    "write_simlingo_sidecar_run",
 ]
